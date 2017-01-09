@@ -1,0 +1,130 @@
+def versionNumber = 1
+def versionBuildType = 0 // 0 debug 1 release
+def releasePassword = ''
+
+if (project.hasProperty("versionBuildType")) {
+    versionBuildType = Integer.parseInt(project.getProperty("versionBuildType"))
+}
+if (project.hasProperty("versionNumber")) {
+    versionNumber = project.getProperty("versionNumber")
+}
+if (project.hasProperty("releasePassword")) {
+    releasePassword = project.getProperty("releasePassword")
+}
+
+ext {
+    versionMajor = versionBuildType
+    versionMinor = 0
+    versionPatch = versionNumber
+
+    supportLibVersion = '25.1.0'
+    daggerVersion = '2.0.1'
+    retrofitVersion = '2.1.0'
+    okhttp3Version = '3.4.1'
+    butterknifeVersion = '8.4.0'
+    espressoVersion = '2.2.2'
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+    defaultConfig {
+        applicationId "com.przemyslawlusnia.vocabularycreator"
+        minSdkVersion 21
+        targetSdkVersion 25
+        versionCode versionNumber.toInteger()
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        jackOptions {
+            enabled true
+        }
+    }
+
+    signingConfigs {
+        config {
+            keyAlias 'covabularyCreator'
+            keyPassword releasePassword
+            storeFile file('./vocabulary-creator-keystore.jks')
+            storePassword releasePassword
+        }
+    }
+    productFlavors {
+        prod {
+        }
+
+        develop {
+            applicationIdSuffix ".develop"
+        }
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+            minifyEnabled false
+        }
+
+        release {
+            signingConfig signingConfigs.config
+            debuggable false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories {
+    maven {
+        url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile "com.google.dagger:dagger-compiler:${daggerVersion}"
+    compile "com.google.dagger:dagger:${daggerVersion}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}"
+    compile "com.squareup.okhttp3:okhttp:${okhttp3Version}"
+    compile "com.squareup.okhttp3:logging-interceptor:${okhttp3Version}"
+    compile "com.jakewharton:butterknife:${butterknifeVersion}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
+    compile 'io.reactivex:rxjava:1.2.3'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'net.danlew:android.joda:2.9.4.1'
+//    compile 'javax.annotation:jsr250-api:1.0' //  annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}" can be enough
+    compile 'com.facebook.stetho:stetho:1.4.1'
+    compile 'com.uphyca:stetho_realm:2.0.0'
+
+    androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile "com.android.support:support-annotations:${supportLibVersion}"
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+}
+
+task checkStyle(type: Checkstyle) {
+    configFile = file("../config/checkstyle/checkstyle.xml")
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    ignoreFailures = false
+    classpath = files()
+}
