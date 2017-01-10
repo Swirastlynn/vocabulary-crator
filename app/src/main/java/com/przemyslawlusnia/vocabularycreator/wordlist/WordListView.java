@@ -1,6 +1,6 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist;
 
-import com.przemyslawlusnia.vocabularycreator.ViewBase;
+import com.przemyslawlusnia.vocabularycreator.BaseView;
 
-public interface WordListView extends ViewBase {
+public interface WordListView extends BaseView {
 }

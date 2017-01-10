@@ -8,14 +8,14 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import butterknife.Unbinder;
 
-public class FragBase extends Fragment {
+public class BaseFragment extends Fragment {
 
-  private static final String TAG = FragBase.class.getSimpleName();
+  private static final String TAG = BaseFragment.class.getSimpleName();
 
   /**
    * There are two types of requests: on demand (click) and on enter screen.
    * <p>
-   * On demand: use {@link FragBase#networking} to keep info if request has started.
+   * On demand: use {@link BaseFragment#networking} to keep info if request has started.
    * If config changes (screen rotation, language change, keyboard change etc...) you will be able to retrieve it
    * with savedInstanceState and restart from onResume() if mentioned value is true.
    * <p>
@@ -27,7 +27,7 @@ public class FragBase extends Fragment {
   protected Unbinder butterknifeUnbinder;
   protected EventListener eventListener;
 
-  public FragBase() {
+  public BaseFragment() {
     // not used
   }
 

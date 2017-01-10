@@ -1,6 +1,6 @@
 package com.przemyslawlusnia.vocabularycreator;
 
-public abstract class PresBase<V> {
+public abstract class BasePresenter<V> {
 
   public V view;
 
