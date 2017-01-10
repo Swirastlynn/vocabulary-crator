@@ -102,7 +102,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.2.3'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'net.danlew:android.joda:2.9.4.1'
-//    compile 'javax.annotation:jsr250-api:1.0' //  annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}" can be enough
+    compile 'javax.annotation:jsr250-api:1.0' // used in Dagger generated classes
     compile 'com.facebook.stetho:stetho:1.4.1'
     compile 'com.uphyca:stetho_realm:2.0.0'
 

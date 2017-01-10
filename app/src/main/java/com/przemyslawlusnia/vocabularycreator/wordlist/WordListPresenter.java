@@ -1,14 +1,13 @@
-package com.przemyslawlusnia.vocabularycreator;
+package com.przemyslawlusnia.vocabularycreator.wordlist;
 
-import javax.inject.Inject;
+import com.przemyslawlusnia.vocabularycreator.PresBase;
 
 public class WordListPresenter extends PresBase<WordListView> {
 
   private static final String TAG = WordListPresenter.class.getSimpleName();
 
-  @Inject
-  public WordListPresenter() {
-
+  public WordListPresenter(WordListView wordListView) {
+    this.view = wordListView;
   }
 
   @Override

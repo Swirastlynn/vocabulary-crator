@@ -1,13 +1,18 @@
-package com.przemyslawlusnia.vocabularycreator;
+package com.przemyslawlusnia.vocabularycreator.wordlist;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
+import com.przemyslawlusnia.vocabularycreator.FragBase;
+import com.przemyslawlusnia.vocabularycreator.R;
+import com.przemyslawlusnia.vocabularycreator.VocabularyCreatorApplication;
+import javax.inject.Inject;
 
 public class WordListFragment extends FragBase implements WordListView {
 
+  @Inject
   WordListPresenter presenter;
 
   public static WordListFragment newInstance() {
@@ -21,7 +26,15 @@ public class WordListFragment extends FragBase implements WordListView {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setupActivityComponent();
     presenter.onAttachView(this);
+  }
+
+  private void setupActivityComponent() {
+    VocabularyCreatorApplication.get(getActivity())
+        .getAppComponent()
+        .plus(new WordListFragmentModule(this))
+        .inject(this);
   }
 
   @Override
