@@ -29,7 +29,7 @@ public class WordsActivity extends BaseActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu_start, menu);
+    getMenuInflater().inflate(R.menu.start_menu, menu);
     return true;
   }
 
