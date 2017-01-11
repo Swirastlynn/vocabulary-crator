@@ -2,7 +2,6 @@ package com.przemyslawlusnia.vocabularycreator.wordlist;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +23,10 @@ public class WordListFragment extends BaseFragment implements WordListView {
 
   @Inject
   WordListPresenter presenter;
+  @Inject
+  WordListAdapter wordListAdapter;
+  @Inject
+  LinearLayoutManager linearLayoutManager;
 
   public static WordListFragment newInstance() {
     return new WordListFragment();
@@ -43,7 +46,7 @@ public class WordListFragment extends BaseFragment implements WordListView {
   private void setupActivityComponent() {
     VocabularyCreatorApplication.get(getActivity())
         .getAppComponent()
-        .plus(new WordListFragmentModule(this))
+        .plus(new WordListFragmentModule(this, (WordListActivity) getContext()))
         .inject(this);
   }
 
@@ -58,25 +61,25 @@ public class WordListFragment extends BaseFragment implements WordListView {
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    WordListAdapter adapter = new WordListAdapter(getTempWordList());
-    wordsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    wordsRecyclerView.setAdapter(adapter);
+    wordsRecyclerView.setLayoutManager(linearLayoutManager);
+    wordListAdapter.setWords(getTempWordList());
+    wordsRecyclerView.setAdapter(wordListAdapter);
   }
 
-  private List<Pair<String, String>> getTempWordList() {
-    List<Pair<String, String>> list = new ArrayList<>();
-    list.add(new Pair<>("new", "nowy"));
-    list.add(new Pair<>("old", "stary"));
-    list.add(new Pair<>("old Brohacz", "stary snowboardzista"));
-    list.add(new Pair<>("menacingly", "groźnie"));
-    list.add(new Pair<>("hush", "cicho-sza"));
-    list.add(new Pair<>("hush!", "cyt!"));
-    list.add(new Pair<>("exert", "wyciąg"));
-    list.add(new Pair<>("assure", "zapewniać, ubezpieczać"));
-    list.add(new Pair<>("assert", "zapewniać"));
-    list.add(new Pair<>("assess", "oszacować"));
-    list.add(new Pair<>("assessment", "oszacowanie"));
-    list.add(new Pair<>("swivel", "obracać się"));
+  private List<Word> getTempWordList() {
+    List<Word> list = new ArrayList<>();
+    list.add(Word.create("new", "nowy", Word.TYPE_TRAINING));
+    list.add(Word.create("old", "stary", Word.TYPE_TRAINING));
+    list.add(Word.create("old Brohacz", "stary snowboardzista", Word.TYPE_TRAINING));
+    list.add(Word.create("menacingly", "groźnie", Word.TYPE_TRAINING));
+    list.add(Word.create("hush", "cicho-sza", Word.TYPE_TRAINING));
+    list.add(Word.create("hush!", "cyt!", Word.TYPE_TRAINING));
+    list.add(Word.create("exert", "wyciąg", Word.TYPE_TRAINING));
+    list.add(Word.create("assure", "zapewniać, ubezpieczać", Word.TYPE_TRAINING));
+    list.add(Word.create("assert", "zapewniać", Word.TYPE_TRAINING));
+    list.add(Word.create("assess", "oszacować", Word.TYPE_TRAINING));
+    list.add(Word.create("assessment", "oszacowanie", Word.TYPE_TRAINING));
+    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
     return list;
   }
 

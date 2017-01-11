@@ -91,7 +91,8 @@ dependencies {
 
     compile "com.google.dagger:dagger-compiler:${daggerVersion}"
     compile "com.google.dagger:dagger:${daggerVersion}"
-    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    compile 'javax.annotation:jsr250-api:1.0' // used in Dagger generated classes
+
     compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
     compile "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}"
@@ -102,12 +103,14 @@ dependencies {
     compile 'io.reactivex:rxjava:1.2.3'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'net.danlew:android.joda:2.9.4.1'
-    compile 'javax.annotation:jsr250-api:1.0' // used in Dagger generated classes
     compile 'com.facebook.stetho:stetho:1.4.1'
     compile 'com.uphyca:stetho_realm:2.0.0'
+    compile 'com.google.auto.value:auto-value:1.2-rc1'
+    annotationProcessor 'com.google.auto.value:auto-value:1.2-rc1'
 
     androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
         exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.squareup', module: 'javawriter'
     })
     androidTestCompile "com.android.support:support-annotations:${supportLibVersion}"
     androidTestCompile 'com.android.support.test:runner:0.5'

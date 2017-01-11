@@ -6,8 +6,6 @@ import java.util.List;
 
 public final class ObjectUtils {
 
-  private static final String TAG = ObjectUtils.class.getSimpleName();
-
   private ObjectUtils() {
   }
 

@@ -1,38 +1,45 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist;
 
-import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.util.Log;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import com.przemyslawlusnia.vocabularycreator.R;
+import com.przemyslawlusnia.vocabularycreator.wordlist.viewholder.LearnedWordRecyclerViewHolder;
+import com.przemyslawlusnia.vocabularycreator.wordlist.viewholder.TrainingWordRecyclerViewHolder;
+import com.przemyslawlusnia.vocabularycreator.wordlist.viewholder.WordsViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class WordListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> { // todo proper renaming
 
-  private List<Pair<String, String>> words = new ArrayList<>();
+  private static final String TAG = WordListAdapter.class.getSimpleName();
+  private List<Word> words;
+  private final WordListView wordListView; // todo handle item click
 
-  public WordListAdapter(List<Pair<String, String>> words) {
-    this.words = words;
+  public WordListAdapter(WordListView wordListView) {
+    words = new ArrayList<>();
+    this.wordListView = wordListView;
   }
 
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new TrainingWordViewHolder(
-        LayoutInflater.from(parent.getContext()).inflate(R.layout.training_word_item, parent, false)
-    );
+    if (viewType == Word.TYPE_TRAINING) {
+      return new TrainingWordRecyclerViewHolder(parent);
+    } else if (viewType == Word.TYPE_LEARNED) {
+      return new LearnedWordRecyclerViewHolder(parent);
+    }
+    Log.e(TAG, "Unknown Word type");
+    return new TrainingWordRecyclerViewHolder(parent);
   }
 
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    if (holder instanceof TrainingWordViewHolder) {
-      ((TrainingWordViewHolder) holder).wordTxt.setText(words.get(position).first);
-      ((TrainingWordViewHolder) holder).translationTxt.setText(words.get(position).second);
-    }
+    ((WordsViewHolder) holder).bind(words.get(position));
+  }
+
+  @Override
+  public int getItemViewType(int position) {
+    Word word = words.get(position);
+    return word.type();
   }
 
   @Override
@@ -40,17 +47,9 @@ public class WordListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     return words.size();
   }
 
-  public static class TrainingWordViewHolder extends RecyclerView.ViewHolder {
-
-    @BindView(R.id.word)
-    TextView wordTxt;
-    @BindView(R.id.translation)
-    TextView translationTxt;
-
-
-    public TrainingWordViewHolder(View itemView) {
-      super(itemView);
-      ButterKnife.bind(this, itemView);
-    }
+  public void setWords(List<Word> words) {
+    this.words = words;
+    notifyDataSetChanged();
   }
+
 }
