@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.przemyslawlusnia.vocabularycreator.ActivitiesAndFragmentsHelper;
 import com.przemyslawlusnia.vocabularycreator.BaseActivity;
@@ -21,7 +22,8 @@ public class WordsActivity extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.words_activity);
-
+    ButterKnife.bind(this);
+    setupToolbar();
     if (savedInstanceState == null) {
       ActivitiesAndFragmentsHelper.showFragment(this, WordsFragment.newInstance(), R.id.fragmentContainer);
     }
