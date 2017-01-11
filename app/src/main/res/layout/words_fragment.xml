@@ -16,6 +16,7 @@
         android:paddingRight="@dimen/word_fragment_padding"
         android:paddingTop="@dimen/word_fragment_padding"
         android:paddingBottom="@dimen/word_fragment_padding"
+        android:theme="@style/ColorEdgeEffect"
         />
 
     <android.support.design.widget.BottomNavigationView
