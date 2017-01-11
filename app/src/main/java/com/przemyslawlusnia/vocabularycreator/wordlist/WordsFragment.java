@@ -2,13 +2,11 @@ package com.przemyslawlusnia.vocabularycreator.wordlist;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.przemyslawlusnia.vocabularycreator.BaseFragment;
@@ -22,8 +20,6 @@ public class WordsFragment extends BaseFragment implements WordsView {
 
   @BindView(R.id.wordsRecyclerView)
   RecyclerView wordsRecyclerView;
-  @BindView(R.id.bottomNavigation)
-  BottomNavigationView bottomNavigation;
 
   @Inject
   WordsPresenter presenter;
@@ -68,17 +64,6 @@ public class WordsFragment extends BaseFragment implements WordsView {
     wordsRecyclerView.setLayoutManager(linearLayoutManager);
     wordsAdapter.setWords(getTempWordList());
     wordsRecyclerView.setAdapter(wordsAdapter);
-    bottomNavigation.setOnNavigationItemSelectedListener(item -> {
-      switch (item.getItemId()) {
-        case R.id.action_edit:
-          Toast.makeText(getContext(), "Action Edit", Toast.LENGTH_SHORT).show();
-          break;
-        case R.id.action_delete:
-          Toast.makeText(getContext(), "Action Delete", Toast.LENGTH_SHORT).show();
-          break;
-      }
-      return true;
-    });
   }
 
   private List<Word> getTempWordList() {
@@ -103,6 +88,8 @@ public class WordsFragment extends BaseFragment implements WordsView {
     list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
     list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
     list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
+    list.add(Word.create("assess", "oszacować", Word.TYPE_TRAINING));
+    list.add(Word.create("assessment", "oszacowanie", Word.TYPE_TRAINING));
     return list;
   }
 
