@@ -16,23 +16,23 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
-public class WordListFragment extends BaseFragment implements WordListView {
+public class WordsFragment extends BaseFragment implements WordsView {
 
   @BindView(R.id.wordsRecyclerView)
   RecyclerView wordsRecyclerView;
 
   @Inject
-  WordListPresenter presenter;
+  WordsPresenter presenter;
   @Inject
-  WordListAdapter wordListAdapter;
+  WordsAdapter wordsAdapter;
   @Inject
   LinearLayoutManager linearLayoutManager;
 
-  public static WordListFragment newInstance() {
-    return new WordListFragment();
+  public static WordsFragment newInstance() {
+    return new WordsFragment();
   }
 
-  public WordListFragment() {
+  public WordsFragment() {
     // Required empty public constructor
   }
 
@@ -46,14 +46,14 @@ public class WordListFragment extends BaseFragment implements WordListView {
   private void setupActivityComponent() {
     VocabularyCreatorApplication.get(getActivity())
         .getAppComponent()
-        .plus(new WordListFragmentModule(this, (WordListActivity) getContext()))
+        .plus(new WordsFragmentModule(this, (WordsActivity) getContext()))
         .inject(this);
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.word_list_fragment, container, false);
+    View view = inflater.inflate(R.layout.words_fragment, container, false);
     butterknifeUnbinder = ButterKnife.bind(this, view);
     return view;
   }
@@ -62,8 +62,8 @@ public class WordListFragment extends BaseFragment implements WordListView {
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     wordsRecyclerView.setLayoutManager(linearLayoutManager);
-    wordListAdapter.setWords(getTempWordList());
-    wordsRecyclerView.setAdapter(wordListAdapter);
+    wordsAdapter.setWords(getTempWordList());
+    wordsRecyclerView.setAdapter(wordsAdapter);
   }
 
   private List<Word> getTempWordList() {

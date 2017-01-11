@@ -5,10 +5,10 @@ import dagger.Subcomponent;
 
 @FragmentScope
 @Subcomponent(
-    modules = WordListFragmentModule.class
+    modules = WordsFragmentModule.class
 )
-public interface WordListFragmentComponent {
+public interface WordsFragmentComponent {
 
-  WordListFragment inject(WordListFragment wordListFragment);
+  WordsFragment inject(WordsFragment wordsFragment);
 
 }

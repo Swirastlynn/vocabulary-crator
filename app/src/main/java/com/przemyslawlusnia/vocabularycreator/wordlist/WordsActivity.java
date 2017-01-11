@@ -12,7 +12,7 @@ import com.przemyslawlusnia.vocabularycreator.ActivitiesAndFragmentsHelper;
 import com.przemyslawlusnia.vocabularycreator.BaseActivity;
 import com.przemyslawlusnia.vocabularycreator.R;
 
-public class WordListActivity extends BaseActivity {
+public class WordsActivity extends BaseActivity {
 
   @BindView(R.id.fab)
   protected FloatingActionButton fab;
@@ -20,10 +20,10 @@ public class WordListActivity extends BaseActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_word_list);
+    setContentView(R.layout.words_activity);
 
     if (savedInstanceState == null) {
-      ActivitiesAndFragmentsHelper.showFragment(this, WordListFragment.newInstance(), R.id.fragmentContainer);
+      ActivitiesAndFragmentsHelper.showFragment(this, WordsFragment.newInstance(), R.id.fragmentContainer);
     }
   }
 

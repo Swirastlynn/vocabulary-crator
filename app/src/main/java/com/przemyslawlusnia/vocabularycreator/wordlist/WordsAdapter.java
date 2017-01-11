@@ -9,15 +9,15 @@ import com.przemyslawlusnia.vocabularycreator.wordlist.viewholder.WordsViewHolde
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> { // todo proper renaming
+public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-  private static final String TAG = WordListAdapter.class.getSimpleName();
+  private static final String TAG = WordsAdapter.class.getSimpleName();
   private List<Word> words;
-  private final WordListView wordListView; // todo handle item click
+  private final WordsView wordsView; // todo handle item click
 
-  public WordListAdapter(WordListView wordListView) {
+  public WordsAdapter(WordsView wordsView) {
     words = new ArrayList<>();
-    this.wordListView = wordListView;
+    this.wordsView = wordsView;
   }
 
   @Override
