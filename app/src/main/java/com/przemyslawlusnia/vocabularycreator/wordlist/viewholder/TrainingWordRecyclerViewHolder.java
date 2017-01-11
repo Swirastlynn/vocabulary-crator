@@ -22,7 +22,7 @@ public class TrainingWordRecyclerViewHolder extends WordsViewHolder {
 
   @Override
   public void bind(Word word) {
-    wordTxt.setText(word.word());
-    translationTxt.setText(word.translation());
+    wordTxt.setText(word.getWord());
+    translationTxt.setText(word.getTranslation());
   }
 }

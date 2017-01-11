@@ -39,7 +39,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
   @Override
   public int getItemViewType(int position) {
     Word word = words.get(position);
-    return word.type();
+    return word.getType();
   }
 
   @Override
