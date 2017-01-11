@@ -26,6 +26,7 @@ ext {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -37,10 +38,6 @@ android {
         versionCode versionNumber.toInteger()
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        jackOptions {
-            enabled true
-        }
     }
 
     signingConfigs {
@@ -79,9 +76,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    dexOptions {
-        javaMaxHeapSize '2048m'
-    }
 }
 
 repositories {
