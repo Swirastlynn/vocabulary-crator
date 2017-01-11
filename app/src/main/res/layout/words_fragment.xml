@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+    >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/wordsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_above="@+id/bottomNavigation"
+        android:paddingLeft="@dimen/word_fragment_padding"
+        android:paddingRight="@dimen/word_fragment_padding"
+        android:paddingTop="@dimen/word_fragment_padding"
+        android:paddingBottom="@dimen/word_fragment_padding"
         />
 
     <android.support.design.widget.BottomNavigationView
@@ -19,6 +26,6 @@
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        app:menu="@menu/bottom_navigation_menu" />
+        app:menu="@menu/bottom_navigation_menu"/>
 
 </RelativeLayout>

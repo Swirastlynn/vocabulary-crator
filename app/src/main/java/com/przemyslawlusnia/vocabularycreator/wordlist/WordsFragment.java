@@ -95,6 +95,14 @@ public class WordsFragment extends BaseFragment implements WordsView {
     list.add(Word.create("assess", "oszacować", Word.TYPE_TRAINING));
     list.add(Word.create("assessment", "oszacowanie", Word.TYPE_TRAINING));
     list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
+    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
+    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
+    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
+    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
+    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
+    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
+    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
+    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
     return list;
   }
 
