@@ -34,6 +34,9 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
     ((WordsViewHolder) holder).bind(words.get(position));
+    holder.itemView.setOnClickListener((view) -> {
+      view.setSelected(!view.isSelected());
+    });
   }
 
   @Override

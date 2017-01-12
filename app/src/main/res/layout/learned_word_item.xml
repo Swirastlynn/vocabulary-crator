@@ -3,7 +3,7 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/learnedWord"
+              android:background="@drawable/learned_word_selector"
               android:padding="@dimen/word_item_padding"
               android:weightSum="2">
 

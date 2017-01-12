@@ -8,4 +8,6 @@
     <color name="gray">#dedede</color>
     <color name="trainingWord">#00BFA5</color>
     <color name="learnedWord">#00897B</color>
+    <color name="trainingWordSelected">#FFB300</color>
+    <color name="learnedWordSelected">#FF8F00</color>
 </resources>
