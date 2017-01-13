@@ -4,6 +4,7 @@ import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import butterknife.BindView;
+import com.przemyslawlusnia.vocabularycreator.utils.ObjectUtils;
 import javax.annotation.Nullable;
 
 public abstract class BaseActivity extends AppCompatActivity {

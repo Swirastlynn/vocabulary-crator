@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import butterknife.Unbinder;
+import com.przemyslawlusnia.vocabularycreator.utils.ObjectUtils;
 
 public class BaseFragment extends Fragment {
 

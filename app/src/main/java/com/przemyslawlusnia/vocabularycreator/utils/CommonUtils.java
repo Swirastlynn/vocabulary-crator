@@ -1,5 +1,6 @@
-package com.przemyslawlusnia.vocabularycreator;
+package com.przemyslawlusnia.vocabularycreator.utils;
 
+import com.przemyslawlusnia.vocabularycreator.BuildConfig;
 import java.util.Map;
 
 public class CommonUtils {

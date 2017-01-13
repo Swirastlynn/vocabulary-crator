@@ -3,6 +3,7 @@ package com.przemyslawlusnia.vocabularycreator;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.stetho.Stetho;
+import com.przemyslawlusnia.vocabularycreator.utils.CommonUtils;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 import net.danlew.android.joda.JodaTimeAndroid;
 

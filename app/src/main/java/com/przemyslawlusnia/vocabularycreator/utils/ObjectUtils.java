@@ -1,4 +1,4 @@
-package com.przemyslawlusnia.vocabularycreator;
+package com.przemyslawlusnia.vocabularycreator.utils;
 
 import android.util.Log;
 import java.util.Collections;

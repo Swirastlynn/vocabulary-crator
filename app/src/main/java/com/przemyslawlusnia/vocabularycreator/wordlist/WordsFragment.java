@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import com.przemyslawlusnia.vocabularycreator.BaseFragment;
 import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.VocabularyCreatorApplication;
+import com.przemyslawlusnia.vocabularycreator.utils.ViewUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -61,7 +62,9 @@ public class WordsFragment extends BaseFragment implements WordsView {
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     if (menuMode == MenuMode.SingleSelection) {
       inflater.inflate(R.menu.words_selection_menu, menu);
-      menu.findItem(R.id.action_edit).setEnabled(false);
+      MenuItem item = menu.findItem(R.id.action_edit);
+      item.setEnabled(false);
+      ViewUtils.tintMenuItemIcon(R.color.gray, item);
     } else if (menuMode == MenuMode.MultipleSelection) {
       inflater.inflate(R.menu.words_selection_menu, menu);
     } else {
