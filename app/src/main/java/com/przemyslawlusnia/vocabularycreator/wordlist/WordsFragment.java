@@ -32,6 +32,8 @@ public class WordsFragment extends BaseFragment implements WordsView {
   @Inject
   LinearLayoutManager linearLayoutManager;
 
+  private MenuMode menuMode;
+
   public static WordsFragment newInstance() {
     return new WordsFragment();
   }
@@ -57,13 +59,26 @@ public class WordsFragment extends BaseFragment implements WordsView {
 
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    inflater.inflate(R.menu.words_menu, menu);
+    if (menuMode == MenuMode.SingleSelection) {
+      inflater.inflate(R.menu.words_selection_menu, menu);
+      menu.findItem(R.id.action_edit).setEnabled(false);
+    } else if (menuMode == MenuMode.MultipleSelection) {
+      inflater.inflate(R.menu.words_selection_menu, menu);
+    } else {
+      inflater.inflate(R.menu.words_start_menu, menu);
+    }
     super.onCreateOptionsMenu(menu, inflater);
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
+      case R.id.action_search:
+        Toast.makeText(getContext(), "Action Search", Toast.LENGTH_SHORT).show();
+        return true;
+      case R.id.action_settings:
+        Toast.makeText(getContext(), "Action Settings", Toast.LENGTH_SHORT).show();
+        return true;
       case R.id.action_learn:
         Toast.makeText(getContext(), "Action Learn", Toast.LENGTH_SHORT).show();
         return true;
@@ -81,6 +96,28 @@ public class WordsFragment extends BaseFragment implements WordsView {
     }
 
     return true;
+  }
+
+  @Override
+  public void updateNoSelection() {
+    if (menuMode != MenuMode.NoSelection) {
+      menuMode = MenuMode.NoSelection;
+      getActivity().supportInvalidateOptionsMenu();
+    }
+  }
+
+  @Override
+  public void updateSingleSelection() {
+    menuMode = MenuMode.SingleSelection;
+    getActivity().supportInvalidateOptionsMenu();
+  }
+
+  @Override
+  public void updateMultipleSelection() {
+    if (menuMode != MenuMode.MultipleSelection) {
+      menuMode = MenuMode.MultipleSelection;
+      getActivity().supportInvalidateOptionsMenu();
+    }
   }
 
   @Override
@@ -154,5 +191,4 @@ public class WordsFragment extends BaseFragment implements WordsView {
     presenter.onDestroy();
     super.onDestroy();
   }
-
 }

@@ -12,8 +12,9 @@ import java.util.List;
 public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
   private static final String TAG = WordsAdapter.class.getSimpleName();
+  private final WordsView wordsView;
   private List<Word> words;
-  private final WordsView wordsView; // todo handle item click
+  private int selectedItemsCount;
 
   public WordsAdapter(WordsView wordsView) {
     words = new ArrayList<>();
@@ -36,6 +37,14 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     ((WordsViewHolder) holder).bind(words.get(position));
     holder.itemView.setOnClickListener((view) -> {
       view.setSelected(!view.isSelected());
+      selectedItemsCount = view.isSelected() ? selectedItemsCount + 1 : selectedItemsCount - 1;
+      if (selectedItemsCount > 1) {
+        wordsView.updateMultipleSelection();
+      } else if (selectedItemsCount == 1) {
+        wordsView.updateSingleSelection();
+      } else {
+        wordsView.updateNoSelection();
+      }
     });
   }
 
