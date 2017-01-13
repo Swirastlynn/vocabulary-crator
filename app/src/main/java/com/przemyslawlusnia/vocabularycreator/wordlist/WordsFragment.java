@@ -5,8 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.przemyslawlusnia.vocabularycreator.BaseFragment;
@@ -39,6 +43,7 @@ public class WordsFragment extends BaseFragment implements WordsView {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setHasOptionsMenu(true);
     setupActivityComponent();
     presenter.onAttachView(this);
   }
@@ -48,6 +53,34 @@ public class WordsFragment extends BaseFragment implements WordsView {
         .getAppComponent()
         .plus(new WordsFragmentModule(this, (WordsActivity) getContext()))
         .inject(this);
+  }
+
+  @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    inflater.inflate(R.menu.words_menu, menu);
+    super.onCreateOptionsMenu(menu, inflater);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_learn:
+        Toast.makeText(getContext(), "Action Learn", Toast.LENGTH_SHORT).show();
+        return true;
+      case R.id.action_train:
+        Toast.makeText(getContext(), "Action Train", Toast.LENGTH_SHORT).show();
+        return true;
+      case R.id.action_edit:
+        Toast.makeText(getContext(), "Action Edit", Toast.LENGTH_SHORT).show();
+        return true;
+      case R.id.action_delete:
+        Toast.makeText(getContext(), "Action Delete", Toast.LENGTH_SHORT).show();
+        return true;
+      default:
+        break;
+    }
+
+    return true;
   }
 
   @Override
@@ -68,6 +101,8 @@ public class WordsFragment extends BaseFragment implements WordsView {
 
   private List<Word> getTempWordList() {
     List<Word> list = new ArrayList<>();
+    list.add(Word.create("obliterate", "wymazać", Word.TYPE_TRAINING));
+    list.add(Word.create("surreptitious", "dyskretny", Word.TYPE_TRAINING));
     list.add(Word.create("new", "nowy", Word.TYPE_TRAINING));
     list.add(Word.create("old", "stary", Word.TYPE_TRAINING));
     list.add(Word.create("old Brohacz", "stary snowboardzista", Word.TYPE_TRAINING));
