@@ -2,6 +2,7 @@ package com.przemyslawlusnia.vocabularycreator.wordlist;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.przemyslawlusnia.vocabularycreator.BaseFragment;
 import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.VocabularyCreatorApplication;
@@ -166,6 +168,13 @@ public class WordsFragment extends BaseFragment implements WordsView {
     list.add(Word.create("assess", "oszacować", Word.TYPE_TRAINING));
     list.add(Word.create("assessment", "oszacowanie", Word.TYPE_TRAINING));
     return list;
+  }
+
+  @OnClick(R.id.addWordFab)
+  public void fabClick(View view) {
+    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        .setAction("Action", null)
+        .show();
   }
 
   @Override
