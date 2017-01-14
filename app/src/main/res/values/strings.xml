@@ -5,4 +5,8 @@
     <string name="delete">Delete</string>
     <string name="learn">Learn</string>
     <string name="train">Train</string>
+    <string name="type_word">Type word</string>
+    <string name="new_word">New word</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
 </resources>

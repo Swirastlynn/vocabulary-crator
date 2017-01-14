@@ -2,7 +2,7 @@ package com.przemyslawlusnia.vocabularycreator.wordlist;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -172,9 +173,23 @@ public class WordsFragment extends BaseFragment implements WordsView {
 
   @OnClick(R.id.addWordFab)
   public void fabClick(View view) {
-    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        .setAction("Action", null)
-        .show();
+    createAndShowAddWordDialog();
+  }
+
+  private void createAndShowAddWordDialog() {
+    View root = View.inflate(getActivity(), R.layout.word_edit_text, null);
+    final EditText wordEditTxt = (EditText) root.findViewById(R.id.wordEditTxt);
+    final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+        .setTitle(R.string.new_word)
+        .setView(root)
+        .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+          Toast.makeText(getActivity(), wordEditTxt.getText().toString(), Toast.LENGTH_SHORT).show();
+          dialogInterface.dismiss();
+        })
+        .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
+          dialogInterface.dismiss();
+        });
+    builder.create().show(); // todo RXJava reactive TextWatcher
   }
 
   @Override
