@@ -64,4 +64,9 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     notifyDataSetChanged();
   }
 
+  public void addWord(Word word) {
+    words.add(word);
+    notifyDataSetChanged();
+  }
+
 }

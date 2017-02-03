@@ -16,6 +16,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.przemyslawlusnia.vocabularycreator.ActivitiesAndFragmentsHelper;
 import com.przemyslawlusnia.vocabularycreator.BaseFragment;
 import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.VocabularyCreatorApplication;
@@ -179,17 +180,24 @@ public class WordsFragment extends BaseFragment implements WordsView {
   private void createAndShowAddWordDialog() {
     View root = View.inflate(getActivity(), R.layout.word_edit_text, null);
     final EditText wordEditTxt = (EditText) root.findViewById(R.id.wordEditTxt);
+    final EditText translationEditTxt = (EditText) root.findViewById(R.id.translationEditTxt);
     final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
         .setTitle(R.string.new_word)
         .setView(root)
         .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-          Toast.makeText(getActivity(), wordEditTxt.getText().toString(), Toast.LENGTH_SHORT).show();
+          final String wordText = wordEditTxt.getText().toString();
+          final String translationText = translationEditTxt.getText().toString();
+          Toast.makeText(getActivity(), wordText, Toast.LENGTH_SHORT).show();
+          wordsAdapter.addWord(Word.create(wordText, translationText, Word.TYPE_TRAINING));
+          ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());
           dialogInterface.dismiss();
         })
         .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
+          ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());
           dialogInterface.dismiss();
         });
     builder.create().show(); // todo RXJava reactive TextWatcher
+    ActivitiesAndFragmentsHelper.showKeyboard(getActivity());
   }
 
   @Override
