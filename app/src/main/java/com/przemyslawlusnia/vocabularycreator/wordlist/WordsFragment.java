@@ -96,7 +96,7 @@ public class WordsFragment extends BaseFragment implements WordsView {
         Toast.makeText(getContext(), "Action Edit", Toast.LENGTH_SHORT).show();
         return true;
       case R.id.action_delete:
-        Toast.makeText(getContext(), "Action Delete", Toast.LENGTH_SHORT).show();
+        wordsAdapter.removeSelectedWords();
         return true;
       default:
         break;
@@ -143,32 +143,30 @@ public class WordsFragment extends BaseFragment implements WordsView {
     wordsRecyclerView.setAdapter(wordsAdapter);
   }
 
-  private List<Word> getTempWordList() {
-    List<Word> list = new ArrayList<>();
-    list.add(Word.create("obliterate", "wymazać", Word.TYPE_TRAINING));
-    list.add(Word.create("surreptitious", "dyskretny", Word.TYPE_TRAINING));
-    list.add(Word.create("new", "nowy", Word.TYPE_TRAINING));
-    list.add(Word.create("old", "stary", Word.TYPE_TRAINING));
-    list.add(Word.create("old Brohacz", "stary snowboardzista", Word.TYPE_TRAINING));
-    list.add(Word.create("menacingly", "groźnie", Word.TYPE_TRAINING));
-    list.add(Word.create("hush", "cicho-sza", Word.TYPE_TRAINING));
-    list.add(Word.create("hush!", "cyt!", Word.TYPE_TRAINING));
-    list.add(Word.create("exert", "wyciąg", Word.TYPE_TRAINING));
-    list.add(Word.create("assure", "zapewniać, ubezpieczać", Word.TYPE_TRAINING));
-    list.add(Word.create("assert", "zapewniać", Word.TYPE_TRAINING));
-    list.add(Word.create("assess", "oszacować", Word.TYPE_TRAINING));
-    list.add(Word.create("assessment", "oszacowanie", Word.TYPE_TRAINING));
-    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
-    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
-    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
-    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
-    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
-    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
-    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
-    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
-    list.add(Word.create("swivel", "obracać się", Word.TYPE_LEARNED));
-    list.add(Word.create("assess", "oszacować", Word.TYPE_TRAINING));
-    list.add(Word.create("assessment", "oszacowanie", Word.TYPE_TRAINING));
+  private List<ModifiableWord> getTempWordList() {
+    List<ModifiableWord> list = new ArrayList<>();
+    list.add(ModifiableWord.create().setTranslation("obliterate").setWord("wymazać").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("surreptitious").setWord("dyskretny").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("menacingly").setWord("groźnie").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("hush").setWord("cicho-sza").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("hush!").setWord("sza!").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("exert").setWord("wyciąg").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assure").setWord("zapewniać, ubezpieczać").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assessment").setWord("oszacowanie").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("swivel").setWord("obracać się").setType(ModifiableWord.TYPE_LEARNED).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assess").setWord("oszacować").setType(ModifiableWord.TYPE_LEARNED).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assess").setWord("oszacować").setType(ModifiableWord.TYPE_LEARNED).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assess").setWord("oszacować").setType(ModifiableWord.TYPE_LEARNED).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assess").setWord("oszacować").setType(ModifiableWord.TYPE_LEARNED).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWord.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false));
     return list;
   }
 
@@ -188,7 +186,9 @@ public class WordsFragment extends BaseFragment implements WordsView {
           final String wordText = wordEditTxt.getText().toString();
           final String translationText = translationEditTxt.getText().toString();
           Toast.makeText(getActivity(), wordText, Toast.LENGTH_SHORT).show();
-          wordsAdapter.addWord(Word.create(wordText, translationText, Word.TYPE_TRAINING));
+          final ModifiableWord word = ModifiableWord.create().setTranslation(translationText)
+              .setWord(wordText).setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false);
+          wordsAdapter.addWord(word);
           ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());
           dialogInterface.dismiss();
         })

@@ -2,7 +2,7 @@ package com.przemyslawlusnia.vocabularycreator.wordlist.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import com.przemyslawlusnia.vocabularycreator.wordlist.Word;
+import com.przemyslawlusnia.vocabularycreator.wordlist.ModifiableWord;
 
 public abstract class WordsViewHolder extends RecyclerView.ViewHolder {
 
@@ -10,6 +10,6 @@ public abstract class WordsViewHolder extends RecyclerView.ViewHolder {
     super(itemView);
   }
 
-  public abstract void bind(Word word);
+  public abstract void bind(ModifiableWord word);
 
 }

@@ -6,7 +6,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.przemyslawlusnia.vocabularycreator.R;
-import com.przemyslawlusnia.vocabularycreator.wordlist.Word;
+import com.przemyslawlusnia.vocabularycreator.wordlist.ModifiableWord;
 
 public class LearnedWordRecyclerViewHolder extends WordsViewHolder {
 
@@ -21,7 +21,7 @@ public class LearnedWordRecyclerViewHolder extends WordsViewHolder {
   }
 
   @Override
-  public void bind(Word word) {
+  public void bind(ModifiableWord word) {
     wordTxt.setText(word.getWord());
     translationTxt.setText(word.getTranslation());
   }

@@ -1,9 +1,9 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist;
 
-import com.google.auto.value.AutoValue;
+import org.immutables.value.Value;
 
-@AutoValue
-public abstract class Word {
+@Value.Modifiable
+public abstract class AbstractWord {
   public static final int TYPE_TRAINING = 0;
   public static final int TYPE_LEARNED = 1;
 
@@ -13,7 +13,5 @@ public abstract class Word {
 
   public abstract int getType();
 
-  public static Word create(String word, String translation, int type) {
-    return new AutoValue_Word(word, translation, type);
-  }
+  public abstract boolean isSelected();
 }

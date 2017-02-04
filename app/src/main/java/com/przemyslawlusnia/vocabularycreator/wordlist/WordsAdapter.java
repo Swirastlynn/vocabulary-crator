@@ -13,7 +13,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   private static final String TAG = WordsAdapter.class.getSimpleName();
   private final WordsView wordsView;
-  private List<Word> words;
+  private List<ModifiableWord> words;
   private int selectedItemsCount;
 
   public WordsAdapter(WordsView wordsView) {
@@ -23,9 +23,9 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    if (viewType == Word.TYPE_TRAINING) {
+    if (viewType == AbstractWord.TYPE_TRAINING) {
       return new TrainingWordRecyclerViewHolder(parent);
-    } else if (viewType == Word.TYPE_LEARNED) {
+    } else if (viewType == AbstractWord.TYPE_LEARNED) {
       return new LearnedWordRecyclerViewHolder(parent);
     }
     Log.e(TAG, "Unknown Word type");
@@ -34,10 +34,14 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    ((WordsViewHolder) holder).bind(words.get(position));
+    final ModifiableWord word = words.get(position);
+    ((WordsViewHolder) holder).bind(word);
+    holder.itemView.setSelected(word.isSelected());
     holder.itemView.setOnClickListener((view) -> {
-      view.setSelected(!view.isSelected());
-      selectedItemsCount = view.isSelected() ? selectedItemsCount + 1 : selectedItemsCount - 1;
+      boolean newSelection = !word.isSelected();
+      word.setIsSelected(newSelection);
+      view.setSelected(newSelection);
+      selectedItemsCount = newSelection ? selectedItemsCount + 1 : selectedItemsCount - 1;
       if (selectedItemsCount > 1) {
         wordsView.updateMultipleSelection();
       } else if (selectedItemsCount == 1) {
@@ -50,7 +54,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public int getItemViewType(int position) {
-    Word word = words.get(position);
+    ModifiableWord word = words.get(position);
     return word.getType();
   }
 
@@ -59,13 +63,24 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     return words.size();
   }
 
-  public void setWords(List<Word> words) {
+  public void setWords(List<ModifiableWord> words) {
     this.words = words;
     notifyDataSetChanged();
   }
 
-  public void addWord(Word word) {
+  public void addWord(ModifiableWord word) {
     words.add(word);
+    notifyDataSetChanged();
+  }
+
+  public void removeSelectedWords() {
+    for (int i = words.size() - 1; i >= 0; i--) {
+      ModifiableWord word = words.get(i);
+      if (word.isSelected()) {
+        words.remove(word);
+        selectedItemsCount--;
+      }
+    }
     notifyDataSetChanged();
   }
 
