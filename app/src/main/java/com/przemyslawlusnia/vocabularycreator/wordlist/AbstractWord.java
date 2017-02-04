@@ -7,11 +7,23 @@ public abstract class AbstractWord {
   public static final int TYPE_TRAINING = 0;
   public static final int TYPE_LEARNED = 1;
 
-  public abstract String getWord();
+  @Value.Default
+  public String getWord() {
+    return "";
+  }
 
-  public abstract String getTranslation();
+  @Value.Default
+  public String getTranslation() {
+    return "";
+  }
 
-  public abstract int getType();
+  @Value.Default
+  public int getType() {
+    return TYPE_TRAINING;
+  }
 
-  public abstract boolean isSelected();
+  @Value.Default
+  public boolean isSelected() {
+    return false;
+  }
 }

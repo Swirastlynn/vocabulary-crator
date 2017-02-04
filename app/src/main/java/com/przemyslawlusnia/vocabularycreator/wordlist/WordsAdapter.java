@@ -84,4 +84,22 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     notifyDataSetChanged();
   }
 
+  private int getFirstSelectedIndex() {
+    for (int i = 0; i < words.size(); i++) {
+      if (words.get(i).isSelected()) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  public ModifiableWord getSelectedWord() {
+    int selectedIndex = getFirstSelectedIndex();
+    return selectedIndex >= 0 ? words.get(getFirstSelectedIndex()) : ModifiableWord.create();
+  }
+
+  public void editSelectedWord(ModifiableWord word) {
+    words.set(getFirstSelectedIndex(), word);
+    notifyDataSetChanged();
+  }
 }

@@ -2,7 +2,6 @@ package com.przemyslawlusnia.vocabularycreator.wordlist;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,7 +91,7 @@ public class WordsFragment extends BaseFragment implements WordsView {
         Toast.makeText(getContext(), "Action Train", Toast.LENGTH_SHORT).show();
         return true;
       case R.id.action_edit:
-        Toast.makeText(getContext(), "Action Edit", Toast.LENGTH_SHORT).show();
+        createAndShowAddWordDialog(wordsAdapter.getSelectedWord(), true);
         return true;
       case R.id.action_delete:
         wordsAdapter.removeSelectedWords();
@@ -172,31 +170,31 @@ public class WordsFragment extends BaseFragment implements WordsView {
 
   @OnClick(R.id.addWordFab)
   public void fabClick(View view) {
-    createAndShowAddWordDialog();
+    createAndShowAddWordDialog(ModifiableWord.create(), false);
   }
 
-  private void createAndShowAddWordDialog() {
-    View root = View.inflate(getActivity(), R.layout.word_edit_text, null);
-    final EditText wordEditTxt = (EditText) root.findViewById(R.id.wordEditTxt);
-    final EditText translationEditTxt = (EditText) root.findViewById(R.id.translationEditTxt);
-    final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-        .setTitle(R.string.new_word)
-        .setView(root)
-        .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-          final String wordText = wordEditTxt.getText().toString();
-          final String translationText = translationEditTxt.getText().toString();
-          Toast.makeText(getActivity(), wordText, Toast.LENGTH_SHORT).show();
-          final ModifiableWord word = ModifiableWord.create().setTranslation(translationText)
-              .setWord(wordText).setType(ModifiableWord.TYPE_TRAINING).setIsSelected(false);
-          wordsAdapter.addWord(word);
-          ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());
-          dialogInterface.dismiss();
-        })
-        .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
-          ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());
-          dialogInterface.dismiss();
-        });
-    builder.create().show(); // todo RXJava reactive TextWatcher
+  private void createAndShowAddWordDialog(ModifiableWord oldWord, boolean edit) {
+    WordDialog wordDialog = new WordDialog(getContext());
+    wordDialog.build(edit ? R.string.edit_word : R.string.new_word,
+        new WordDialog.WordDialogListener() {
+          @Override
+          public void positiveButtonClick(ModifiableWord word) {
+            if (edit) {
+              wordsAdapter.editSelectedWord(word);
+            } else {
+              wordsAdapter.addWord(word);
+            }
+            ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());
+          }
+
+          @Override
+          public void negativeButtonClick() {
+            ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());
+          }
+        }, oldWord
+    ).create().show();
+
+    // todo RXJava reactive TextWatcher
     ActivitiesAndFragmentsHelper.showKeyboard(getActivity());
   }
 

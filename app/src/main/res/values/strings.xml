@@ -8,6 +8,7 @@
     <string name="type_word">Type word</string>
     <string name="type_translation">Type translation</string>
     <string name="new_word">New word</string>
+    <string name="edit_word">Edit word</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
 </resources>
