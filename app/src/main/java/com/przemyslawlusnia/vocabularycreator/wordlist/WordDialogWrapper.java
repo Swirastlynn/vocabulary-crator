@@ -6,14 +6,14 @@ import android.view.View;
 import android.widget.EditText;
 import com.przemyslawlusnia.vocabularycreator.R;
 
-public class WordDialog {
+public class WordDialogWrapper {
 
   private View root;
   private EditText wordEditTxt;
   private EditText translationEditTxt;
   private Context context;
 
-  public WordDialog(Context context) {
+  public WordDialogWrapper(Context context) {
     this.root = View.inflate(context, R.layout.word_translation_dialog, null);
     this.wordEditTxt = (EditText) root.findViewById(R.id.wordEditTxt);
     this.translationEditTxt = (EditText) root.findViewById(R.id.translationEditTxt);
