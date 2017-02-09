@@ -3,6 +3,7 @@ package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ViewGroup;
+import com.przemyslawlusnia.vocabularycreator.core.Constants;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.LearnedWordRecyclerViewHolder;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.TrainingWordRecyclerViewHolder;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.WordsViewHolder;
@@ -23,9 +24,9 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    if (viewType == AbstractWordViewModel.TYPE_TRAINING) {
+    if (viewType == Constants.TYPE_TRAINING) {
       return new TrainingWordRecyclerViewHolder(parent);
-    } else if (viewType == AbstractWordViewModel.TYPE_LEARNED) {
+    } else if (viewType == Constants.TYPE_LEARNED) {
       return new LearnedWordRecyclerViewHolder(parent);
     }
     Log.e(TAG, "Unknown Word type");
@@ -73,7 +74,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     notifyDataSetChanged();
   }
 
-  public void removeSelectedWords() {
+  public void deleteSelectedWords() {
     for (int i = words.size() - 1; i >= 0; i--) {
       ModifiableWordViewModel word = words.get(i);
       if (word.isSelected()) {
@@ -84,6 +85,21 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     notifyDataSetChanged();
   }
 
+  public ModifiableWordViewModel getSelectedWord() {
+    int selectedIndex = getFirstSelectedIndex();
+    return selectedIndex >= 0 ? words.get(getFirstSelectedIndex()) : ModifiableWordViewModel.create();
+  }
+
+  public List<ModifiableWordViewModel> getSelectedWords() {
+    List<ModifiableWordViewModel> result = new ArrayList<>();
+    for (ModifiableWordViewModel word : words) {
+      if (word.isSelected()) {
+        result.add(word);
+      }
+    }
+    return result;
+  }
+
   private int getFirstSelectedIndex() {
     for (int i = 0; i < words.size(); i++) {
       if (words.get(i).isSelected()) {
@@ -91,11 +107,6 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       }
     }
     return -1;
-  }
-
-  public ModifiableWordViewModel getSelectedWord() {
-    int selectedIndex = getFirstSelectedIndex();
-    return selectedIndex >= 0 ? words.get(getFirstSelectedIndex()) : ModifiableWordViewModel.create();
   }
 
   public void editSelectedWord(ModifiableWordViewModel word) {

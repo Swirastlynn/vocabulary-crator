@@ -5,6 +5,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import com.przemyslawlusnia.vocabularycreator.R;
+import com.przemyslawlusnia.vocabularycreator.core.Constants;
 
 public class WordDialogWrapper {
 
@@ -33,7 +34,7 @@ public class WordDialogWrapper {
           String translationText = translationEditTxt.getText().toString();
           ModifiableWordViewModel newWord = ModifiableWordViewModel.create().setTranslation(translationText)
               .setWord(wordText)
-              .setType(oldWord == null ? ModifiableWordViewModel.TYPE_TRAINING : oldWord.getType())
+              .setType(oldWord == null ? Constants.TYPE_TRAINING : oldWord.getType())
               .setIsSelected(oldWord != null && oldWord.isSelected());
           wordDialogListener.positiveButtonClick(newWord);
           dialogInterface.dismiss();

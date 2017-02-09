@@ -4,7 +4,7 @@ import com.przemyslawlusnia.vocabularycreator.core.BaseView;
 
 public interface WordsView extends BaseView {
 
-  void updateMultipleSelection();
+  void updateMultipleSelection(); // todo sure? Such abstraction from presenter?
 
   void updateSingleSelection();
 

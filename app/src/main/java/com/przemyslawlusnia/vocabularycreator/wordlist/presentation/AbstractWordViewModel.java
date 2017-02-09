@@ -1,11 +1,10 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
+import com.przemyslawlusnia.vocabularycreator.core.Constants;
 import org.immutables.value.Value;
 
 @Value.Modifiable
 public abstract class AbstractWordViewModel {
-  public static final int TYPE_TRAINING = 0;
-  public static final int TYPE_LEARNED = 1;
 
   @Value.Default
   public String getWord() {
@@ -19,7 +18,7 @@ public abstract class AbstractWordViewModel {
 
   @Value.Default
   public int getType() {
-    return TYPE_TRAINING;
+    return Constants.TYPE_TRAINING;
   }
 
   @Value.Default

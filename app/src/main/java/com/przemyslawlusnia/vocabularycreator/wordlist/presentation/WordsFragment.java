@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import com.przemyslawlusnia.vocabularycreator.core.ActivitiesAndFragmentsHelper;
 import com.przemyslawlusnia.vocabularycreator.core.BaseFragment;
 import com.przemyslawlusnia.vocabularycreator.R;
+import com.przemyslawlusnia.vocabularycreator.core.Constants;
 import com.przemyslawlusnia.vocabularycreator.core.VocabularyCreatorApplication;
 import com.przemyslawlusnia.vocabularycreator.core.utils.ViewUtils;
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsFragmentModule;
@@ -93,9 +94,11 @@ public class WordsFragment extends BaseFragment implements WordsView {
         return true;
       case R.id.action_edit:
         createAndShowAddWordDialog(wordsAdapter.getSelectedWord(), true);
+        // todo database operation
         return true;
       case R.id.action_delete:
-        wordsAdapter.removeSelectedWords();
+        presenter.deleteWord(wordsAdapter.getSelectedWords());
+        wordsAdapter.deleteSelectedWords();
         return true;
       default:
         break;
@@ -144,28 +147,28 @@ public class WordsFragment extends BaseFragment implements WordsView {
 
   private List<ModifiableWordViewModel> getTempWordList() {
     List<ModifiableWordViewModel> list = new ArrayList<>();
-    list.add(ModifiableWordViewModel.create().setTranslation("obliterate").setWord("wymazać").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("surreptitious").setWord("dyskretny").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("menacingly").setWord("groźnie").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("hush").setWord("cicho-sza").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("hush!").setWord("sza!").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("exert").setWord("wyciąg").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assure").setWord("zapewniać, ubezpieczać").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assessment").setWord("oszacowanie").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("swivel").setWord("obracać się").setType(ModifiableWordViewModel.TYPE_LEARNED).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assess").setWord("oszacować").setType(ModifiableWordViewModel.TYPE_LEARNED).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assess").setWord("oszacować").setType(ModifiableWordViewModel.TYPE_LEARNED).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assess").setWord("oszacować").setType(ModifiableWordViewModel.TYPE_LEARNED).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assess").setWord("oszacować").setType(ModifiableWordViewModel.TYPE_LEARNED).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(ModifiableWordViewModel.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("obliterate").setWord("wymazać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("surreptitious").setWord("dyskretny").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("menacingly").setWord("groźnie").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("hush").setWord("cicho-sza").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("hush!").setWord("sza!").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("exert").setWord("wyciąg").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assure").setWord("zapewniać, ubezpieczać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assessment").setWord("oszacowanie").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("swivel").setWord("obracać się").setType(Constants.TYPE_LEARNED).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assess").setWord("oszacować").setType(Constants.TYPE_LEARNED).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assess").setWord("oszacować").setType(Constants.TYPE_LEARNED).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assess").setWord("oszacować").setType(Constants.TYPE_LEARNED).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assess").setWord("oszacować").setType(Constants.TYPE_LEARNED).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
+    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
     return list;
   }
 
@@ -183,6 +186,7 @@ public class WordsFragment extends BaseFragment implements WordsView {
             if (edit) {
               wordsAdapter.editSelectedWord(word);
             } else {
+              presenter.addWord(word);
               wordsAdapter.addWord(word);
             }
             ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());

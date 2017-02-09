@@ -3,12 +3,14 @@ package com.przemyslawlusnia.vocabularycreator.core;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.stetho.Stetho;
+import com.przemyslawlusnia.vocabularycreator.BuildConfig;
 import com.przemyslawlusnia.vocabularycreator.core.di.AppComponent;
 import com.przemyslawlusnia.vocabularycreator.core.di.AppModule;
 import com.przemyslawlusnia.vocabularycreator.core.di.DaggerAppComponent;
 import com.przemyslawlusnia.vocabularycreator.core.utils.CommonUtils;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
-import net.danlew.android.joda.JodaTimeAndroid;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class VocabularyCreatorApplication extends Application {
 
@@ -23,7 +25,7 @@ public class VocabularyCreatorApplication extends Application {
   public void onCreate() {
     super.onCreate();
     initAppComponent();
-    initJodaTime();
+    initRealm();
     initStetho();
   }
 
@@ -33,8 +35,13 @@ public class VocabularyCreatorApplication extends Application {
         .build();
   }
 
-  protected void initJodaTime() {
-    JodaTimeAndroid.init(this);
+  private void initRealm() {
+    Realm.init(this);
+    RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+        .name(BuildConfig.REALM_DATABASE_NAME)
+        .deleteRealmIfMigrationNeeded()
+        .build();
+    Realm.setDefaultConfiguration(realmConfig);
   }
 
   private void initStetho() {

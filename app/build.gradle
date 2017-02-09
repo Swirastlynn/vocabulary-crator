@@ -1,6 +1,7 @@
 def versionNumber = 1
 def versionBuildType = 0 // 0 debug 1 release
 def releasePassword = ''
+def realmDatabaseName = "vocabularycreator.realm";
 
 if (project.hasProperty("versionBuildType")) {
     versionBuildType = Integer.parseInt(project.getProperty("versionBuildType"))
@@ -27,6 +28,7 @@ ext {
 
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 25
@@ -38,6 +40,7 @@ android {
         versionCode versionNumber.toInteger()
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "REALM_DATABASE_NAME", "\"${realmDatabaseName}\""
     }
 
     signingConfigs {
@@ -82,6 +85,9 @@ repositories {
     maven {
         url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
     }
+    maven {
+        url 'https://github.com/linchaolong/stetho-realm/raw/master/maven-repo'
+    }
 }
 
 dependencies {
@@ -100,9 +106,8 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
     compile 'io.reactivex:rxjava:1.2.3'
     compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'net.danlew:android.joda:2.9.4.1'
-    compile 'com.facebook.stetho:stetho:1.4.1'
-    compile 'com.uphyca:stetho_realm:2.0.0'
+    compile 'com.facebook.stetho:stetho:1.4.2'
+    compile 'com.uphyca:stetho_realm:2.0.1'
     compile 'org.immutables:value:2.4.2'
 
     androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
