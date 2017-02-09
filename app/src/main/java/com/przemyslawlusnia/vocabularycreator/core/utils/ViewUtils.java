@@ -1,4 +1,4 @@
-package com.przemyslawlusnia.vocabularycreator.utils;
+package com.przemyslawlusnia.vocabularycreator.core.utils;
 
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;

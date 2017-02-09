@@ -1,7 +1,7 @@
-package com.przemyslawlusnia.vocabularycreator;
+package com.przemyslawlusnia.vocabularycreator.core.di;
 
-import com.przemyslawlusnia.vocabularycreator.wordlist.WordsFragmentComponent;
-import com.przemyslawlusnia.vocabularycreator.wordlist.WordsFragmentModule;
+import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsFragmentComponent;
+import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsFragmentModule;
 import dagger.Component;
 import javax.inject.Singleton;
 

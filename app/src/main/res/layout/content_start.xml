@@ -7,5 +7,5 @@
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
     tools:showIn="@layout/words_activity"
-    tools:context="com.przemyslawlusnia.vocabularycreator.wordlist.WordsActivity">
+    tools:context="com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsActivity">
 </RelativeLayout>

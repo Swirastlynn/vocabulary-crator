@@ -1,4 +1,4 @@
-package com.przemyslawlusnia.vocabularycreator.wordlist;
+package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
@@ -20,7 +20,7 @@ public class WordDialogWrapper {
     this.context = context;
   }
 
-  AlertDialog.Builder build(int titleId, WordDialogListener wordDialogListener, ModifiableWord oldWord) {
+  AlertDialog.Builder build(int titleId, WordDialogListener wordDialogListener, ModifiableWordViewModel oldWord) {
     if (oldWord != null) {
       wordEditTxt.setText(oldWord.getWord());
       translationEditTxt.setText(oldWord.getTranslation());
@@ -31,9 +31,9 @@ public class WordDialogWrapper {
         .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
           String wordText = wordEditTxt.getText().toString();
           String translationText = translationEditTxt.getText().toString();
-          ModifiableWord newWord = ModifiableWord.create().setTranslation(translationText)
+          ModifiableWordViewModel newWord = ModifiableWordViewModel.create().setTranslation(translationText)
               .setWord(wordText)
-              .setType(oldWord == null ? ModifiableWord.TYPE_TRAINING : oldWord.getType())
+              .setType(oldWord == null ? ModifiableWordViewModel.TYPE_TRAINING : oldWord.getType())
               .setIsSelected(oldWord != null && oldWord.isSelected());
           wordDialogListener.positiveButtonClick(newWord);
           dialogInterface.dismiss();
@@ -45,7 +45,7 @@ public class WordDialogWrapper {
   }
 
   public interface WordDialogListener {
-    void positiveButtonClick(ModifiableWord newWord);
+    void positiveButtonClick(ModifiableWordViewModel newWord);
 
     void negativeButtonClick();
   }

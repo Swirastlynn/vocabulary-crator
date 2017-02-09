@@ -1,4 +1,4 @@
-package com.przemyslawlusnia.vocabularycreator.utils;
+package com.przemyslawlusnia.vocabularycreator.core.utils;
 
 import com.przemyslawlusnia.vocabularycreator.BuildConfig;
 import java.util.Map;

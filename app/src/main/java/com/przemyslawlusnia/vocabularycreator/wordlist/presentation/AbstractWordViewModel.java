@@ -1,9 +1,9 @@
-package com.przemyslawlusnia.vocabularycreator.wordlist;
+package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
 import org.immutables.value.Value;
 
 @Value.Modifiable
-public abstract class AbstractWord {
+public abstract class AbstractWordViewModel {
   public static final int TYPE_TRAINING = 0;
   public static final int TYPE_LEARNED = 1;
 

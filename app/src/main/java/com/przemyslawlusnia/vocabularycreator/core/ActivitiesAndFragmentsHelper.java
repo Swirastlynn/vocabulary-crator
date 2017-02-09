@@ -1,4 +1,4 @@
-package com.przemyslawlusnia.vocabularycreator;
+package com.przemyslawlusnia.vocabularycreator.core;
 
 import android.app.Activity;
 import android.content.Context;

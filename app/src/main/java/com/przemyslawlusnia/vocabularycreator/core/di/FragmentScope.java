@@ -1,4 +1,4 @@
-package com.przemyslawlusnia.vocabularycreator;
+package com.przemyslawlusnia.vocabularycreator.core.di;
 
 import javax.inject.Scope;
 

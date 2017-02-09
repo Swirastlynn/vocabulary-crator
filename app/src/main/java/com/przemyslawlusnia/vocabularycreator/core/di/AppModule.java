@@ -1,4 +1,4 @@
-package com.przemyslawlusnia.vocabularycreator;
+package com.przemyslawlusnia.vocabularycreator.core.di;
 
 import android.app.Application;
 import dagger.Module;

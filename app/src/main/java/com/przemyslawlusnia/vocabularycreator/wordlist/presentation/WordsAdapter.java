@@ -1,11 +1,11 @@
-package com.przemyslawlusnia.vocabularycreator.wordlist;
+package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ViewGroup;
-import com.przemyslawlusnia.vocabularycreator.wordlist.viewholder.LearnedWordRecyclerViewHolder;
-import com.przemyslawlusnia.vocabularycreator.wordlist.viewholder.TrainingWordRecyclerViewHolder;
-import com.przemyslawlusnia.vocabularycreator.wordlist.viewholder.WordsViewHolder;
+import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.LearnedWordRecyclerViewHolder;
+import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.TrainingWordRecyclerViewHolder;
+import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.WordsViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   private static final String TAG = WordsAdapter.class.getSimpleName();
   private final WordsView wordsView;
-  private List<ModifiableWord> words;
+  private List<ModifiableWordViewModel> words;
   private int selectedItemsCount;
 
   public WordsAdapter(WordsView wordsView) {
@@ -23,9 +23,9 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    if (viewType == AbstractWord.TYPE_TRAINING) {
+    if (viewType == AbstractWordViewModel.TYPE_TRAINING) {
       return new TrainingWordRecyclerViewHolder(parent);
-    } else if (viewType == AbstractWord.TYPE_LEARNED) {
+    } else if (viewType == AbstractWordViewModel.TYPE_LEARNED) {
       return new LearnedWordRecyclerViewHolder(parent);
     }
     Log.e(TAG, "Unknown Word type");
@@ -34,7 +34,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    final ModifiableWord word = words.get(position);
+    final ModifiableWordViewModel word = words.get(position);
     ((WordsViewHolder) holder).bind(word);
     holder.itemView.setSelected(word.isSelected());
     holder.itemView.setOnClickListener((view) -> {
@@ -54,7 +54,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public int getItemViewType(int position) {
-    ModifiableWord word = words.get(position);
+    ModifiableWordViewModel word = words.get(position);
     return word.getType();
   }
 
@@ -63,19 +63,19 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     return words.size();
   }
 
-  public void setWords(List<ModifiableWord> words) {
+  public void setWords(List<ModifiableWordViewModel> words) {
     this.words = words;
     notifyDataSetChanged();
   }
 
-  public void addWord(ModifiableWord word) {
+  public void addWord(ModifiableWordViewModel word) {
     words.add(word);
     notifyDataSetChanged();
   }
 
   public void removeSelectedWords() {
     for (int i = words.size() - 1; i >= 0; i--) {
-      ModifiableWord word = words.get(i);
+      ModifiableWordViewModel word = words.get(i);
       if (word.isSelected()) {
         words.remove(word);
         selectedItemsCount--;
@@ -93,12 +93,12 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     return -1;
   }
 
-  public ModifiableWord getSelectedWord() {
+  public ModifiableWordViewModel getSelectedWord() {
     int selectedIndex = getFirstSelectedIndex();
-    return selectedIndex >= 0 ? words.get(getFirstSelectedIndex()) : ModifiableWord.create();
+    return selectedIndex >= 0 ? words.get(getFirstSelectedIndex()) : ModifiableWordViewModel.create();
   }
 
-  public void editSelectedWord(ModifiableWord word) {
+  public void editSelectedWord(ModifiableWordViewModel word) {
     words.set(getFirstSelectedIndex(), word);
     notifyDataSetChanged();
   }

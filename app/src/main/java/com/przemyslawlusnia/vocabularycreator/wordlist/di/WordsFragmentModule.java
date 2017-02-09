@@ -1,7 +1,11 @@
-package com.przemyslawlusnia.vocabularycreator.wordlist;
+package com.przemyslawlusnia.vocabularycreator.wordlist.di;
 
 import android.support.v7.widget.LinearLayoutManager;
-import com.przemyslawlusnia.vocabularycreator.FragmentScope;
+import com.przemyslawlusnia.vocabularycreator.core.di.FragmentScope;
+import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsActivity;
+import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsAdapter;
+import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsPresenter;
+import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsView;
 import dagger.Module;
 import dagger.Provides;
 

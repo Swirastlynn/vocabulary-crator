@@ -1,4 +1,4 @@
-package com.przemyslawlusnia.vocabularycreator.wordlist;
+package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;

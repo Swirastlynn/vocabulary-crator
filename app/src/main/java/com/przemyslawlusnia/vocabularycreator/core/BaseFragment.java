@@ -1,4 +1,4 @@
-package com.przemyslawlusnia.vocabularycreator;
+package com.przemyslawlusnia.vocabularycreator.core;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import butterknife.Unbinder;
-import com.przemyslawlusnia.vocabularycreator.utils.ObjectUtils;
+import com.przemyslawlusnia.vocabularycreator.core.utils.ObjectUtils;
 
 public class BaseFragment extends Fragment {
 

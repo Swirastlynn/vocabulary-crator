@@ -1,9 +1,9 @@
-package com.przemyslawlusnia.vocabularycreator.wordlist;
+package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
 import android.os.Bundle;
 import butterknife.ButterKnife;
-import com.przemyslawlusnia.vocabularycreator.ActivitiesAndFragmentsHelper;
-import com.przemyslawlusnia.vocabularycreator.BaseActivity;
+import com.przemyslawlusnia.vocabularycreator.core.ActivitiesAndFragmentsHelper;
+import com.przemyslawlusnia.vocabularycreator.core.BaseActivity;
 import com.przemyslawlusnia.vocabularycreator.R;
 
 public class WordsActivity extends BaseActivity {

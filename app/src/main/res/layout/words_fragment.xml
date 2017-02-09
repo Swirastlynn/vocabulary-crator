@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        app:layout_behavior="com.przemyslawlusnia.vocabularycreator.wordlist.ScrollAwareFABBehavior"
+        app:layout_behavior="com.przemyslawlusnia.vocabularycreator.wordlist.presentation.ScrollAwareFABBehavior"
         app:layout_anchor="@id/wordsRecyclerView"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_plus_white_24dp"

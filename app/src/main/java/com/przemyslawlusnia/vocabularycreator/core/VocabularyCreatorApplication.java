@@ -1,9 +1,12 @@
-package com.przemyslawlusnia.vocabularycreator;
+package com.przemyslawlusnia.vocabularycreator.core;
 
 import android.app.Application;
 import android.content.Context;
 import com.facebook.stetho.Stetho;
-import com.przemyslawlusnia.vocabularycreator.utils.CommonUtils;
+import com.przemyslawlusnia.vocabularycreator.core.di.AppComponent;
+import com.przemyslawlusnia.vocabularycreator.core.di.AppModule;
+import com.przemyslawlusnia.vocabularycreator.core.di.DaggerAppComponent;
+import com.przemyslawlusnia.vocabularycreator.core.utils.CommonUtils;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 import net.danlew.android.joda.JodaTimeAndroid;
 
