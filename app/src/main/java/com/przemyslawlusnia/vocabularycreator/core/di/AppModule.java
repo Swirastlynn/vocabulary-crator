@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRealmRepository;
 import dagger.Module;
 import dagger.Provides;
-import javax.inject.Singleton;
 
 @Module
 public class AppModule {
@@ -17,13 +16,13 @@ public class AppModule {
   }
 
   @Provides
-  @Singleton
+  @AppScope
   public Application provideApplication() {
     return application;
   }
 
   @Provides
-  @Singleton
+  @AppScope
   WordsRealmRepository wordsRealmRepository() {
     return getWordsRepository();
   }

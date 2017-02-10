@@ -1,7 +1,6 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.di;
 
 import com.przemyslawlusnia.vocabularycreator.core.UseCase;
-import com.przemyslawlusnia.vocabularycreator.core.di.WordsFragmentScope;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.AddWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.DeleteWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.GetAllWordsUseCase;
@@ -16,19 +15,19 @@ import rx.android.schedulers.AndroidSchedulers;
 public class WordsDomainModule {
 
   @Provides
-  @WordsFragmentScope
+  @WordsDomainScope
   AddWordUseCase addWordUseCase(WordsRealmRepository wordsRealmRepository) { // todo WordsRealmRepository change to abstract interface?
     return new AddWordUseCase(wordsRealmRepository);
   }
 
   @Provides
-  @WordsFragmentScope
+  @WordsDomainScope
   DeleteWordUseCase deleteWordUseCase(WordsRealmRepository wordsRealmRepository) { // todo WordsRealmRepository change to abstract interface?
     return new DeleteWordUseCase(wordsRealmRepository);
   }
 
   @Provides
-  @WordsFragmentScope
+  @WordsDomainScope
     // todo what about WordDomainModel? WordRealm? Sure?
   UseCase<List<WordRealm>> getAllWordsUseCase(WordsRealmRepository wordsRealmRepository) { // todo WordsRealmRepository change to abstract interface?
     return new GetAllWordsUseCase(AndroidSchedulers.mainThread(), wordsRealmRepository);

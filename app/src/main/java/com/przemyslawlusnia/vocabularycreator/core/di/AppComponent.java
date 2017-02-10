@@ -3,9 +3,8 @@ package com.przemyslawlusnia.vocabularycreator.core.di;
 import android.app.Application;
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRealmRepository;
 import dagger.Component;
-import javax.inject.Singleton;
 
-@Singleton
+@AppScope
 @Component(modules = {AppModule.class})
 public interface AppComponent {
 

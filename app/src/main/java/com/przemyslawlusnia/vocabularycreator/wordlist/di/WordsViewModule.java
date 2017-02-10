@@ -2,10 +2,8 @@ package com.przemyslawlusnia.vocabularycreator.wordlist.di;
 
 import android.support.v7.widget.LinearLayoutManager;
 import com.przemyslawlusnia.vocabularycreator.core.UseCase;
-import com.przemyslawlusnia.vocabularycreator.core.di.WordsFragmentScope;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.AddWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.DeleteWordUseCase;
-import com.przemyslawlusnia.vocabularycreator.wordlist.domain.GetAllWordsUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsActivity;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsAdapter;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsPresenter;
@@ -26,31 +24,31 @@ public class WordsViewModule {
   }
 
   @Provides
-  @WordsFragmentScope
+  @WordsViewScope
   WordsActivity provideWordsActivity() {
     return activity;
   }
 
   @Provides
-  @WordsFragmentScope
+  @WordsViewScope
   WordsView provideWordsView() {
     return wordsView;
   }
 
   @Provides
-  @WordsFragmentScope
+  @WordsViewScope
   WordsAdapter provideWordsAdapter() {
     return new WordsAdapter(wordsView);
   }
 
   @Provides
-  @WordsFragmentScope
+  @WordsViewScope
   LinearLayoutManager provideLinearLayoutManager(WordsActivity activity) {
     return new LinearLayoutManager(activity);
   }
 
   @Provides
-  @WordsFragmentScope
+  @WordsViewScope
   WordsPresenter provideWordsPresenter(AddWordUseCase addWordUseCase,
                                        DeleteWordUseCase deleteWordUseCase,
                                        UseCase<List<WordRealm>> getAllWordsUseCase) {

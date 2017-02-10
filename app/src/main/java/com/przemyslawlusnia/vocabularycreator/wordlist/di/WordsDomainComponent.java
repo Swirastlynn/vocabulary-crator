@@ -1,7 +1,6 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.di;
 
 import com.przemyslawlusnia.vocabularycreator.core.di.AppComponent;
-import com.przemyslawlusnia.vocabularycreator.core.di.WordsFragmentScope;
 import dagger.Component;
 
 /**
@@ -11,7 +10,7 @@ import dagger.Component;
  * <p>
  * In such case I should use custom scope.
  */
-@WordsFragmentScope
+@WordsDomainScope
 @Component(modules = WordsDomainModule.class, dependencies = AppComponent.class)
 public interface WordsDomainComponent {
 
