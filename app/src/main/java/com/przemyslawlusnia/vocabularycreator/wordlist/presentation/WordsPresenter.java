@@ -1,27 +1,36 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
 import com.przemyslawlusnia.vocabularycreator.core.BasePresenter;
+import com.przemyslawlusnia.vocabularycreator.core.UseCase;
+import com.przemyslawlusnia.vocabularycreator.wordlist.domain.AddWordUseCase;
+import com.przemyslawlusnia.vocabularycreator.wordlist.domain.DeleteWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordRealm;
-import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordRealmRepository;
 import java.util.List;
 
 public class WordsPresenter extends BasePresenter<WordsView> {
 
   private static final String TAG = WordsPresenter.class.getSimpleName();
 
-  WordRealmRepository realmRepository;
+  private final AddWordUseCase addWordUseCase;
+  private final DeleteWordUseCase deleteWordUseCase;
+  private final UseCase<List<WordRealm>> getAllWordsUseCase;
 
-  public WordsPresenter(WordsView wordsView) { // rest of dependencies is also in constructor. Module @Provides injection :)
+  public WordsPresenter(WordsView wordsView,
+                        AddWordUseCase addWordUseCase,
+                        DeleteWordUseCase deleteWordUseCase,
+                        UseCase<List<WordRealm>> getAllWordsUseCase) {
     this.view = wordsView;
-    realmRepository = new WordRealmRepository(); // todo DI
+    this.addWordUseCase = addWordUseCase;
+    this.deleteWordUseCase = deleteWordUseCase;
+    this.getAllWordsUseCase = getAllWordsUseCase;
   }
 
   public void addWord(ModifiableWordViewModel word) {
-    realmRepository.add(WordRealm.createRealmAddress(word));
+    addWordUseCase.addWord(WordRealm.createRealmAddress(word));
   }
 
   public void deleteWord(List<ModifiableWordViewModel> words) {
-    realmRepository.delete(words);
+    deleteWordUseCase.delete(words);
   }
 
   @Override

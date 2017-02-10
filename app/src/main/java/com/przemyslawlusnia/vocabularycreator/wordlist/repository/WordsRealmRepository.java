@@ -4,8 +4,9 @@ import com.przemyslawlusnia.vocabularycreator.data.RealmRepository;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.ModifiableWordViewModel;
 import io.realm.RealmResults;
 import java.util.List;
+import rx.Observable;
 
-public class WordRealmRepository extends RealmRepository {
+public class WordsRealmRepository extends RealmRepository {
 
   public void delete(List<ModifiableWordViewModel> words) {
     openRealmIfClosed();
@@ -17,5 +18,13 @@ public class WordRealmRepository extends RealmRepository {
       realm.executeTransaction(realm -> result.deleteFirstFromRealm());
     }
     closeRealm();
+  }
+
+  public Observable<List<WordRealm>> getAllWords() {
+    openRealmIfClosed();
+    RealmResults<WordRealm> allWords = realm.where(WordRealm.class).findAll();
+    final List<WordRealm> result = allWords.subList(0, allWords.size());
+    closeRealm();
+    return Observable.just(result);
   }
 }

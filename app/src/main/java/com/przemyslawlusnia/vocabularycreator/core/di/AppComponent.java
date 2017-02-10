@@ -1,7 +1,7 @@
 package com.przemyslawlusnia.vocabularycreator.core.di;
 
-import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsFragmentComponent;
-import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsFragmentModule;
+import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainComponent;
+import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainModule;
 import dagger.Component;
 import javax.inject.Singleton;
 
@@ -13,6 +13,6 @@ import javax.inject.Singleton;
 )
 public interface AppComponent {
 
-  WordsFragmentComponent plus(WordsFragmentModule module);
+  WordsDomainComponent plus(WordsDomainModule module);
 
 }

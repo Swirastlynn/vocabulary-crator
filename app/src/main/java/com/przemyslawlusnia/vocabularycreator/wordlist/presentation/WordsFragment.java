@@ -14,13 +14,16 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.core.ActivitiesAndFragmentsHelper;
 import com.przemyslawlusnia.vocabularycreator.core.BaseFragment;
-import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.core.Constants;
 import com.przemyslawlusnia.vocabularycreator.core.VocabularyCreatorApplication;
 import com.przemyslawlusnia.vocabularycreator.core.utils.ViewUtils;
-import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsFragmentModule;
+import com.przemyslawlusnia.vocabularycreator.wordlist.di.DaggerWordsViewComponent;
+import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainComponent;
+import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainModule;
+import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsViewModule;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -51,14 +54,18 @@ public class WordsFragment extends BaseFragment implements WordsView {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setHasOptionsMenu(true);
-    setupActivityComponent();
+    setupDependencies();
     presenter.onAttachView(this);
   }
 
-  private void setupActivityComponent() {
-    VocabularyCreatorApplication.get(getActivity())
+  private void setupDependencies() {
+    WordsDomainComponent wordsDomainComponent = VocabularyCreatorApplication.get(getActivity())
         .getAppComponent()
-        .plus(new WordsFragmentModule(this, (WordsActivity) getContext()))
+        .plus(new WordsDomainModule());
+    DaggerWordsViewComponent.builder()
+        .wordsDomainComponent(wordsDomainComponent)
+        .wordsViewModule(new WordsViewModule(this, (WordsActivity) getActivity()))
+        .build()
         .inject(this);
   }
 
