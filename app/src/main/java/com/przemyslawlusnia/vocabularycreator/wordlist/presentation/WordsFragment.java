@@ -18,11 +18,8 @@ import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.core.ActivitiesAndFragmentsHelper;
 import com.przemyslawlusnia.vocabularycreator.core.BaseFragment;
 import com.przemyslawlusnia.vocabularycreator.core.Constants;
-import com.przemyslawlusnia.vocabularycreator.core.VocabularyCreatorApplication;
 import com.przemyslawlusnia.vocabularycreator.core.utils.ViewUtils;
-import com.przemyslawlusnia.vocabularycreator.wordlist.di.DaggerWordsDomainComponent;
-import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainComponent;
-import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainModule;
+import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainComponentProvider;
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsViewModule;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +36,6 @@ public class WordsFragment extends BaseFragment implements WordsView {
   WordsAdapter wordsAdapter;
   @Inject
   LinearLayoutManager linearLayoutManager;
-
-  private WordsDomainComponent wordsDomainComponent;
 
   private MenuMode menuMode;
 
@@ -61,13 +56,7 @@ public class WordsFragment extends BaseFragment implements WordsView {
   }
 
   private void setupDependencies() {
-    wordsDomainComponent = DaggerWordsDomainComponent
-        .builder()
-        .appComponent(VocabularyCreatorApplication.get(getActivity()).getAppComponent())
-        .wordsDomainModule(new WordsDomainModule())
-        .build();
-
-    wordsDomainComponent
+    WordsDomainComponentProvider.INSTANCE.getWordsDomainComponent()
         .plus(new WordsViewModule(this, (WordsActivity) getActivity()))
         .inject(this);
   }

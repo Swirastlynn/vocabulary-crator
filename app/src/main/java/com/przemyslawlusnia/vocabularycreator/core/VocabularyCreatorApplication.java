@@ -1,7 +1,6 @@
 package com.przemyslawlusnia.vocabularycreator.core;
 
 import android.app.Application;
-import android.content.Context;
 import com.facebook.stetho.Stetho;
 import com.przemyslawlusnia.vocabularycreator.BuildConfig;
 import com.przemyslawlusnia.vocabularycreator.core.di.AppComponent;
@@ -15,11 +14,7 @@ import io.realm.RealmConfiguration;
 public class VocabularyCreatorApplication extends Application {
 
   private static final int STETHO_ROWS_LIMIT = 5000;
-  private AppComponent appComponent;
-
-  public static VocabularyCreatorApplication get(Context context) {
-    return (VocabularyCreatorApplication) context.getApplicationContext();
-  }
+  private static AppComponent appComponent;
 
   @Override
   public void onCreate() {
@@ -58,7 +53,7 @@ public class VocabularyCreatorApplication extends Application {
     }
   }
 
-  public AppComponent getAppComponent() {
+  public static AppComponent getAppComponent() {
     return appComponent;
   }
 
