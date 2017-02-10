@@ -1,7 +1,7 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
 import com.przemyslawlusnia.vocabularycreator.core.BasePresenter;
-import com.przemyslawlusnia.vocabularycreator.core.UseCase;
+import com.przemyslawlusnia.vocabularycreator.core.RxUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.AddWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.DeleteWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordRealm;
@@ -13,12 +13,12 @@ public class WordsPresenter extends BasePresenter<WordsView> {
 
   private final AddWordUseCase addWordUseCase;
   private final DeleteWordUseCase deleteWordUseCase;
-  private final UseCase<List<WordRealm>> getAllWordsUseCase;
+  private final RxUseCase<List<WordRealm>> getAllWordsUseCase;
 
   public WordsPresenter(WordsView wordsView,
                         AddWordUseCase addWordUseCase,
                         DeleteWordUseCase deleteWordUseCase,
-                        UseCase<List<WordRealm>> getAllWordsUseCase) {
+                        RxUseCase<List<WordRealm>> getAllWordsUseCase) {
     this.view = wordsView;
     this.addWordUseCase = addWordUseCase;
     this.deleteWordUseCase = deleteWordUseCase;

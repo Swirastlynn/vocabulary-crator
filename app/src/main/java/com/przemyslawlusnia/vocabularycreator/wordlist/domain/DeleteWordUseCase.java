@@ -1,18 +1,18 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.domain;
 
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.ModifiableWordViewModel;
-import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRealmRepository;
+import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRepository;
 import java.util.List;
 
 public class DeleteWordUseCase {
 
-  private final WordsRealmRepository wordsRealmRepository;
+  private final WordsRepository wordsRepository;
 
-  public DeleteWordUseCase(WordsRealmRepository wordsRealmRepository) {
-    this.wordsRealmRepository = wordsRealmRepository;
+  public DeleteWordUseCase(WordsRepository wordsRepository) {
+    this.wordsRepository = wordsRepository;
   }
 
   public void delete(List<ModifiableWordViewModel> words) {
-    wordsRealmRepository.delete(words);
+    wordsRepository.delete(words);
   }
 }

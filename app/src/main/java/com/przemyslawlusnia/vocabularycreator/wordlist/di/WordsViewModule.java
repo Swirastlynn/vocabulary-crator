@@ -1,7 +1,7 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.di;
 
 import android.support.v7.widget.LinearLayoutManager;
-import com.przemyslawlusnia.vocabularycreator.core.UseCase;
+import com.przemyslawlusnia.vocabularycreator.core.RxUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.AddWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.DeleteWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsActivity;
@@ -51,7 +51,7 @@ public class WordsViewModule {
   @WordsViewScope
   WordsPresenter provideWordsPresenter(AddWordUseCase addWordUseCase,
                                        DeleteWordUseCase deleteWordUseCase,
-                                       UseCase<List<WordRealm>> getAllWordsUseCase) {
+                                       RxUseCase<List<WordRealm>> getAllWordsUseCase) {
     return new WordsPresenter(wordsView, addWordUseCase, deleteWordUseCase, getAllWordsUseCase);
   }
 

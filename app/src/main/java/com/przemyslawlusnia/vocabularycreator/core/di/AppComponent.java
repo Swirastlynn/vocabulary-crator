@@ -1,7 +1,7 @@
 package com.przemyslawlusnia.vocabularycreator.core.di;
 
 import android.app.Application;
-import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRealmRepository;
+import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRepository;
 import dagger.Component;
 
 @AppScope
@@ -12,6 +12,6 @@ public interface AppComponent {
 
   Application provideApplication();
 
-  WordsRealmRepository wordsRealmRepository();
+  WordsRepository wordsRealmRepository();
 
 }

@@ -3,13 +3,14 @@ package com.przemyslawlusnia.vocabularycreator.core.di;
 import android.app.Application;
 import android.support.annotation.NonNull;
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRealmRepository;
+import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRepository;
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public class AppModule {
   private Application application;
-  private WordsRealmRepository wordsRealmRepository;
+  private WordsRepository wordsRealmRepository;
 
   public AppModule(Application application) {
     this.application = application;
@@ -17,18 +18,18 @@ public class AppModule {
 
   @Provides
   @AppScope
-  public Application provideApplication() {
+  Application provideApplication() {
     return application;
   }
 
   @Provides
   @AppScope
-  WordsRealmRepository wordsRealmRepository() {
+  WordsRepository wordsRealmRepository() {
     return getWordsRepository();
   }
 
   @NonNull
-  private WordsRealmRepository getWordsRepository() { // todo mapper?
+  private WordsRepository getWordsRepository() { // todo mapper?
     if (wordsRealmRepository == null) {
       wordsRealmRepository = new WordsRealmRepository();
     }

@@ -2,7 +2,7 @@ package com.przemyslawlusnia.vocabularycreator.core;
 
 import rx.Observable;
 
-public interface UseCase<T> {
+public interface RxUseCase<T> {
 
     Observable<T> execute();
 }

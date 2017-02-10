@@ -1,12 +1,11 @@
 package com.przemyslawlusnia.vocabularycreator.data;
 
 import android.util.Log;
-import com.przemyslawlusnia.vocabularycreator.core.RealmOperations;
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
 import io.realm.RealmModel;
 
-public abstract class RealmRepository implements RealmOperations { // todo inject it with Dagger
+public abstract class RealmRepository {
 
   private static final String TAG = RealmRepository.class.getSimpleName();
 
@@ -23,26 +22,16 @@ public abstract class RealmRepository implements RealmOperations { // todo injec
     }
   }
 
-  @Override
-  public void add(RealmModel realmModel) {
-    openRealmIfClosed();
-    transaction = realm.executeTransactionAsync(
-        realm -> realm.copyToRealmOrUpdate(realmModel),
-        this::onSuccessTransaction,
-        this::onFailureTransaction);
-  }
-
-  private void onSuccessTransaction() {
+  protected void onSuccessTransaction() {
     Log.d(getClass().getSimpleName(), "Success transaction"); // todo
     closeRealm();
   }
 
-  private void onFailureTransaction(Throwable throwable) {
+  protected void onFailureTransaction(Throwable throwable) {
     // todo
     closeRealm();
   }
 
-  @Override
   public void deleteTable(Class<? extends RealmModel> realmClass) {
     openRealmIfClosed();
     realm.delete(realmClass);

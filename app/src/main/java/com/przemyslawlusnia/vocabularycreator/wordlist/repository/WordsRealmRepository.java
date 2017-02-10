@@ -6,8 +6,18 @@ import io.realm.RealmResults;
 import java.util.List;
 import rx.Observable;
 
-public class WordsRealmRepository extends RealmRepository {
+public class WordsRealmRepository extends RealmRepository implements WordsRepository {
 
+  @Override
+  public void add(WordRealm wordRealm) {
+    openRealmIfClosed();
+    transaction = realm.executeTransactionAsync(
+        realm -> realm.copyToRealmOrUpdate(wordRealm),
+        this::onSuccessTransaction,
+        this::onFailureTransaction);
+  }
+
+  @Override
   public void delete(List<ModifiableWordViewModel> words) {
     openRealmIfClosed();
     for (ModifiableWordViewModel word : words) {
@@ -20,6 +30,7 @@ public class WordsRealmRepository extends RealmRepository {
     closeRealm();
   }
 
+  @Override
   public Observable<List<WordRealm>> getAllWords() {
     openRealmIfClosed();
     RealmResults<WordRealm> allWords = realm.where(WordRealm.class).findAll();

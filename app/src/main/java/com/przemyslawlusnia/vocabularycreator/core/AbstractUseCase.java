@@ -3,7 +3,7 @@ package com.przemyslawlusnia.vocabularycreator.core;
 import rx.Observable;
 import rx.Scheduler;
 
-public abstract class AbstractUseCase<T> implements UseCase<T> { // todo rename to rx use case
+public abstract class AbstractUseCase<T> implements RxUseCase<T> {
 
     private final Scheduler executionScheduler;
 

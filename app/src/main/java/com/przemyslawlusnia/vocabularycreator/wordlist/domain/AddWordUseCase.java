@@ -1,17 +1,17 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.domain;
 
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordRealm;
-import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRealmRepository;
+import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRepository;
 
 public class AddWordUseCase {
 
-  private final WordsRealmRepository wordsRealmRepository;
+  private final WordsRepository wordsRepository;
 
-  public AddWordUseCase(WordsRealmRepository wordsRealmRepository) {
-    this.wordsRealmRepository = wordsRealmRepository;
+  public AddWordUseCase(WordsRepository wordsRepository) {
+    this.wordsRepository = wordsRepository;
   }
 
   public void addWord(WordRealm wordRealm) {
-    wordsRealmRepository.add(wordRealm);
+    wordsRepository.add(wordRealm);
   }
 }
