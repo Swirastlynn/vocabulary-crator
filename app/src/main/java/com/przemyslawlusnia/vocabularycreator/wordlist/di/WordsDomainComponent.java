@@ -1,19 +1,20 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.di;
 
-import com.przemyslawlusnia.vocabularycreator.core.UseCase;
-import com.przemyslawlusnia.vocabularycreator.wordlist.domain.AddWordUseCase;
-import com.przemyslawlusnia.vocabularycreator.wordlist.domain.DeleteWordUseCase;
-import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordRealm;
-import dagger.Subcomponent;
-import java.util.List;
-import javax.inject.Singleton;
+import com.przemyslawlusnia.vocabularycreator.core.di.AppComponent;
+import com.przemyslawlusnia.vocabularycreator.core.di.WordsFragmentScope;
+import dagger.Component;
 
-@Singleton
-@Subcomponent(modules = WordsDomainModule.class)
+/**
+ * If I had this Component kept in reference, then I would be responsible for its lifecycle -> it should be released
+ * wordsDomainComponent = null
+ * Check: http://frogermcs.github.io/dependency-injection-with-dagger-2-custom-scopes/
+ * <p>
+ * In such case I should use custom scope.
+ */
+@WordsFragmentScope
+@Component(modules = WordsDomainModule.class, dependencies = AppComponent.class)
 public interface WordsDomainComponent {
 
-  AddWordUseCase addWordUseCase();
-  DeleteWordUseCase deleteWordUseCase();
-  UseCase<List<WordRealm>> getAllWordsUseCase();
+  WordsViewComponent plus(WordsViewModule wordsViewModule);
 
 }

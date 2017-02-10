@@ -20,7 +20,7 @@ import com.przemyslawlusnia.vocabularycreator.core.BaseFragment;
 import com.przemyslawlusnia.vocabularycreator.core.Constants;
 import com.przemyslawlusnia.vocabularycreator.core.VocabularyCreatorApplication;
 import com.przemyslawlusnia.vocabularycreator.core.utils.ViewUtils;
-import com.przemyslawlusnia.vocabularycreator.wordlist.di.DaggerWordsViewComponent;
+import com.przemyslawlusnia.vocabularycreator.wordlist.di.DaggerWordsDomainComponent;
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainComponent;
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainModule;
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsViewModule;
@@ -39,6 +39,8 @@ public class WordsFragment extends BaseFragment implements WordsView {
   WordsAdapter wordsAdapter;
   @Inject
   LinearLayoutManager linearLayoutManager;
+
+  private WordsDomainComponent wordsDomainComponent;
 
   private MenuMode menuMode;
 
@@ -59,13 +61,14 @@ public class WordsFragment extends BaseFragment implements WordsView {
   }
 
   private void setupDependencies() {
-    WordsDomainComponent wordsDomainComponent = VocabularyCreatorApplication.get(getActivity())
-        .getAppComponent()
-        .plus(new WordsDomainModule());
-    DaggerWordsViewComponent.builder()
-        .wordsDomainComponent(wordsDomainComponent)
-        .wordsViewModule(new WordsViewModule(this, (WordsActivity) getActivity()))
-        .build()
+    wordsDomainComponent = DaggerWordsDomainComponent
+        .builder()
+        .appComponent(VocabularyCreatorApplication.get(getActivity()).getAppComponent())
+        .wordsDomainModule(new WordsDomainModule())
+        .build();
+
+    wordsDomainComponent
+        .plus(new WordsViewModule(this, (WordsActivity) getActivity()))
         .inject(this);
   }
 
@@ -233,6 +236,7 @@ public class WordsFragment extends BaseFragment implements WordsView {
 
   @Override
   public void onDestroy() {
+    wordsDomainComponent = null;
     presenter.onDestroy();
     super.onDestroy();
   }

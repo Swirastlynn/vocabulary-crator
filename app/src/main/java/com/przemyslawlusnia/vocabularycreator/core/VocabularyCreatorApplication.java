@@ -33,6 +33,7 @@ public class VocabularyCreatorApplication extends Application {
     appComponent = DaggerAppComponent.builder()
         .appModule(new AppModule(this))
         .build();
+    appComponent.inject(this);
   }
 
   private void initRealm() {

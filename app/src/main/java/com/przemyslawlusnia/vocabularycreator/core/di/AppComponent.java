@@ -1,18 +1,18 @@
 package com.przemyslawlusnia.vocabularycreator.core.di;
 
-import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainComponent;
-import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainModule;
+import android.app.Application;
+import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRealmRepository;
 import dagger.Component;
 import javax.inject.Singleton;
 
 @Singleton
-@Component(
-    modules = {
-        AppModule.class
-    }
-)
+@Component(modules = {AppModule.class})
 public interface AppComponent {
 
-  WordsDomainComponent plus(WordsDomainModule module);
+  void inject(Application app);
+
+  Application provideApplication();
+
+  WordsRealmRepository wordsRealmRepository();
 
 }
