@@ -4,8 +4,8 @@ import com.przemyslawlusnia.vocabularycreator.core.di.AppComponent;
 import dagger.Component;
 
 /**
- * If I had this Component kept in reference, then I would be responsible for its lifecycle -> it should be released
- * wordsDomainComponent = null
+ * If I had this Component kept in reference in Application class,
+ * then I would be responsible for its lifecycle -> it should be released: wordsDomainComponent = null
  * Check: http://frogermcs.github.io/dependency-injection-with-dagger-2-custom-scopes/
  * <p>
  * In such case I should use custom scope.

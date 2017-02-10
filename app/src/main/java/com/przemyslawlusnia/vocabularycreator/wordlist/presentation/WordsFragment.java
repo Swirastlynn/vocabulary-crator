@@ -236,7 +236,6 @@ public class WordsFragment extends BaseFragment implements WordsView {
 
   @Override
   public void onDestroy() {
-    wordsDomainComponent = null;
     presenter.onDestroy();
     super.onDestroy();
   }
