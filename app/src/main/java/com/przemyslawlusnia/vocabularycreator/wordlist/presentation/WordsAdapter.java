@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ViewGroup;
 import com.przemyslawlusnia.vocabularycreator.core.Constants;
+import com.przemyslawlusnia.vocabularycreator.core.utils.ObjectUtils;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.LearnedWordRecyclerViewHolder;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.TrainingWordRecyclerViewHolder;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.WordsViewHolder;
@@ -13,13 +14,13 @@ import java.util.List;
 public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
   private static final String TAG = WordsAdapter.class.getSimpleName();
-  private final WordsView wordsView;
+  private final OnWordsSelectionListener listener;
   private List<ModifiableWordViewModel> words;
   private int selectedItemsCount;
 
-  public WordsAdapter(WordsView wordsView) {
+  public WordsAdapter(OnWordsSelectionListener wordsView) {
     words = new ArrayList<>();
-    this.wordsView = wordsView;
+    this.listener = wordsView;
   }
 
   @Override
@@ -43,12 +44,14 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       word.setIsSelected(newSelection);
       view.setSelected(newSelection);
       selectedItemsCount = newSelection ? selectedItemsCount + 1 : selectedItemsCount - 1;
-      if (selectedItemsCount > 1) {
-        wordsView.updateMultipleSelection();
-      } else if (selectedItemsCount == 1) {
-        wordsView.updateSingleSelection();
-      } else {
-        wordsView.updateNoSelection();
+      if (ObjectUtils.isNotNull(TAG, "onBindViewHolder", listener)) {
+        if (selectedItemsCount > 1) {
+          listener.updateMultipleSelection();
+        } else if (selectedItemsCount == 1) {
+          listener.updateSingleSelection();
+        } else {
+          listener.updateNoSelection();
+        }
       }
     });
   }

@@ -5,6 +5,7 @@ import com.przemyslawlusnia.vocabularycreator.core.RxUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.AddWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.DeleteWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainModel;
+import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.OnWordsSelectionListener;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordViewMapper;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsActivity;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsAdapter;
@@ -18,9 +19,11 @@ import java.util.List;
 public class WordsViewModule {
   private final WordsActivity activity;
   private final WordsView wordsView;
+  private final OnWordsSelectionListener listener;
 
-  public WordsViewModule(WordsView wordsView, WordsActivity activity) {
+  public WordsViewModule(WordsView wordsView, OnWordsSelectionListener listener, WordsActivity activity) {
     this.wordsView = wordsView;
+    this.listener = listener;
     this.activity = activity;
   }
 
@@ -39,7 +42,7 @@ public class WordsViewModule {
   @Provides
   @WordsViewScope
   WordsAdapter provideWordsAdapter() {
-    return new WordsAdapter(wordsView);
+    return new WordsAdapter(listener);
   }
 
   @Provides

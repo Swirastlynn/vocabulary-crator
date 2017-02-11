@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
-public class WordsFragment extends BaseFragment implements WordsView {
+public class WordsFragment extends BaseFragment implements WordsView, OnWordsSelectionListener {
 
   @BindView(R.id.wordsRecyclerView)
   RecyclerView wordsRecyclerView;
@@ -57,7 +57,7 @@ public class WordsFragment extends BaseFragment implements WordsView {
 
   private void setupDependencies() {
     WordsDomainComponentProvider.INSTANCE.getWordsDomainComponent()
-        .plus(new WordsViewModule(this, (WordsActivity) getActivity()))
+        .plus(new WordsViewModule(this, this, (WordsActivity) getActivity()))
         .inject(this);
   }
 
