@@ -69,8 +69,8 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     notifyDataSetChanged();
   }
 
-  public void addWord(ModifiableWordViewModel word) {
-    words.add(word);
+  public void addWord(WordViewModel word) {
+    words.add((ModifiableWordViewModel) word);
     notifyDataSetChanged();
   }
 
@@ -85,13 +85,13 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     notifyDataSetChanged();
   }
 
-  public ModifiableWordViewModel getSelectedWord() {
+  public WordViewModel getSelectedWord() {
     int selectedIndex = getFirstSelectedIndex();
     return selectedIndex >= 0 ? words.get(getFirstSelectedIndex()) : ModifiableWordViewModel.create();
   }
 
-  public List<ModifiableWordViewModel> getSelectedWords() {
-    List<ModifiableWordViewModel> result = new ArrayList<>();
+  public List<WordViewModel> getSelectedWords() {
+    List<WordViewModel> result = new ArrayList<>();
     for (ModifiableWordViewModel word : words) {
       if (word.isSelected()) {
         result.add(word);
@@ -109,8 +109,8 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     return -1;
   }
 
-  public void editSelectedWord(ModifiableWordViewModel word) {
-    words.set(getFirstSelectedIndex(), word);
+  public void editSelectedWord(WordViewModel word) {
+    words.set(getFirstSelectedIndex(), (ModifiableWordViewModel) word);
     notifyDataSetChanged();
   }
 }

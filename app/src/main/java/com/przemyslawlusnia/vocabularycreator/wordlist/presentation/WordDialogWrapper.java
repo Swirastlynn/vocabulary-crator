@@ -21,7 +21,7 @@ public class WordDialogWrapper {
     this.context = context;
   }
 
-  AlertDialog.Builder build(int titleId, WordDialogListener wordDialogListener, ModifiableWordViewModel oldWord) {
+  AlertDialog.Builder build(int titleId, WordDialogListener wordDialogListener, WordViewModel oldWord) {
     if (oldWord != null) {
       wordEditTxt.setText(oldWord.getWord());
       translationEditTxt.setText(oldWord.getTranslation());
@@ -46,7 +46,7 @@ public class WordDialogWrapper {
   }
 
   public interface WordDialogListener {
-    void positiveButtonClick(ModifiableWordViewModel newWord);
+    void positiveButtonClick(WordViewModel newWord);
 
     void negativeButtonClick();
   }

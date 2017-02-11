@@ -4,11 +4,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.przemyslawlusnia.vocabularycreator.core.RxUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.AddWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.DeleteWordUseCase;
+import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainModel;
+import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordViewMapper;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsActivity;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsAdapter;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsPresenter;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsView;
-import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordRealm;
 import dagger.Module;
 import dagger.Provides;
 import java.util.List;
@@ -49,10 +50,11 @@ public class WordsViewModule {
 
   @Provides
   @WordsViewScope
-  WordsPresenter provideWordsPresenter(AddWordUseCase addWordUseCase,
+  WordsPresenter provideWordsPresenter(WordViewMapper mapper,
+                                       AddWordUseCase addWordUseCase,
                                        DeleteWordUseCase deleteWordUseCase,
-                                       RxUseCase<List<WordRealm>> getAllWordsUseCase) {
-    return new WordsPresenter(wordsView, addWordUseCase, deleteWordUseCase, getAllWordsUseCase);
+                                       RxUseCase<List<WordDomainModel>> getAllWordsUseCase) {
+    return new WordsPresenter(wordsView, mapper, addWordUseCase, deleteWordUseCase, getAllWordsUseCase);
   }
 
 }

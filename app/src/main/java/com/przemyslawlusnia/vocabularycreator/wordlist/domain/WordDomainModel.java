@@ -1,10 +1,10 @@
-package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
+package com.przemyslawlusnia.vocabularycreator.wordlist.domain;
 
 import com.przemyslawlusnia.vocabularycreator.core.Constants;
 import org.immutables.value.Value;
 
-@Value.Modifiable
-public abstract class AbstractWordViewModel {
+@Value.Immutable
+public abstract class WordDomainModel {
 
   @Value.Default
   public String getWord() {
@@ -21,8 +21,4 @@ public abstract class AbstractWordViewModel {
     return Constants.TYPE_TRAINING;
   }
 
-  @Value.Default
-  public boolean isSelected() {
-    return false;
-  }
 }

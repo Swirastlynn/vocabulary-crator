@@ -1,6 +1,5 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.domain;
 
-import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordRealm;
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRepository;
 
 public class AddWordUseCase {
@@ -11,7 +10,7 @@ public class AddWordUseCase {
     this.wordsRepository = wordsRepository;
   }
 
-  public void addWord(WordRealm wordRealm) {
-    wordsRepository.add(wordRealm);
+  public void addWord(WordDomainModel wordDomainModel) {
+    wordsRepository.add(wordDomainModel);
   }
 }

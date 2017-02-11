@@ -2,6 +2,8 @@ package com.przemyslawlusnia.vocabularycreator.core.di;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
+import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainMapper;
+import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordViewMapper;
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRealmRepository;
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRepository;
 import dagger.Module;
@@ -24,14 +26,26 @@ public class AppModule {
 
   @Provides
   @AppScope
-  WordsRepository wordsRealmRepository() {
-    return getWordsRepository();
+  WordViewMapper wordViewMapper() {
+    return new WordViewMapper();
+  }
+
+  @Provides
+  @AppScope
+  WordDomainMapper wordDomainMapper() {
+    return new WordDomainMapper();
+  }
+
+  @Provides
+  @AppScope
+  WordsRepository wordsRealmRepository(WordDomainMapper wordMapper) {
+    return getWordsRepository(wordMapper);
   }
 
   @NonNull
-  private WordsRepository getWordsRepository() { // todo mapper?
+  private WordsRepository getWordsRepository(WordDomainMapper wordMapper) {
     if (wordsRealmRepository == null) {
-      wordsRealmRepository = new WordsRealmRepository();
+      wordsRealmRepository = new WordsRealmRepository(wordMapper);
     }
     return wordsRealmRepository;
   }

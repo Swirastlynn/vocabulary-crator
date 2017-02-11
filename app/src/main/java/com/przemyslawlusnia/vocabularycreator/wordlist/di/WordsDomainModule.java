@@ -4,7 +4,7 @@ import com.przemyslawlusnia.vocabularycreator.core.RxUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.AddWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.DeleteWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.GetAllWordsUseCase;
-import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordRealm;
+import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainModel;
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRepository;
 import dagger.Module;
 import dagger.Provides;
@@ -28,8 +28,7 @@ public class WordsDomainModule {
 
   @Provides
   @WordsDomainScope
-    // todo what about WordDomainModel? WordRealm? Sure?
-  RxUseCase<List<WordRealm>> getAllWordsUseCase(WordsRepository wordsRepository) {
+  RxUseCase<List<WordDomainModel>> getAllWordsUseCase(WordsRepository wordsRepository) {
     return new GetAllWordsUseCase(AndroidSchedulers.mainThread(), wordsRepository);
   }
 

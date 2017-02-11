@@ -176,12 +176,12 @@ public class WordsFragment extends BaseFragment implements WordsView {
     createAndShowAddWordDialog(ModifiableWordViewModel.create(), false);
   }
 
-  private void createAndShowAddWordDialog(ModifiableWordViewModel oldWord, boolean edit) {
+  private void createAndShowAddWordDialog(WordViewModel oldWord, boolean edit) {
     WordDialogWrapper wordDialogWrapper = new WordDialogWrapper(getContext());
     wordDialogWrapper.build(edit ? R.string.edit_word : R.string.new_word,
         new WordDialogWrapper.WordDialogListener() {
           @Override
-          public void positiveButtonClick(ModifiableWordViewModel word) {
+          public void positiveButtonClick(WordViewModel word) {
             if (edit) {
               wordsAdapter.editSelectedWord(word);
             } else {

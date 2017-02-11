@@ -1,6 +1,6 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.repository;
 
-import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.ModifiableWordViewModel;
+import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainModel;
 import io.realm.RealmModel;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
@@ -54,12 +54,12 @@ public class WordRealm implements RealmModel {
     this.type = type;
   }
 
-  public static WordRealm createRealmAddress(ModifiableWordViewModel wordViewModel) {
+  public static WordRealm mapToWordRealm(WordDomainModel wordDomainModel) {
     WordRealm wordRealm = new WordRealm();
     wordRealm.setId(UUID.randomUUID().toString());
-    wordRealm.setWord(wordViewModel.getWord());
-    wordRealm.setTranslation(wordViewModel.getTranslation());
-    wordRealm.setType(wordViewModel.getType());
+    wordRealm.setWord(wordDomainModel.getWord());
+    wordRealm.setTranslation(wordDomainModel.getTranslation());
+    wordRealm.setType(wordDomainModel.getType());
     return wordRealm;
   }
 }

@@ -1,26 +1,24 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.repository;
 
 import com.przemyslawlusnia.vocabularycreator.data.RealmRepository;
-import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.ModifiableWordViewModel;
+import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainMapper;
+import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainModel;
 import io.realm.RealmResults;
 import java.util.List;
 import rx.Observable;
 
 public class WordsRealmRepository extends RealmRepository implements WordsRepository {
 
-  @Override
-  public void add(WordRealm wordRealm) {
-    openRealmIfClosed();
-    transaction = realm.executeTransactionAsync(
-        realm -> realm.copyToRealmOrUpdate(wordRealm),
-        this::onSuccessTransaction,
-        this::onFailureTransaction);
+  private WordDomainMapper mapper;
+
+  public WordsRealmRepository(WordDomainMapper mapper) {
+    this.mapper = mapper;
   }
 
   @Override
-  public void delete(List<ModifiableWordViewModel> words) {
+  public void delete(List<WordDomainModel> words) {
     openRealmIfClosed();
-    for (ModifiableWordViewModel word : words) {
+    for (WordDomainModel word : words) {
       RealmResults<WordRealm> result = realm.where(WordRealm.class)
           .equalTo(WordRealm.KEY_WORD, word.getWord())
           .equalTo(WordRealm.KEY_TRANSLATION, word.getTranslation())
@@ -31,11 +29,21 @@ public class WordsRealmRepository extends RealmRepository implements WordsReposi
   }
 
   @Override
-  public Observable<List<WordRealm>> getAllWords() {
+  public void add(WordDomainModel wordDomainModel) {
+    final WordRealm wordRealm = WordRealm.mapToWordRealm(wordDomainModel);
+    openRealmIfClosed();
+    transaction = realm.executeTransactionAsync(
+        realm -> realm.copyToRealmOrUpdate(wordRealm),
+        this::onSuccessTransaction,
+        this::onFailureTransaction);
+  }
+
+  @Override
+  public Observable<List<WordDomainModel>> getAllWords() {
     openRealmIfClosed();
     RealmResults<WordRealm> allWords = realm.where(WordRealm.class).findAll();
     final List<WordRealm> result = allWords.subList(0, allWords.size());
     closeRealm();
-    return Observable.just(result);
+    return Observable.just(mapper.mapToWordDomainModels(result));
   }
 }
