@@ -14,6 +14,7 @@ import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.WordsView;
 import dagger.Module;
 import dagger.Provides;
 import java.util.List;
+import rx.android.schedulers.AndroidSchedulers;
 
 @Module
 public class WordsViewModule {
@@ -57,7 +58,10 @@ public class WordsViewModule {
                                        AddWordUseCase addWordUseCase,
                                        DeleteWordUseCase deleteWordUseCase,
                                        RxUseCase<List<WordDomainModel>> getAllWordsUseCase) {
-    return new WordsPresenter(wordsView, mapper, addWordUseCase, deleteWordUseCase, getAllWordsUseCase);
+    return new WordsPresenter(
+        wordsView, mapper, AndroidSchedulers.mainThread(),
+        addWordUseCase, deleteWordUseCase, getAllWordsUseCase
+    );
   }
 
 }

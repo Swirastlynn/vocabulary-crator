@@ -5,5 +5,5 @@ public interface BaseView {
 
   void hideProgress();
 
-  void showFailure(Throwable t);
+  void showFailure(String message);
 }

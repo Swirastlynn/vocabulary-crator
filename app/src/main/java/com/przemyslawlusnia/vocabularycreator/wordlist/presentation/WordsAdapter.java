@@ -15,7 +15,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   private static final String TAG = WordsAdapter.class.getSimpleName();
   private final OnWordsSelectionListener listener;
-  private List<ModifiableWordViewModel> words;
+  private List<WordViewModel> words;
   private int selectedItemsCount;
 
   public WordsAdapter(OnWordsSelectionListener wordsView) {
@@ -36,7 +36,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    final ModifiableWordViewModel word = words.get(position);
+    final ModifiableWordViewModel word = (ModifiableWordViewModel) words.get(position);
     ((WordsViewHolder) holder).bind(word);
     holder.itemView.setSelected(word.isSelected());
     holder.itemView.setOnClickListener((view) -> {
@@ -58,7 +58,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public int getItemViewType(int position) {
-    ModifiableWordViewModel word = words.get(position);
+    WordViewModel word = words.get(position);
     return word.getType();
   }
 
@@ -67,19 +67,19 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     return words.size();
   }
 
-  public void setWords(List<ModifiableWordViewModel> words) {
+  public void setWords(List<WordViewModel> words) {
     this.words = words;
     notifyDataSetChanged();
   }
 
   public void addWord(WordViewModel word) {
-    words.add((ModifiableWordViewModel) word);
+    words.add(word);
     notifyDataSetChanged();
   }
 
   public void deleteSelectedWords() {
     for (int i = words.size() - 1; i >= 0; i--) {
-      ModifiableWordViewModel word = words.get(i);
+      WordViewModel word = words.get(i);
       if (word.isSelected()) {
         words.remove(word);
         selectedItemsCount--;
@@ -95,7 +95,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   public List<WordViewModel> getSelectedWords() {
     List<WordViewModel> result = new ArrayList<>();
-    for (ModifiableWordViewModel word : words) {
+    for (WordViewModel word : words) {
       if (word.isSelected()) {
         result.add(word);
       }
@@ -113,7 +113,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
   }
 
   public void editSelectedWord(WordViewModel word) {
-    words.set(getFirstSelectedIndex(), (ModifiableWordViewModel) word);
+    words.set(getFirstSelectedIndex(), word);
     notifyDataSetChanged();
   }
 }

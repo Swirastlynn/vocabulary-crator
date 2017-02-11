@@ -9,7 +9,7 @@ import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRepositor
 import dagger.Module;
 import dagger.Provides;
 import java.util.List;
-import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 @Module
 public class WordsDomainModule {
@@ -29,7 +29,7 @@ public class WordsDomainModule {
   @Provides
   @WordsDomainScope
   RxUseCase<List<WordDomainModel>> getAllWordsUseCase(WordsRepository wordsRepository) {
-    return new GetAllWordsUseCase(AndroidSchedulers.mainThread(), wordsRepository);
+    return new GetAllWordsUseCase(Schedulers.io(), wordsRepository);
   }
 
 }

@@ -42,8 +42,9 @@ public class WordsRealmRepository extends RealmRepository implements WordsReposi
   public Observable<List<WordDomainModel>> getAllWords() {
     openRealmIfClosed();
     RealmResults<WordRealm> allWords = realm.where(WordRealm.class).findAll();
-    final List<WordRealm> result = allWords.subList(0, allWords.size());
+    List<WordRealm> result = allWords.subList(0, allWords.size());
+    Observable<List<WordDomainModel>> observable = Observable.just(mapper.mapToWordDomainModels(result));
     closeRealm();
-    return Observable.just(mapper.mapToWordDomainModels(result));
+    return observable;
   }
 }

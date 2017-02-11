@@ -17,11 +17,9 @@ import butterknife.OnClick;
 import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.core.ActivitiesAndFragmentsHelper;
 import com.przemyslawlusnia.vocabularycreator.core.BaseFragment;
-import com.przemyslawlusnia.vocabularycreator.core.Constants;
 import com.przemyslawlusnia.vocabularycreator.core.utils.ViewUtils;
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainComponentProvider;
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsViewModule;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -97,7 +95,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
         return true;
       case R.id.action_delete:
         presenter.deleteWord(wordsAdapter.getSelectedWords());
-        wordsAdapter.deleteSelectedWords();
+        wordsAdapter.deleteSelectedWords(); // todo on success
         return true;
       default:
         break;
@@ -140,35 +138,13 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     wordsRecyclerView.setLayoutManager(linearLayoutManager);
-    wordsAdapter.setWords(getTempWordList());
+    presenter.getAllWords();
     wordsRecyclerView.setAdapter(wordsAdapter);
   }
 
-  private List<ModifiableWordViewModel> getTempWordList() {
-    List<ModifiableWordViewModel> list = new ArrayList<>();
-    list.add(ModifiableWordViewModel.create().setTranslation("obliterate").setWord("wymazać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("surreptitious").setWord("dyskretny").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("menacingly").setWord("groźnie").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("hush").setWord("cicho-sza").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("hush!").setWord("sza!").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("exert").setWord("wyciąg").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assure").setWord("zapewniać, ubezpieczać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assessment").setWord("oszacowanie").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("swivel").setWord("obracać się").setType(Constants.TYPE_LEARNED).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assess").setWord("oszacować").setType(Constants.TYPE_LEARNED).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assess").setWord("oszacować").setType(Constants.TYPE_LEARNED).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assess").setWord("oszacować").setType(Constants.TYPE_LEARNED).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assess").setWord("oszacować").setType(Constants.TYPE_LEARNED).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    list.add(ModifiableWordViewModel.create().setTranslation("assert").setWord("zapewniać").setType(Constants.TYPE_TRAINING).setIsSelected(false));
-    return list;
+  @Override
+  public void showAllWords(List<WordViewModel> wordViewModels) {
+    wordsAdapter.setWords(wordViewModels);
   }
 
   @OnClick(R.id.addWordFab)
@@ -186,7 +162,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
               wordsAdapter.editSelectedWord(word);
             } else {
               presenter.addWord(word);
-              wordsAdapter.addWord(word);
+              wordsAdapter.addWord(word);// todo on success
             }
             ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());
           }
@@ -213,7 +189,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
   }
 
   @Override
-  public void showFailure(Throwable t) {
+  public void showFailure(String message) {
     // not used
   }
 
