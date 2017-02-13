@@ -7,7 +7,7 @@ import rx.Observable;
 public interface WordsRepository {
   void delete(List<WordDomainModel> words);
 
-  void add(WordDomainModel wordRealm);
+  Observable<Boolean> add(WordDomainModel wordDomainModel);
 
   Observable<List<WordDomainModel>> getAllWords();
 }

@@ -29,13 +29,17 @@ public class WordsRealmRepository extends RealmRepository implements WordsReposi
   }
 
   @Override
-  public void add(WordDomainModel wordDomainModel) {
+  public Observable<Boolean> add(WordDomainModel wordDomainModel) {
     final WordRealm wordRealm = WordRealm.mapToWordRealm(wordDomainModel);
     openRealmIfClosed();
-    transaction = realm.executeTransactionAsync(
-        realm -> realm.copyToRealmOrUpdate(wordRealm),
-        this::onSuccessTransaction,
-        this::onFailureTransaction);
+    try {
+      realm.executeTransaction(realm -> realm.copyToRealmOrUpdate(wordRealm));
+    } catch (Exception e) {
+      return Observable.just(false);
+    } finally {
+      closeRealm();
+    }
+    return Observable.just(true);
   }
 
   @Override

@@ -7,6 +7,7 @@ import com.przemyslawlusnia.vocabularycreator.wordlist.domain.DeleteWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainModel;
 import java.util.List;
 import rx.Observer;
+import rx.Subscription;
 
 public class WordsPresenter extends BasePresenter<WordsView> {
 
@@ -17,6 +18,8 @@ public class WordsPresenter extends BasePresenter<WordsView> {
   private final DeleteWordUseCase deleteWordUseCase;
   private final RxUseCase<List<WordDomainModel>> getAllWordsUseCase;
   private final rx.Scheduler uiScheduler;
+  private Subscription addWordSubscription;
+  private Subscription getAllWordsSubscription;
 
   public WordsPresenter(WordsView wordsView,
                         WordViewMapper mapper,
@@ -32,28 +35,66 @@ public class WordsPresenter extends BasePresenter<WordsView> {
     this.getAllWordsUseCase = getAllWordsUseCase;
   }
 
-  public void addWord(WordViewModel word) {
-    addWordUseCase.addWord(mapper.mapToWordDomainModel(word));
+  public void addWord(WordViewModel wordViewModel) {
+    view.showProgress();
+    addWordUseCase.init(mapper.mapToWordDomainModel(wordViewModel));
+    addWordSubscription = addWordUseCase.execute()
+        .observeOn(uiScheduler)
+        .subscribe(new AddWordObserver(wordViewModel));
   }
 
   public void deleteWord(List<WordViewModel> words) {
+    view.showProgress();
     deleteWordUseCase.delete(mapper.mapToWordDomainModels(words));
-  }
-
-  @Override
-  public void onUnsubscribe() {
-    // not used
   }
 
   public void getAllWords() {
     view.showProgress();
-    getAllWordsUseCase.execute()
+    getAllWordsSubscription = getAllWordsUseCase.execute()
         .map(wordDomainModels -> mapper.mapToWordViewModels(wordDomainModels))
         .observeOn(uiScheduler)
-        .subscribe(new WordViewListObserver());
+        .subscribe(new GetAllWordsObserver());
   }
 
-  private class WordViewListObserver implements Observer<List<WordViewModel>> {
+  @Override
+  public void onUnsubscribe() {
+    if (!getAllWordsSubscription.isUnsubscribed()) {
+      getAllWordsSubscription.unsubscribe();
+    }
+    if (!addWordSubscription.isUnsubscribed()) {
+      addWordSubscription.unsubscribe();
+    }
+  }
+
+  // Observers
+
+  private class AddWordObserver implements Observer<Boolean> {
+    private final WordViewModel wordViewModel;
+
+    public AddWordObserver(WordViewModel wordViewModel) {
+      this.wordViewModel = wordViewModel;
+    }
+
+    @Override
+    public void onCompleted() {
+      view.hideProgress();
+    }
+
+    @Override
+    public void onError(Throwable t) {
+      view.hideProgress();
+      view.showFailure(t.getMessage());
+    }
+
+    @Override
+    public void onNext(Boolean success) {
+      if (success) {
+        view.showAddWord(wordViewModel);
+      }
+    }
+  }
+
+  private class GetAllWordsObserver implements Observer<List<WordViewModel>> {
 
     @Override
     public void onCompleted() {
@@ -70,5 +111,6 @@ public class WordsPresenter extends BasePresenter<WordsView> {
     public void onNext(List<WordViewModel> wordViewModels) {
       view.showAllWords(wordViewModels);
     }
+
   }
 }

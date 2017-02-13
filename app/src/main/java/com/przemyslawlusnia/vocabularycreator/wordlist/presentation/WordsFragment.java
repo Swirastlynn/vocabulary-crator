@@ -147,6 +147,11 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
     wordsAdapter.setWords(wordViewModels);
   }
 
+  @Override
+  public void showAddWord(WordViewModel wordViewModel) {
+    wordsAdapter.addWord(wordViewModel);
+  }
+
   @OnClick(R.id.addWordFab)
   public void fabClick(View view) {
     createAndShowAddWordDialog(ModifiableWordViewModel.create(), false);
@@ -162,7 +167,6 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
               wordsAdapter.editSelectedWord(word);
             } else {
               presenter.addWord(word);
-              wordsAdapter.addWord(word);// todo on success
             }
             ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());
           }

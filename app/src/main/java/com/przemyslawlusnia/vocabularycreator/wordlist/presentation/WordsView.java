@@ -7,4 +7,5 @@ public interface WordsView extends BaseView {
 
   void showAllWords(List<WordViewModel> wordViewModels);
 
+  void showAddWord(WordViewModel wordViewModel);
 }

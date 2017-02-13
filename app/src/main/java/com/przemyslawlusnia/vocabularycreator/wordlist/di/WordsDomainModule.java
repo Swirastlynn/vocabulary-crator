@@ -17,7 +17,7 @@ public class WordsDomainModule {
   @Provides
   @WordsDomainScope
   AddWordUseCase addWordUseCase(WordsRepository wordsRepository) {
-    return new AddWordUseCase(wordsRepository);
+    return new AddWordUseCase(Schedulers.io(), wordsRepository);
   }
 
   @Provides
