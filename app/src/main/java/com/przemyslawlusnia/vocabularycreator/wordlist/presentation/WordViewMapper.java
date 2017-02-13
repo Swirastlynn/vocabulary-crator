@@ -11,7 +11,7 @@ public class WordViewMapper {
     ModifiableWordViewModel result = ModifiableWordViewModel.create();
     result
         .setTranslation(wordDomainModel.getTranslation())
-        .setWord(wordDomainModel.getTranslation())
+        .setWord(wordDomainModel.getWord())
         .setType(wordDomainModel.getType());
     return result;
   }
@@ -22,7 +22,7 @@ public class WordViewMapper {
       ModifiableWordViewModel viewWord = ModifiableWordViewModel.create();
       viewWord
           .setTranslation(word.getTranslation())
-          .setWord(word.getTranslation())
+          .setWord(word.getWord())
           .setType(word.getType());
       result.add(viewWord);
     }
