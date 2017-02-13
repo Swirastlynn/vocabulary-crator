@@ -7,7 +7,7 @@ import java.util.List;
 import rx.Observable;
 import rx.Scheduler;
 
-public class DeleteWordUseCase extends RxUseCase<Boolean> {
+public class DeleteWordUseCase extends RxUseCase<Void> {
 
   private final WordsRepository wordsRepository;
   private List<WordDomainModel> wordDomainModels;
@@ -23,9 +23,9 @@ public class DeleteWordUseCase extends RxUseCase<Boolean> {
   }
 
   @Override
-  protected Observable<Boolean> buildUseCaseObservable() {
+  protected Observable<Void> buildUseCaseObservable() {
     if (this.wordDomainModels == null) {
-      throw new IllegalArgumentException("init(wordDomainModel) not called, or called with null argument.");
+      throw new IllegalArgumentException("init(wordDomainModels) not called, or called with null argument.");
     }
     return wordsRepository.delete(wordDomainModels);
   }

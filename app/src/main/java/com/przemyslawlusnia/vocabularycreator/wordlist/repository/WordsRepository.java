@@ -5,7 +5,7 @@ import java.util.List;
 import rx.Observable;
 
 public interface WordsRepository {
-  Observable<Boolean> delete(List<WordDomainModel> words);
+  Observable<Void> delete(List<WordDomainModel> words);
 
   Observable<Boolean> add(WordDomainModel wordDomainModel);
 

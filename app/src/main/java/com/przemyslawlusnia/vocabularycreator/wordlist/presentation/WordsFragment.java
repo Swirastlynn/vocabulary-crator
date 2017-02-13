@@ -91,7 +91,6 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
         return true;
       case R.id.action_edit:
         createAndShowAddWordDialog(wordsAdapter.getSelectedWord(), true);
-        // todo database operation
         return true;
       case R.id.action_delete:
         presenter.deleteWords(wordsAdapter.getSelectedWords());
@@ -177,8 +176,9 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
   }
 
   @Override
-  public void showDeleteWords(List<WordViewModel> wordViewModels) {
-    wordsAdapter.deleteSelectedWords();
+  public void showDeletedWords() {
+    wordsAdapter.clearSelection();
+    presenter.getAllWords();
   }
 
   @Override

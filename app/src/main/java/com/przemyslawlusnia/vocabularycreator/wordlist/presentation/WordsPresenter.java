@@ -50,7 +50,7 @@ public class WordsPresenter extends BasePresenter<WordsView> {
     deleteWordUseCase.init(mapper.mapToWordDomainModels(wordViewModels));
     deleteWordSubscription = deleteWordUseCase.execute()
         .observeOn(uiScheduler)
-        .subscribe(new DeleteWordObserver(wordViewModels));
+        .subscribe(new DeleteWordObserver());
   }
 
   public void getAllWords() {
@@ -122,15 +122,11 @@ public class WordsPresenter extends BasePresenter<WordsView> {
 
   }
 
-  private class DeleteWordObserver implements Observer<Boolean> {
-    private final List<WordViewModel> wordViewModels;
-
-    private DeleteWordObserver(List<WordViewModel> wordViewModels) {
-      this.wordViewModels = wordViewModels;
-    }
+  private class DeleteWordObserver implements Observer<Void> {
 
     @Override
     public void onCompleted() {
+      view.showDeletedWords();
       view.hideProgress();
     }
 
@@ -141,10 +137,8 @@ public class WordsPresenter extends BasePresenter<WordsView> {
     }
 
     @Override
-    public void onNext(Boolean success) {
-      if (success) {
-        view.showDeleteWords(wordViewModels);
-      }
+    public void onNext(Void aVoid) {
+      // nothing
     }
   }
 }

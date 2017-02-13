@@ -77,15 +77,8 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     notifyDataSetChanged();
   }
 
-  public void deleteSelectedWords() {
-    for (int i = words.size() - 1; i >= 0; i--) {
-      WordViewModel word = words.get(i);
-      if (word.isSelected()) {
-        words.remove(word);
-        selectedItemsCount--;
-      }
-    }
-    notifyDataSetChanged();
+  public void clearSelection() {
+    selectedItemsCount = 0;
   }
 
   public WordViewModel getSelectedWord() {

@@ -38,7 +38,7 @@ public class BaseFragment extends Fragment {
     if (context instanceof EventListener) {
       eventListener = (EventListener) context;
     } else {
-      Log.e(TAG, "onAttach, context is not instanceof EventListener");
+      Log.d(TAG, "onAttach, context is not instanceof EventListener");
     }
   }
 
