@@ -8,6 +8,7 @@ import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainModel;
 import java.util.List;
 import rx.Observer;
 import rx.Subscription;
+import rx.subscriptions.Subscriptions;
 
 public class WordsPresenter extends BasePresenter<WordsView> {
 
@@ -18,8 +19,9 @@ public class WordsPresenter extends BasePresenter<WordsView> {
   private final DeleteWordUseCase deleteWordUseCase;
   private final RxUseCase<List<WordDomainModel>> getAllWordsUseCase;
   private final rx.Scheduler uiScheduler;
-  private Subscription addWordSubscription;
-  private Subscription getAllWordsSubscription;
+  private Subscription addWordSubscription = Subscriptions.empty();
+  private Subscription deleteWordSubscription = Subscriptions.empty();
+  private Subscription getAllWordsSubscription = Subscriptions.empty();
 
   public WordsPresenter(WordsView wordsView,
                         WordViewMapper mapper,
@@ -43,9 +45,12 @@ public class WordsPresenter extends BasePresenter<WordsView> {
         .subscribe(new AddWordObserver(wordViewModel));
   }
 
-  public void deleteWord(List<WordViewModel> words) {
+  public void deleteWords(List<WordViewModel> wordViewModels) {
     view.showProgress();
-    deleteWordUseCase.delete(mapper.mapToWordDomainModels(words));
+    deleteWordUseCase.init(mapper.mapToWordDomainModels(wordViewModels));
+    deleteWordSubscription = deleteWordUseCase.execute()
+        .observeOn(uiScheduler)
+        .subscribe(new DeleteWordObserver(wordViewModels));
   }
 
   public void getAllWords() {
@@ -58,6 +63,9 @@ public class WordsPresenter extends BasePresenter<WordsView> {
 
   @Override
   public void onUnsubscribe() {
+    if (!deleteWordSubscription.isUnsubscribed()) {
+      deleteWordSubscription.unsubscribe();
+    }
     if (!getAllWordsSubscription.isUnsubscribed()) {
       getAllWordsSubscription.unsubscribe();
     }
@@ -112,5 +120,31 @@ public class WordsPresenter extends BasePresenter<WordsView> {
       view.showAllWords(wordViewModels);
     }
 
+  }
+
+  private class DeleteWordObserver implements Observer<Boolean> {
+    private final List<WordViewModel> wordViewModels;
+
+    private DeleteWordObserver(List<WordViewModel> wordViewModels) {
+      this.wordViewModels = wordViewModels;
+    }
+
+    @Override
+    public void onCompleted() {
+      view.hideProgress();
+    }
+
+    @Override
+    public void onError(Throwable t) {
+      view.hideProgress();
+      view.showFailure(t.getMessage());
+    }
+
+    @Override
+    public void onNext(Boolean success) {
+      if (success) {
+        view.showDeleteWords(wordViewModels);
+      }
+    }
   }
 }

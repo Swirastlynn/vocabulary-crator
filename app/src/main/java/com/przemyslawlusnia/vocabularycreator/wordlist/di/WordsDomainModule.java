@@ -23,7 +23,7 @@ public class WordsDomainModule {
   @Provides
   @WordsDomainScope
   DeleteWordUseCase deleteWordUseCase(WordsRepository wordsRepository) {
-    return new DeleteWordUseCase(wordsRepository);
+    return new DeleteWordUseCase(Schedulers.io(), wordsRepository);
   }
 
   @Provides

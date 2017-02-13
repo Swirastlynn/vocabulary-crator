@@ -5,7 +5,9 @@ import java.util.List;
 
 public interface WordsView extends BaseView {
 
-  void showAllWords(List<WordViewModel> wordViewModels);
-
   void showAddWord(WordViewModel wordViewModel);
+
+  void showDeleteWords(List<WordViewModel> wordViewModels);
+
+  void showAllWords(List<WordViewModel> wordViewModels);
 }

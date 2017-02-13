@@ -22,16 +22,6 @@ public abstract class RealmRepository {
     }
   }
 
-  protected void onSuccessTransaction() {
-    Log.d(getClass().getSimpleName(), "Success transaction"); // todo
-    closeRealm();
-  }
-
-  protected void onFailureTransaction(Throwable throwable) {
-    // todo
-    closeRealm();
-  }
-
   public void deleteTable(Class<? extends RealmModel> realmClass) {
     openRealmIfClosed();
     realm.delete(realmClass);

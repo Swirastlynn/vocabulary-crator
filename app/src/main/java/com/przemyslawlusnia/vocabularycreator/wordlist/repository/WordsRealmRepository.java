@@ -16,16 +16,22 @@ public class WordsRealmRepository extends RealmRepository implements WordsReposi
   }
 
   @Override
-  public void delete(List<WordDomainModel> words) {
+  public Observable<Boolean> delete(List<WordDomainModel> words) {
     openRealmIfClosed();
-    for (WordDomainModel word : words) {
-      RealmResults<WordRealm> result = realm.where(WordRealm.class)
-          .equalTo(WordRealm.KEY_WORD, word.getWord())
-          .equalTo(WordRealm.KEY_TRANSLATION, word.getTranslation())
-          .findAll();
-      realm.executeTransaction(realm -> result.deleteFirstFromRealm());
+    try { // todo but cancellation results in correct deletion...
+      for (WordDomainModel word : words) {
+        RealmResults<WordRealm> result = realm.where(WordRealm.class) // todo optimize
+            .equalTo(WordRealm.KEY_WORD, word.getWord())
+            .equalTo(WordRealm.KEY_TRANSLATION, word.getTranslation())
+            .findAll();
+        realm.executeTransaction(realm -> result.deleteFirstFromRealm());
+      }
+    } catch (Exception e) {
+      return Observable.just(false);
+    } finally {
+      closeRealm();
     }
-    closeRealm();
+    return Observable.just(true);
   }
 
   @Override

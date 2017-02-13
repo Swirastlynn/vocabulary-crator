@@ -94,8 +94,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
         // todo database operation
         return true;
       case R.id.action_delete:
-        presenter.deleteWord(wordsAdapter.getSelectedWords());
-        wordsAdapter.deleteSelectedWords(); // todo on success
+        presenter.deleteWords(wordsAdapter.getSelectedWords());
         return true;
       default:
         break;
@@ -142,16 +141,6 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
     wordsRecyclerView.setAdapter(wordsAdapter);
   }
 
-  @Override
-  public void showAllWords(List<WordViewModel> wordViewModels) {
-    wordsAdapter.setWords(wordViewModels);
-  }
-
-  @Override
-  public void showAddWord(WordViewModel wordViewModel) {
-    wordsAdapter.addWord(wordViewModel);
-  }
-
   @OnClick(R.id.addWordFab)
   public void fabClick(View view) {
     createAndShowAddWordDialog(ModifiableWordViewModel.create(), false);
@@ -183,8 +172,23 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
   }
 
   @Override
+  public void showAddWord(WordViewModel wordViewModel) {
+    wordsAdapter.addWord(wordViewModel);
+  }
+
+  @Override
+  public void showDeleteWords(List<WordViewModel> wordViewModels) {
+    wordsAdapter.deleteSelectedWords();
+  }
+
+  @Override
+  public void showAllWords(List<WordViewModel> wordViewModels) {
+    wordsAdapter.setWords(wordViewModels);
+  }
+
+  @Override
   public void showProgress() {
-    // not used
+    // not used todo progressBar
   }
 
   @Override
@@ -194,7 +198,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
 
   @Override
   public void showFailure(String message) {
-    // not used
+    // not used todo log
   }
 
   @Override
