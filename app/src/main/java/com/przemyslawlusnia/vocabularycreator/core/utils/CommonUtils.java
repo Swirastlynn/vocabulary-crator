@@ -20,7 +20,7 @@ public class CommonUtils {
   }
 
   public static boolean isDevDebug() {
-    return BuildConfig.DEBUG && BuildConfig.FLAVOR.equals("dev") && BuildConfig.BUILD_TYPE.equals("debug");
+    return BuildConfig.DEBUG && BuildConfig.FLAVOR.equals("develop") && BuildConfig.BUILD_TYPE.equals("debug");
   }
 
   public static boolean isProd() {

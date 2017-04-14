@@ -10,7 +10,7 @@ public final class ObjectUtils {
   }
 
   public static <T> List<T> safeList(List<T> other) {
-    return other == null ? Collections.EMPTY_LIST : other;
+    return other == null ? Collections.<T>emptyList() : other;
   }
 
   public static <T> boolean isNotNull(String tag, String function, T other) {
