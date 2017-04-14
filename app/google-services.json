@@ -1,0 +1,148 @@
+{
+  "project_info": {
+    "project_number": "133596606303",
+    "firebase_url": "https://vocabulary-creator.firebaseio.com",
+    "project_id": "vocabulary-creator",
+    "storage_bucket": "vocabulary-creator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133596606303:android:d4977fa3cddbd3be",
+        "android_client_info": {
+          "package_name": "com.przemyslawlusnia.vocabularycreator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133596606303-j0k6jl4t69gpsi2v1n4j3nhptp2rqdp0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.przemyslawlusnia.vocabularycreator",
+            "certificate_hash": "3bc24f43fefd6f9a801991ab0ba2a3d3ba71fbc4"
+          }
+        },
+        {
+          "client_id": "133596606303-nth2f5efeg8an4v87uq2np1st1t74jvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlb03s3ARoQ49U347eC2yDrcXiFyA7_34"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "133596606303-nth2f5efeg8an4v87uq2np1st1t74jvr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133596606303:android:5d5ac7fe712d04d4",
+        "android_client_info": {
+          "package_name": "com.przemyslawlusnia.vocabularycreator.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133596606303-nth2f5efeg8an4v87uq2np1st1t74jvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlb03s3ARoQ49U347eC2yDrcXiFyA7_34"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133596606303:android:d720a6e62e40a0c2",
+        "android_client_info": {
+          "package_name": "com.przemyslawlusnia.vocabularycreator.develop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133596606303-nth2f5efeg8an4v87uq2np1st1t74jvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlb03s3ARoQ49U347eC2yDrcXiFyA7_34"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133596606303:android:386976e7690d7154",
+        "android_client_info": {
+          "package_name": "com.przemyslawlusnia.vocabularycreator.develop.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133596606303-nth2f5efeg8an4v87uq2np1st1t74jvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlb03s3ARoQ49U347eC2yDrcXiFyA7_34"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

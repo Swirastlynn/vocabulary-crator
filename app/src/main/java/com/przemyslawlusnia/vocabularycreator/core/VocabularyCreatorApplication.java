@@ -10,6 +10,7 @@ import com.przemyslawlusnia.vocabularycreator.core.utils.CommonUtils;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import timber.log.Timber;
 
 public class VocabularyCreatorApplication extends Application {
 
@@ -19,9 +20,23 @@ public class VocabularyCreatorApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
+    initTimber();
     initAppComponent();
     initRealm();
     initStetho();
+  }
+
+  private void initTimber() {
+    if (BuildConfig.DEBUG) {
+      Timber.plant(new Timber.DebugTree() {
+        @Override
+        protected String createStackElementTag(StackTraceElement element) {
+          return super.createStackElementTag(element) + ":" + element.getLineNumber();
+        }
+      });
+    } else {
+      Timber.plant(new FirebaseCrashTree());
+    }
   }
 
   private void initAppComponent() {

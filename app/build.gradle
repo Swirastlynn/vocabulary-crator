@@ -1,6 +1,7 @@
 def versionNumber = 1
 def versionBuildType = 0 // 0 debug 1 release
-def releasePassword = ''
+def keyReleasePassword = ''
+def keystoreReleasePassword = ''
 def realmDatabaseName = "vocabularycreator.realm";
 
 if (project.hasProperty("versionBuildType")) {
@@ -9,8 +10,11 @@ if (project.hasProperty("versionBuildType")) {
 if (project.hasProperty("versionNumber")) {
     versionNumber = project.getProperty("versionNumber")
 }
-if (project.hasProperty("releasePassword")) {
-    releasePassword = project.getProperty("releasePassword")
+if (project.hasProperty("keyReleasePassword")) {
+    keyReleasePassword = project.getProperty("keyReleasePassword")
+}
+if (project.hasProperty("keystoreReleasePassword")) {
+    keystoreReleasePassword = project.getProperty("keystoreReleasePassword")
 }
 
 ext {
@@ -45,10 +49,10 @@ android {
 
     signingConfigs {
         config {
-            keyAlias 'covabularyCreator'
-            keyPassword releasePassword
-            storeFile file('./vocabulary-creator-keystore.jks')
-            storePassword releasePassword
+            keyAlias 'vocabularycreator'
+            keyPassword keyReleasePassword
+            storeFile file('./przemyslawlusnia-keystore.jks')
+            storePassword keystoreReleasePassword
         }
     }
     productFlavors {
@@ -110,6 +114,9 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.4.2'
     compile 'com.uphyca:stetho_realm:2.0.1'
     compile 'org.immutables:value:2.4.2'
+    compile 'com.jakewharton.timber:timber:4.5.1'
+    apply plugin: 'com.google.gms.google-services' // for google-services.json file configuration usage
+    compile 'com.google.firebase:firebase-crash:10.2.1'
 
     androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
         exclude group: 'com.android.support', module: 'support-annotations'
