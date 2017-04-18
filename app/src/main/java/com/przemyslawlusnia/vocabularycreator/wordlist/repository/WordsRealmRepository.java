@@ -22,17 +22,22 @@ public class WordsRealmRepository implements WordsRepository {
   @Override
   public Observable<Void> delete(List<WordDomainModel> words) {
     try (Realm realmInstance = Realm.getDefaultInstance()) {
+      String[] wordList = new String[words.size()];
+      String[] translationList = new String[words.size()];
       for (int i = 0; i < words.size(); i++) {
         WordDomainModel wordDomainModel = words.get(i);
-        RealmResults<WordRealm> result = realmInstance.where(WordRealm.class)
-            .equalTo(WordRealm.KEY_WORD, wordDomainModel.getWord())
-            .equalTo(WordRealm.KEY_TRANSLATION, wordDomainModel.getTranslation())
-            .findAll();
-        if (result.isEmpty()) {
-          Log.e(TAG, "Such word do not exists in database");
-        }
-        realmInstance.executeTransaction(realm -> result.deleteAllFromRealm());
+        wordList[i] = wordDomainModel.getWord();
+        translationList[i] = wordDomainModel.getTranslation();
       }
+      RealmResults<WordRealm> result = realmInstance.where(WordRealm.class)
+          .in(WordRealm.KEY_WORD, wordList)
+          .in(WordRealm.KEY_TRANSLATION, translationList)
+          .findAll();
+      if (result.isEmpty()) {
+        Log.e(TAG, "Such word do not exists in database");
+      }
+      realmInstance.executeTransaction(realm -> result.deleteAllFromRealm());
+
     }
     return Observable.empty();
   }
