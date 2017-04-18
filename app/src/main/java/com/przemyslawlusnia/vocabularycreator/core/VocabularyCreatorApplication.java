@@ -1,11 +1,15 @@
 package com.przemyslawlusnia.vocabularycreator.core;
 
 import android.app.Application;
+import android.support.annotation.VisibleForTesting;
 import com.facebook.stetho.Stetho;
 import com.przemyslawlusnia.vocabularycreator.BuildConfig;
 import com.przemyslawlusnia.vocabularycreator.core.di.AppComponent;
 import com.przemyslawlusnia.vocabularycreator.core.di.AppModule;
+import com.przemyslawlusnia.vocabularycreator.core.di.ClockComponent;
 import com.przemyslawlusnia.vocabularycreator.core.di.DaggerAppComponent;
+import com.przemyslawlusnia.vocabularycreator.core.di.DaggerClockComponent;
+import com.przemyslawlusnia.vocabularycreator.core.di.DaggerTestClockComponent;
 import com.przemyslawlusnia.vocabularycreator.core.utils.CommonUtils;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 import io.realm.Realm;
@@ -16,12 +20,14 @@ public class VocabularyCreatorApplication extends Application {
 
   private static final int STETHO_ROWS_LIMIT = 5000;
   private static AppComponent appComponent;
+  private static ClockComponent clockComponent;
 
   @Override
   public void onCreate() {
     super.onCreate();
     initTimber();
     initAppComponent();
+    initClockComponent();
     initRealm();
     initStetho();
   }
@@ -44,6 +50,12 @@ public class VocabularyCreatorApplication extends Application {
         .appModule(new AppModule(this))
         .build();
     appComponent.inject(this);
+  }
+
+  private void initClockComponent() {
+    clockComponent = DaggerClockComponent.builder()
+        .build();
+    clockComponent.inject(this);
   }
 
   private void initRealm() {
@@ -72,4 +84,10 @@ public class VocabularyCreatorApplication extends Application {
     return appComponent;
   }
 
+  @VisibleForTesting
+  public void setTestClockComponent() {
+    clockComponent = DaggerTestClockComponent.builder()
+        .build();
+    clockComponent.inject(this);
+  }
 }

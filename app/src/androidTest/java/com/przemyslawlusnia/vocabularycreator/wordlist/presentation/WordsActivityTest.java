@@ -55,7 +55,7 @@ public class WordsActivityTest {
 
 
   @Test
-  public void adnnThenDeleteWord_wordDoesNotExistsInRecyclerView() {
+  public void addThenDeleteWord_wordDoesNotExistsInRecyclerView() {
     addTestWord();
     onView(allOf(withId(R.id.wordsRecyclerView), withParent(withId(R.id.cardView)), isDisplayed()))
         .perform(actionOnHolderItem(withWordAndTranslation("test word", "test translation"), click()));
