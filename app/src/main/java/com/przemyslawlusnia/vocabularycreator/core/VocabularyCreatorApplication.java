@@ -6,11 +6,11 @@ import com.facebook.stetho.Stetho;
 import com.przemyslawlusnia.vocabularycreator.BuildConfig;
 import com.przemyslawlusnia.vocabularycreator.core.di.AppComponent;
 import com.przemyslawlusnia.vocabularycreator.core.di.AppModule;
-import com.przemyslawlusnia.vocabularycreator.core.di.ClockComponent;
 import com.przemyslawlusnia.vocabularycreator.core.di.DaggerAppComponent;
-import com.przemyslawlusnia.vocabularycreator.core.di.DaggerClockComponent;
-import com.przemyslawlusnia.vocabularycreator.core.di.DaggerTestClockComponent;
 import com.przemyslawlusnia.vocabularycreator.core.utils.CommonUtils;
+import com.przemyslawlusnia.vocabularycreator.funwithtests.ClockComponent;
+import com.przemyslawlusnia.vocabularycreator.funwithtests.DaggerClockComponent;
+import com.przemyslawlusnia.vocabularycreator.funwithtests.DaggerTestClockComponent;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -53,9 +53,7 @@ public class VocabularyCreatorApplication extends Application {
   }
 
   private void initClockComponent() {
-    clockComponent = DaggerClockComponent.builder()
-        .build();
-    clockComponent.inject(this);
+    clockComponent = DaggerClockComponent.builder().build();
   }
 
   private void initRealm() {
@@ -84,10 +82,12 @@ public class VocabularyCreatorApplication extends Application {
     return appComponent;
   }
 
+  public static ClockComponent getClockComponent() {
+    return clockComponent;
+  }
+
   @VisibleForTesting
-  public void setTestClockComponent() {
-    clockComponent = DaggerTestClockComponent.builder()
-        .build();
-    clockComponent.inject(this);
+  public static void setTestClockComponent() {
+    clockComponent = DaggerTestClockComponent.builder().build();
   }
 }

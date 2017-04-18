@@ -1,6 +1,8 @@
-package com.przemyslawlusnia.vocabularycreator.core.di;
+package com.przemyslawlusnia.vocabularycreator.funwithtests;
 
+import com.przemyslawlusnia.vocabularycreator.core.clock.MyClock;
 import com.przemyslawlusnia.vocabularycreator.core.clock.TestMyClock;
+import com.przemyslawlusnia.vocabularycreator.core.di.AppScope;
 import dagger.Module;
 import dagger.Provides;
 
@@ -9,7 +11,7 @@ public class TestClockModule {
 
   @Provides
   @AppScope
-  TestMyClock testMyClock() {
+  MyClock myClock() {
     return new TestMyClock();
   }
 

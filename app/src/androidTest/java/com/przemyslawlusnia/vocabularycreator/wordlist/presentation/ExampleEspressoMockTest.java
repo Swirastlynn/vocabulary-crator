@@ -1,43 +1,36 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.core.VocabularyCreatorApplication;
+import com.przemyslawlusnia.vocabularycreator.core.clock.TestMyClock;
+import com.przemyslawlusnia.vocabularycreator.funwithtests.TestActivity;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.Matchers.allOf;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class ExampleEspressoMockTest {
 
   @Rule
-  public ActivityTestRule<WordsActivity> activityRule =
-      new ActivityTestRule<WordsActivity>(WordsActivity.class) {
+  public ActivityTestRule<TestActivity> activityRule =
+      new ActivityTestRule<TestActivity>(TestActivity.class) {
         @Override
         protected void beforeActivityLaunched() {
-          VocabularyCreatorApplication application = (VocabularyCreatorApplication)
-              InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
-          application.setTestClockComponent();
+          VocabularyCreatorApplication.setTestClockComponent();
         }
       };
 
-
   @Test
-  void stupidButEspressoTest() {
-    // todo create new activity for test purposes
+  public void testTxt_hasAppropriateValue() {
+    onView(withText(TestMyClock.TEST_DATE)).check(matches(isDisplayed()));
   }
-  // todo move test components here and call them mock?
-
-  // todo use with espresso test and normal test - maybe test components should be inside main code to handle both cases?
+  // todo use with espresso test and normal test IF IT IS GOOD PRACTICE?
+  // todo Maybe test components should be inside main code to handle both cases?
 
 }
