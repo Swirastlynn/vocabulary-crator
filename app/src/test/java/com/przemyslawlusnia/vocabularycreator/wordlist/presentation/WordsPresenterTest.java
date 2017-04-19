@@ -58,7 +58,7 @@ public class WordsPresenterTest {
   }
 
   @Test
-  public void cannotAddWord() throws Exception {
+  public void addWord_cannot() throws Exception {
     when(addWordUseCaseMock.execute()).thenReturn(Observable.just(false));
     tested.addWord(testedWordViewModel);
     Mockito.verify(viewMock, Mockito.atLeastOnce()).showProgress();
@@ -76,7 +76,7 @@ public class WordsPresenterTest {
   }
 
   @Test
-  public void deleteWordsNullcheck() throws Exception {
+  public void deleteWords_nullcheck() throws Exception {
     when(deleteWordUseCaseMock.execute()).thenReturn(Observable.empty());
     tested.deleteWords(null);
     Mockito.verify(viewMock, Mockito.atLeastOnce()).showProgress();
@@ -95,7 +95,7 @@ public class WordsPresenterTest {
   }
 
   @Test
-  public void getAllWordsForEmptyList() throws Exception {
+  public void getAllWords_forEmptyList() throws Exception {
     Observable<List<WordDomainModel>> observable = Observable.just(Collections.emptyList());
     when(getAllWordsUseCaseMock.execute()).thenReturn(observable);
     tested.getAllWords();
@@ -105,7 +105,7 @@ public class WordsPresenterTest {
   }
 
   @Test
-  public void getAllWordsNullcheck() throws Exception {
+  public void getAllWords_nullcheck() throws Exception {
     Observable<List<WordDomainModel>> observable = Observable.just(null);
     when(getAllWordsUseCaseMock.execute()).thenReturn(observable);
     tested.getAllWords();

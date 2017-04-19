@@ -25,7 +25,9 @@ public class DeleteWordUseCase extends RxUseCase<Void> {
   @Override
   protected Observable<Void> buildUseCaseObservable() {
     if (this.wordDomainModels == null) {
-      throw new IllegalArgumentException("init(wordDomainModels) not called, or called with null argument.");
+      return Observable.create(subscriber -> {
+        subscriber.onError(new Throwable("init(wordDomainModels) not called, or called with null argument."));
+      });
     }
     return wordsRepository.delete(wordDomainModels);
   }
