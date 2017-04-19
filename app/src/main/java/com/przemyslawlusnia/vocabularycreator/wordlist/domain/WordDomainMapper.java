@@ -2,6 +2,7 @@ package com.przemyslawlusnia.vocabularycreator.wordlist.domain;
 
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordRealm;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class WordDomainMapper {
@@ -15,6 +16,9 @@ public class WordDomainMapper {
   }
 
   public List<WordDomainModel> mapToWordDomainModels(List<WordRealm> wordsRealm) {
+    if (wordsRealm == null) {
+      return Collections.emptyList();
+    }
     List<WordDomainModel> result = new ArrayList<>(wordsRealm.size());
     for (WordRealm wordRealm : wordsRealm) {
       result.add(ImmutableWordDomainModel.builder()

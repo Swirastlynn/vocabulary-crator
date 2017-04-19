@@ -3,6 +3,7 @@ package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.ImmutableWordDomainModel;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainModel;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class WordViewMapper {
@@ -17,6 +18,9 @@ public class WordViewMapper {
   }
 
   public List<WordViewModel> mapToWordViewModels(List<WordDomainModel> wordDomainModels) {
+    if (wordDomainModels == null) {
+      return Collections.emptyList();
+    }
     List<WordViewModel> result = new ArrayList<>(wordDomainModels.size());
     for (WordDomainModel word : wordDomainModels) {
       ModifiableWordViewModel viewWord = ModifiableWordViewModel.create();
@@ -39,6 +43,9 @@ public class WordViewMapper {
   }
 
   public List<WordDomainModel> mapToWordDomainModels(List<WordViewModel> wordViewModels) {
+    if (wordViewModels == null) {
+      return Collections.emptyList();
+    }
     List<WordDomainModel> result = new ArrayList<>(wordViewModels.size());
     for (WordViewModel word : wordViewModels) {
       WordDomainModel viewWord = ImmutableWordDomainModel.builder()
