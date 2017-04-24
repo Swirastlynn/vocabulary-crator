@@ -132,6 +132,9 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
+    androidTestCompile 'org.mockito:mockito-core:1.10.19'
+    androidTestCompile 'com.linkedin.dexmaker:dexmaker-mockito:1.5.1'
+    // 2.2.0 is newer, but I don't need Mockito 2.x yet (2.2.0 implicitly add Mockito 2.x library).
 
     androidTestCompile "com.google.dagger:dagger:${daggerVersion}"
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
