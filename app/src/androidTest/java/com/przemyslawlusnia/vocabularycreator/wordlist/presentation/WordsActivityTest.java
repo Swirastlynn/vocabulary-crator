@@ -22,6 +22,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnHolderItem;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -52,7 +53,7 @@ public class WordsActivityTest {
   }
 
   @Test
-  public void addWordAndBack_noWordEditText() {
+  public void addWordAndBack_wordEditTextIsNotVisible() {
     onView(allOf(withId(R.id.addWordFab), isDisplayed())).perform(click());
     onView(allOf(withId(R.id.wordEditTxt), isDisplayed()));
     pressBack();
@@ -64,16 +65,7 @@ public class WordsActivityTest {
   @Test
   public void addThenDeleteWord_wordDoesNotExistsInRecyclerView() {
     addTestWord();
-    onView(allOf(withId(R.id.wordsRecyclerView), withParent(withId(R.id.cardView)), isDisplayed()))
-        .perform(actionOnHolderItem(withWordAndTranslation("test word", "test translation"), click()));
-    onView(withId(R.id.word))
-        .check(matches(withText("test word")))
-        .check(matches(isDisplayed()));
-    onView(withId(R.id.translation))
-        .check(matches(withText("test translation")))
-        .check(matches(isDisplayed()));
-
-    onView(allOf(withId(R.id.action_delete), isDisplayed())).perform(click());
+    deleteTestWord();
 
     // check on deleted ViewHolder data
     try {
@@ -94,6 +86,47 @@ public class WordsActivityTest {
       // View is not in hierarchy
     }
   }
+
+  // edit - edited correctly
+
+  // edit possible for single selected
+
+  // edit impossible for none or multi selected
+
+  // delete action possible for single and multi selected
+
+  // delete action impossible for none selected
+  @Test
+  public void itemNotSelected_DeleteActionNotVisible() {
+    // when initialized
+    // doesNotExist because is not part of hierarchy after activity start
+    onView(withId(R.id.action_delete)).check(doesNotExist());
+
+    // when added and deleted
+    addTestWord();
+    deleteTestWord();
+    onView(withId(R.id.action_delete)).check(doesNotExist());
+  }
+
+  private void deleteTestWord() {
+    onView(allOf(withId(R.id.wordsRecyclerView), withParent(withId(R.id.cardView)), isDisplayed()))
+        .perform(actionOnHolderItem(withWordAndTranslation("test word", "test translation"), click()));
+    onView(withId(R.id.word))
+        .check(matches(withText("test word")))
+        .check(matches(isDisplayed()));
+    onView(withId(R.id.translation))
+        .check(matches(withText("test translation")))
+        .check(matches(isDisplayed()));
+    onView(allOf(withId(R.id.action_delete), isDisplayed())).perform(click());
+  }
+
+  // cannot add empty word
+
+  // can add empty translation if word is
+
+  // popup - cancel and ok hide
+
+  // popup: 2 x enter == OK click (TDD: feature to add)
 
   private void addTestWord() {
     onView(allOf(withId(R.id.addWordFab), isDisplayed())).perform(click());
@@ -120,22 +153,4 @@ public class WordsActivityTest {
       }
     };
   }
-
-  // edit - edited correctly
-
-  // edit possible for single selected
-
-  // edit impossible for none or multi selected
-
-  // delete action possible for single and multi selected
-
-  // delete action impossible for none selected
-
-  // cannot add empty word
-
-  // can add empty translation if word is
-
-  // popup - cancel and ok hide
-
-  // popup: 2 x enter == OK click (TDD: feature to add)
 }
