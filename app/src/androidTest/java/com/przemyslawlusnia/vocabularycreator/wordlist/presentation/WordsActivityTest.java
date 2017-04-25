@@ -8,6 +8,8 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
 import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.WordsViewHolder;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.Rule;
@@ -35,7 +37,14 @@ public class WordsActivityTest {
 
   @Rule
   public ActivityTestRule<WordsActivity> activityRule =
-      new ActivityTestRule<>(WordsActivity.class);
+      new ActivityTestRule<WordsActivity>(WordsActivity.class) {
+        @Override
+        protected void beforeActivityLaunched() {
+          RealmConfiguration config = new RealmConfiguration.Builder().inMemory().name("test-realm").build();
+          Realm.deleteRealm(config);
+          Realm.setDefaultConfiguration(config);
+        }
+      };
 
   @Test
   public void ensureFragmentContainerIsVisible() {
@@ -43,7 +52,7 @@ public class WordsActivityTest {
   }
 
   @Test
-  public void addWordClickAndBack_noWordEditText() {
+  public void addWordAndBack_noWordEditText() {
     onView(allOf(withId(R.id.addWordFab), isDisplayed())).perform(click());
     onView(allOf(withId(R.id.wordEditTxt), isDisplayed()));
     pressBack();
@@ -51,8 +60,6 @@ public class WordsActivityTest {
   }
 
   // todo click on an item for mocked data.
-  // you cannot be dependent on previous tests!
-
 
   @Test
   public void addThenDeleteWord_wordDoesNotExistsInRecyclerView() {

@@ -115,7 +115,8 @@ dependencies {
     compile 'com.uphyca:stetho_realm:2.0.1'
     compile 'org.immutables:value:2.4.2'
     compile 'com.jakewharton.timber:timber:4.5.1'
-    apply plugin: 'com.google.gms.google-services' // for google-services.json file configuration usage
+    // for google-services.json file configuration usage
+    apply plugin: 'com.google.gms.google-services'
     compile 'com.google.firebase:firebase-crash:10.2.1'
 
     androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
@@ -125,6 +126,13 @@ dependencies {
     androidTestCompile "com.android.support:support-annotations:${supportLibVersion}"
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
+    // Allows to work with RecyclerView, DatePicker, Drawer, Accessibility, CountingIdlingResource
+    androidTestCompile "com.android.support.test.espresso:espresso-contrib:${espressoVersion}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
 
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile "com.android.support:design:${supportLibVersion}"
@@ -138,12 +146,6 @@ dependencies {
 
     androidTestCompile "com.google.dagger:dagger:${daggerVersion}"
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
-    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'design'
-        exclude group: 'com.android.support', module: 'recyclerview-v7'
-    }
 }
 
 task checkStyle(type: Checkstyle) {
