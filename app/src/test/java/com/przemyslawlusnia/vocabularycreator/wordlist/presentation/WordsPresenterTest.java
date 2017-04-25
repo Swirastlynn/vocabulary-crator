@@ -72,7 +72,7 @@ public class WordsPresenterTest {
     tested.deleteWords(getListWithWordViewModel());
     Mockito.verify(viewMock, Mockito.atLeastOnce()).showProgress();
     Mockito.verify(viewMock, Mockito.atLeastOnce()).hideProgress();
-    Mockito.verify(viewMock, Mockito.atLeastOnce()).showDeletedWords();
+    Mockito.verify(viewMock, Mockito.atLeastOnce()).showAllWordsAfterDeletion();
   }
 
   @Test
@@ -81,7 +81,7 @@ public class WordsPresenterTest {
     tested.deleteWords(null);
     Mockito.verify(viewMock, Mockito.atLeastOnce()).showProgress();
     Mockito.verify(viewMock, Mockito.atLeastOnce()).hideProgress();
-    Mockito.verify(viewMock, Mockito.atLeastOnce()).showDeletedWords();
+    Mockito.verify(viewMock, Mockito.atLeastOnce()).showAllWordsAfterDeletion();
   }
 
   @Test

@@ -43,17 +43,22 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
       boolean newSelection = !word.isSelected();
       word.setIsSelected(newSelection);
       view.setSelected(newSelection);
-      selectedItemsCount = newSelection ? selectedItemsCount + 1 : selectedItemsCount - 1;
-      if (ObjectUtils.isNotNull(TAG, "onBindViewHolder", listener)) {
-        if (selectedItemsCount > 1) {
-          listener.updateMultipleSelection();
-        } else if (selectedItemsCount == 1) {
-          listener.updateSingleSelection();
-        } else {
-          listener.updateNoSelection();
-        }
-      }
+      updateSelection(newSelection ? selectedItemsCount + 1 : selectedItemsCount - 1);
     });
+  }
+
+  private void updateSelection(int newSelectedItemsCount) {
+    selectedItemsCount = newSelectedItemsCount;
+
+    if (ObjectUtils.isNotNull(TAG, "updateSelection", listener)) {
+      if (selectedItemsCount > 1) {
+        listener.updateMultipleSelection();
+      } else if (selectedItemsCount == 1) {
+        listener.updateSingleSelection();
+      } else {
+        listener.updateNoSelection();
+      }
+    }
   }
 
   @Override
@@ -78,12 +83,12 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
   }
 
   public void clearSelection() {
-    selectedItemsCount = 0;
+    updateSelection(0);
   }
 
   public WordViewModel getSelectedWord() {
     int selectedIndex = getFirstSelectedIndex();
-    return selectedIndex >= 0 ? words.get(getFirstSelectedIndex()) : ModifiableWordViewModel.create();
+    return selectedIndex >= 0 ? words.get(selectedIndex) : ModifiableWordViewModel.create();
   }
 
   public List<WordViewModel> getSelectedWords() {

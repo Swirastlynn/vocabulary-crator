@@ -176,7 +176,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
   }
 
   @Override
-  public void showDeletedWords() {
+  public void showAllWordsAfterDeletion() {
     wordsAdapter.clearSelection();
     presenter.getAllWords();
   }

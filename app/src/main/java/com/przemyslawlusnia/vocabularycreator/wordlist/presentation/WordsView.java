@@ -7,7 +7,7 @@ public interface WordsView extends BaseView {
 
   void showAddWord(WordViewModel wordViewModel);
 
-  void showDeletedWords();
+  void showAllWordsAfterDeletion();
 
   void showAllWords(List<WordViewModel> wordViewModels);
 }

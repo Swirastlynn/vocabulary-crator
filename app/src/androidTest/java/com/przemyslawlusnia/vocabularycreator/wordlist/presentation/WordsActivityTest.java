@@ -36,6 +36,9 @@ import static org.hamcrest.Matchers.not;
 @RunWith(AndroidJUnit4.class)
 public class WordsActivityTest {
 
+  public static final String TEST_WORD = "test word";
+  public static final String TEST_TRANSLATION = "test translation";
+
   @Rule
   public ActivityTestRule<WordsActivity> activityRule =
       new ActivityTestRule<WordsActivity>(WordsActivity.class) {
@@ -65,22 +68,22 @@ public class WordsActivityTest {
   @Test
   public void addThenDeleteWord_wordDoesNotExistsInRecyclerView() {
     addTestWord();
+    clickTestWord();
     deleteTestWord();
 
     // check on deleted ViewHolder data
     try {
-      onView(allOf(withId(R.id.wordsRecyclerView), withParent(withId(R.id.cardView)), isDisplayed()))
-          .perform(actionOnHolderItem(withWordAndTranslation("test word", "test translation"), click()));
+      clickTestWord();
     } catch (NoMatchingViewException e) {
       // View is not in hierarchy
     }
     // check on view - just for training
     try {
       onView(withId(R.id.word))
-          .check(matches(not(withText("test word"))))
+          .check(matches(not(withText(TEST_WORD))))
           .check(matches(isDisplayed()));
       onView(withId(R.id.translation))
-          .check(matches(not(withText("test translation"))))
+          .check(matches(not(withText(TEST_TRANSLATION))))
           .check(matches(isDisplayed()));
     } catch (NoMatchingViewException e) {
       // View is not in hierarchy
@@ -95,29 +98,18 @@ public class WordsActivityTest {
 
   // delete action possible for single and multi selected
 
-  // delete action impossible for none selected
   @Test
-  public void itemNotSelected_DeleteActionNotVisible() {
+  public void itemNotSelected_DeleteActionNotExists() {
     // when initialized
     // doesNotExist because is not part of hierarchy after activity start
     onView(withId(R.id.action_delete)).check(doesNotExist());
 
-    // when added and deleted
+    // when added, selected - visible, deleted - not exists
     addTestWord();
+    clickTestWord();
+    onView(withId(R.id.action_delete)).check(matches(isDisplayed()));
     deleteTestWord();
     onView(withId(R.id.action_delete)).check(doesNotExist());
-  }
-
-  private void deleteTestWord() {
-    onView(allOf(withId(R.id.wordsRecyclerView), withParent(withId(R.id.cardView)), isDisplayed()))
-        .perform(actionOnHolderItem(withWordAndTranslation("test word", "test translation"), click()));
-    onView(withId(R.id.word))
-        .check(matches(withText("test word")))
-        .check(matches(isDisplayed()));
-    onView(withId(R.id.translation))
-        .check(matches(withText("test translation")))
-        .check(matches(isDisplayed()));
-    onView(allOf(withId(R.id.action_delete), isDisplayed())).perform(click());
   }
 
   // cannot add empty word
@@ -128,13 +120,28 @@ public class WordsActivityTest {
 
   // popup: 2 x enter == OK click (TDD: feature to add)
 
+  private void clickTestWord() {
+    onView(allOf(withId(R.id.wordsRecyclerView), withParent(withId(R.id.cardView)), isDisplayed()))
+        .perform(actionOnHolderItem(withWordAndTranslation(TEST_WORD, TEST_TRANSLATION), click()));
+  }
+
   private void addTestWord() {
     onView(allOf(withId(R.id.addWordFab), isDisplayed())).perform(click());
     onView(allOf(withId(R.id.wordEditTxt), isDisplayed())).perform(click());
-    onView(allOf(withId(R.id.wordEditTxt), isDisplayed())).perform(replaceText("test word"));
+    onView(allOf(withId(R.id.wordEditTxt), isDisplayed())).perform(replaceText(TEST_WORD));
     onView(allOf(withId(R.id.translationEditTxt), isDisplayed())).perform(click());
-    onView(allOf(withId(R.id.translationEditTxt), isDisplayed())).perform(replaceText("test translation"), closeSoftKeyboard());
+    onView(allOf(withId(R.id.translationEditTxt), isDisplayed())).perform(replaceText(TEST_TRANSLATION), closeSoftKeyboard());
     onView(allOf(withId(android.R.id.button1), withText("Ok"))).perform(scrollTo(), click());
+  }
+
+  private void deleteTestWord() {
+    onView(withId(R.id.word))
+        .check(matches(withText(TEST_WORD)))
+        .check(matches(isDisplayed()));
+    onView(withId(R.id.translation))
+        .check(matches(withText(TEST_TRANSLATION)))
+        .check(matches(isDisplayed()));
+    onView(allOf(withId(R.id.action_delete), isDisplayed())).perform(click());
   }
 
   public static Matcher<RecyclerView.ViewHolder> withWordAndTranslation(String word, String translation) {

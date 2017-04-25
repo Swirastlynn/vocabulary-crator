@@ -126,7 +126,7 @@ public class WordsPresenter extends BasePresenter<WordsView> {
 
     @Override
     public void onCompleted() {
-      view.showDeletedWords();
+      view.showAllWordsAfterDeletion();
       view.hideProgress();
     }
 
