@@ -2,6 +2,8 @@ package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import com.przemyslawlusnia.vocabularycreator.R;
@@ -21,12 +23,12 @@ public class WordDialogWrapper {
     this.context = context;
   }
 
-  AlertDialog.Builder build(int titleId, WordDialogListener wordDialogListener, WordViewModel oldWord) {
+  void buildAndShow(int titleId, WordDialogListener wordDialogListener, WordViewModel oldWord) {
     if (oldWord != null) {
       wordEditTxt.setText(oldWord.getWord());
       translationEditTxt.setText(oldWord.getTranslation());
     }
-    return new AlertDialog.Builder(context)
+    final AlertDialog dialog = new AlertDialog.Builder(context)
         .setTitle(titleId)
         .setView(root)
         .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
@@ -42,7 +44,29 @@ public class WordDialogWrapper {
         .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
           wordDialogListener.negativeButtonClick();
           dialogInterface.dismiss();
-        });
+        }).create();
+    dialog.show();
+    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(!wordEditTxt.getText().toString().isEmpty());
+    addTextChangeListener(dialog);
+  }
+
+  private void addTextChangeListener(final AlertDialog dialog) {
+    wordEditTxt.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        // nothing
+      }
+
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
+        // nothing
+      }
+
+      @Override
+      public void afterTextChanged(Editable s) {
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(!s.toString().isEmpty());
+      }
+    });
   }
 
   public interface WordDialogListener {

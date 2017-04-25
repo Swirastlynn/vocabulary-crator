@@ -90,7 +90,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
         Toast.makeText(getContext(), "Action Train", Toast.LENGTH_SHORT).show();
         return true;
       case R.id.action_edit:
-        createAndShowAddWordDialog(wordsAdapter.getSelectedWord(), true);
+        buildAndShowAddWordDialog(wordsAdapter.getSelectedWord(), true);
         return true;
       case R.id.action_delete:
         presenter.deleteWords(wordsAdapter.getSelectedWords());
@@ -142,12 +142,12 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
 
   @OnClick(R.id.addWordFab)
   public void fabClick(View view) {
-    createAndShowAddWordDialog(ModifiableWordViewModel.create(), false);
+    buildAndShowAddWordDialog(ModifiableWordViewModel.create(), false);
   }
 
-  private void createAndShowAddWordDialog(WordViewModel oldWord, boolean edit) {
+  private void buildAndShowAddWordDialog(WordViewModel oldWord, boolean edit) {
     WordDialogWrapper wordDialogWrapper = new WordDialogWrapper(getContext());
-    wordDialogWrapper.build(edit ? R.string.edit_word : R.string.new_word,
+    wordDialogWrapper.buildAndShow(edit ? R.string.edit_word : R.string.new_word,
         new WordDialogWrapper.WordDialogListener() {
           @Override
           public void positiveButtonClick(WordViewModel word) {
@@ -164,8 +164,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
             ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());
           }
         }, oldWord
-    ).create().show();
-
+    );
     // todo RXJava reactive TextWatcher
     ActivitiesAndFragmentsHelper.showKeyboard(getActivity());
   }

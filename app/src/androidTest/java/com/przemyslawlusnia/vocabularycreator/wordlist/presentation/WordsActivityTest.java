@@ -26,6 +26,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnHolderItem;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -63,11 +64,10 @@ public class WordsActivityTest {
     onView(allOf(withId(R.id.wordEditTxt), not(isDisplayed())));
   }
 
-  // todo click on an item for mocked data.
-
   @Test
   public void addThenDeleteWord_wordDoesNotExistsInRecyclerView() {
-    addTestWord();
+    addTestWord(TEST_WORD, TEST_TRANSLATION);
+    clickOkButton();
     clickTestWord();
     deleteTestWord();
 
@@ -105,14 +105,19 @@ public class WordsActivityTest {
     onView(withId(R.id.action_delete)).check(doesNotExist());
 
     // when added, selected - visible, deleted - not exists
-    addTestWord();
+    addTestWord(TEST_WORD, TEST_TRANSLATION);
+    clickOkButton();
     clickTestWord();
     onView(withId(R.id.action_delete)).check(matches(isDisplayed()));
     deleteTestWord();
     onView(withId(R.id.action_delete)).check(doesNotExist());
   }
 
-  // cannot add empty word
+  @Test
+  public void addEmptyWord_NotPossible() {
+    addTestWord("", "asdf");
+    onView(allOf(withId(android.R.id.button1), withText("Ok"))).check(matches(not(isEnabled())));
+  }
 
   // can add empty translation if word is
 
@@ -125,12 +130,15 @@ public class WordsActivityTest {
         .perform(actionOnHolderItem(withWordAndTranslation(TEST_WORD, TEST_TRANSLATION), click()));
   }
 
-  private void addTestWord() {
+  private void addTestWord(String testWord, String testTranslation) {
     onView(allOf(withId(R.id.addWordFab), isDisplayed())).perform(click());
     onView(allOf(withId(R.id.wordEditTxt), isDisplayed())).perform(click());
-    onView(allOf(withId(R.id.wordEditTxt), isDisplayed())).perform(replaceText(TEST_WORD));
+    onView(allOf(withId(R.id.wordEditTxt), isDisplayed())).perform(replaceText(testWord));
     onView(allOf(withId(R.id.translationEditTxt), isDisplayed())).perform(click());
-    onView(allOf(withId(R.id.translationEditTxt), isDisplayed())).perform(replaceText(TEST_TRANSLATION), closeSoftKeyboard());
+    onView(allOf(withId(R.id.translationEditTxt), isDisplayed())).perform(replaceText(testTranslation), closeSoftKeyboard());
+  }
+
+  private void clickOkButton() {
     onView(allOf(withId(android.R.id.button1), withText("Ok"))).perform(scrollTo(), click());
   }
 
