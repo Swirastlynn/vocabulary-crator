@@ -53,40 +53,53 @@ public class WordsActivityTest {
 
   @Test
   public void ensureFragmentContainerIsVisible() {
+    //given user opens activity
+    //when nothing
+    //then
     onView(ViewMatchers.withId(R.id.fragmentContainer)).check(matches(isDisplayed()));
   }
 
   @Test
-  public void addWordAndBack_wordEditTextNotExists() {
+  public void showAddWordDialogAndBackPressTwice_wordEditTextNotExists() {
+    //given user opens activity
     onView(allOf(withId(R.id.addWordFab), isDisplayed())).perform(click());
     onView(allOf(withId(R.id.wordEditTxt), isDisplayed()));
+    //when
     pressBack();
     pressBack();
+    //then
     onView(withId(R.id.wordEditTxt)).check(doesNotExist());
   }
 
   @Test
-  public void addWordAndCancel_wordEditTextNotExists() {
+  public void showAddWordDialogAndCancel_wordEditTextNotExists() {
+    //given user opens activity
     onView(allOf(withId(R.id.addWordFab), isDisplayed())).perform(click());
     onView(allOf(withId(R.id.wordEditTxt), isDisplayed()));
+    //when
     onView(withText(R.string.cancel)).perform(click());
+    //then
     onView(withId(R.id.wordEditTxt)).check(doesNotExist());
   }
 
   @Test
   public void addThenDeleteWord_wordDoesNotExistsInRecyclerView() {
+    //given user opens activity and vocabulary list is empty
+
+    //when
     addTestWord(TEST_WORD, TEST_TRANSLATION);
     clickOkButton();
     clickTestWord();
     deleteTestWord();
 
-    // check on deleted ViewHolder data
+    //then
+    //check on deleted ViewHolder data
     try {
       clickTestWord();
     } catch (NoMatchingViewException e) {
-      // View is not in hierarchy
+      //ViewHolder data is not in RecyclerView data. It's good.
     }
-    // check on view - just for training
+    //additionally check on view
     try {
       onView(withId(R.id.word))
           .check(matches(not(withText(TEST_WORD))))
@@ -95,7 +108,7 @@ public class WordsActivityTest {
           .check(matches(not(withText(TEST_TRANSLATION))))
           .check(matches(isDisplayed()));
     } catch (NoMatchingViewException e) {
-      // View is not in hierarchy
+      //View is not in hierarchy. It's good.
     }
   }
 
@@ -109,7 +122,7 @@ public class WordsActivityTest {
 
   @Test
   public void emptyVocabularyAndWordNotSelected_ActionsNotExists() {
-    //given user opens vocabulary list and vocabulary list is empty
+    //given user opens activity and vocabulary list is empty
     //when nothing
     //then
     onView(withId(R.id.action_delete)).check(doesNotExist());
@@ -118,7 +131,7 @@ public class WordsActivityTest {
 
   @Test
   public void wordSelected_ActionsVisible() {
-    //given user opens vocabulary list and vocabulary list is empty
+    //given user opens activity and vocabulary list is empty
     //when
     addTestWord(TEST_WORD, TEST_TRANSLATION);
     clickOkButton();
@@ -143,7 +156,10 @@ public class WordsActivityTest {
 
   @Test
   public void addEmptyWord_NotPossible() {
+    //given user opens activity
+    //when
     addTestWord("", TEST_TRANSLATION);
+    //then
     onView(allOf(withId(android.R.id.button1), withText(R.string.ok))).check(matches(not(isEnabled())));
   }
 
