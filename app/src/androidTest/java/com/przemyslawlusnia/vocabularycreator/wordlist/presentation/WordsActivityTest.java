@@ -57,11 +57,20 @@ public class WordsActivityTest {
   }
 
   @Test
-  public void addWordAndBack_wordEditTextIsNotVisible() {
+  public void addWordAndBack_wordEditTextNotExists() {
     onView(allOf(withId(R.id.addWordFab), isDisplayed())).perform(click());
     onView(allOf(withId(R.id.wordEditTxt), isDisplayed()));
     pressBack();
-    onView(allOf(withId(R.id.wordEditTxt), not(isDisplayed())));
+    pressBack();
+    onView(withId(R.id.wordEditTxt)).check(doesNotExist());
+  }
+
+  @Test
+  public void addWordAndCancel_wordEditTextNotExists() {
+    onView(allOf(withId(R.id.addWordFab), isDisplayed())).perform(click());
+    onView(allOf(withId(R.id.wordEditTxt), isDisplayed()));
+    onView(withText(R.string.cancel)).perform(click());
+    onView(withId(R.id.wordEditTxt)).check(doesNotExist());
   }
 
   @Test
@@ -99,24 +108,43 @@ public class WordsActivityTest {
   // delete action possible for single and multi selected
 
   @Test
-  public void itemNotSelected_DeleteActionNotExists() {
-    // when initialized
-    // doesNotExist because is not part of hierarchy after activity start
+  public void emptyVocabularyAndWordNotSelected_ActionsNotExists() {
+    //given user opens vocabulary list and vocabulary list is empty
+    //when nothing
+    //then
     onView(withId(R.id.action_delete)).check(doesNotExist());
+    onView(withId(R.id.action_edit)).check(doesNotExist());
+  }
 
-    // when added, selected - visible, deleted - not exists
+  @Test
+  public void wordSelected_ActionsVisible() {
+    //given user opens vocabulary list and vocabulary list is empty
+    //when
     addTestWord(TEST_WORD, TEST_TRANSLATION);
     clickOkButton();
     clickTestWord();
+    //then
     onView(withId(R.id.action_delete)).check(matches(isDisplayed()));
+    onView(withId(R.id.action_edit)).check(matches(isDisplayed()));
+  }
+
+  @Test
+  public void deleteWordAndWordNotSelected_ActionsNotExist() {
+    //given
+    addTestWord(TEST_WORD, TEST_TRANSLATION);
+    clickOkButton();
+    clickTestWord();
+    //when
     deleteTestWord();
+    //then
     onView(withId(R.id.action_delete)).check(doesNotExist());
+    onView(withId(R.id.action_edit)).check(doesNotExist());
   }
 
   @Test
   public void addEmptyWord_NotPossible() {
-    addTestWord("", "asdf");
-    onView(allOf(withId(android.R.id.button1), withText("Ok"))).check(matches(not(isEnabled())));
+    addTestWord("", TEST_TRANSLATION);
+    onView(allOf(withId(android.R.id.button1), withText(R.string.ok))).check(matches(not(isEnabled())));
   }
 
   // can add empty translation if word is
