@@ -38,7 +38,9 @@ import static org.hamcrest.Matchers.not;
 public class WordsActivityTest {
 
   public static final String TEST_WORD = "test word";
+  public static final String TEST_WORD2 = "test word 2";
   public static final String TEST_TRANSLATION = "test translation";
+  public static final String TEST_TRANSLATION2 = "test translation 2";
 
   @Rule
   public ActivityTestRule<WordsActivity> activityRule =
@@ -89,13 +91,13 @@ public class WordsActivityTest {
     //when
     addTestWord(TEST_WORD, TEST_TRANSLATION);
     clickOkButton();
-    clickTestWord();
+    clickTestWord(TEST_WORD, TEST_TRANSLATION);
     deleteTestWord();
 
     //then
     //check on deleted ViewHolder data
     try {
-      clickTestWord();
+      clickTestWord(TEST_WORD, TEST_TRANSLATION);
     } catch (NoMatchingViewException e) {
       //ViewHolder data is not in RecyclerView data. It's good.
     }
@@ -114,14 +116,8 @@ public class WordsActivityTest {
 
   // edit - edited correctly
 
-  // edit possible for single selected
-
-  // edit impossible for none or multi selected
-
-  // delete action possible for single and multi selected
-
   @Test
-  public void emptyVocabularyAndWordNotSelected_ActionsNotExists() {
+  public void wordNotSelected_ActionsNotExists() {
     //given user opens activity and vocabulary list is empty
     //when nothing
     //then
@@ -135,10 +131,25 @@ public class WordsActivityTest {
     //when
     addTestWord(TEST_WORD, TEST_TRANSLATION);
     clickOkButton();
-    clickTestWord();
+    clickTestWord(TEST_WORD, TEST_TRANSLATION);
     //then
     onView(withId(R.id.action_delete)).check(matches(isDisplayed()));
     onView(withId(R.id.action_edit)).check(matches(isDisplayed()));
+  }
+
+  @Test
+  public void twoWordsSelected_DeleteActionVisibleEditActionNotExists() {
+    //given user opens activity and vocabulary list is empty
+    //when
+    addTestWord(TEST_WORD, TEST_TRANSLATION);
+    clickOkButton();
+    clickTestWord(TEST_WORD, TEST_TRANSLATION);
+    addTestWord(TEST_WORD2, TEST_TRANSLATION2);
+    clickOkButton();
+    clickTestWord(TEST_WORD2, TEST_TRANSLATION2);
+    //then
+    onView(withId(R.id.action_delete)).check(matches(isDisplayed()));
+    onView(withId(R.id.action_edit)).check(matches(not(isEnabled())));
   }
 
   @Test
@@ -146,7 +157,7 @@ public class WordsActivityTest {
     //given
     addTestWord(TEST_WORD, TEST_TRANSLATION);
     clickOkButton();
-    clickTestWord();
+    clickTestWord(TEST_WORD, TEST_TRANSLATION);
     //when
     deleteTestWord();
     //then
@@ -163,15 +174,20 @@ public class WordsActivityTest {
     onView(allOf(withId(android.R.id.button1), withText(R.string.ok))).check(matches(not(isEnabled())));
   }
 
-  // can add empty translation if word is
-
-  // popup - cancel and ok hide
+  @Test
+  public void addEmptyTranslation_Possible() {
+    //given user opens activity
+    //when
+    addTestWord(TEST_WORD, "");
+    //then
+    onView(allOf(withId(android.R.id.button1), withText(R.string.ok))).check(matches(isEnabled()));
+  }
 
   // popup: 2 x enter == OK click (TDD: feature to add)
 
-  private void clickTestWord() {
+  private void clickTestWord(String testWord, String testTranslation) {
     onView(allOf(withId(R.id.wordsRecyclerView), withParent(withId(R.id.cardView)), isDisplayed()))
-        .perform(actionOnHolderItem(withWordAndTranslation(TEST_WORD, TEST_TRANSLATION), click()));
+        .perform(actionOnHolderItem(withWordAndTranslation(testWord, testTranslation), click()));
   }
 
   private void addTestWord(String testWord, String testTranslation) {
