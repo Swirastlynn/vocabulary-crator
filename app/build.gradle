@@ -26,12 +26,11 @@ ext {
     daggerVersion = '2.9'
     retrofitVersion = '2.1.0'
     okhttp3Version = '3.4.1'
-    butterknifeVersion = '8.4.0'
+    butterknifeVersion = '8.6.0'
     espressoVersion = '2.2.2'
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
 
 android {
@@ -55,12 +54,15 @@ android {
             storePassword keystoreReleasePassword
         }
     }
+    flavorDimensions "developmentStage"
     productFlavors {
         prod {
+            dimension "developmentStage"
         }
 
         develop {
             applicationIdSuffix ".develop"
+            dimension "developmentStage"
         }
     }
     buildTypes {
@@ -113,11 +115,10 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.facebook.stetho:stetho:1.4.2'
     compile 'com.uphyca:stetho_realm:2.0.1'
-    compile 'org.immutables:value:2.4.2'
+    annotationProcessor "org.immutables:value:2.5.1" // for annotation processor
+    provided "org.immutables:value:2.5.1:annotations" // annotation-only artifact
     compile 'com.jakewharton.timber:timber:4.5.1'
-    // for google-services.json file configuration usage
-    apply plugin: 'com.google.gms.google-services'
-    compile 'com.google.firebase:firebase-crash:10.2.1'
+    compile 'com.google.firebase:firebase-crash:10.2.6'
 
     androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -139,14 +140,18 @@ dependencies {
     compile "com.android.support:cardview-v7:${supportLibVersion}"
 
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile 'com.linkedin.dexmaker:dexmaker-mockito:1.5.1'
+    testCompile 'org.mockito:mockito-core:2.2.29'
+    androidTestCompile 'org.mockito:mockito-core:2.2.29'
+    androidTestCompile 'com.linkedin.dexmaker:dexmaker-mockito:2.2.0'
     // 2.2.0 is newer, but I don't need Mockito 2.x yet (2.2.0 implicitly add Mockito 2.x library).
 
     androidTestCompile "com.google.dagger:dagger:${daggerVersion}"
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
 }
+
+// ADD THIS AT THE BOTTOM
+// for google-services.json file configuration usage
+apply plugin: 'com.google.gms.google-services'
 
 task checkStyle(type: Checkstyle) {
     configFile = file("../config/checkstyle/checkstyle.xml")
