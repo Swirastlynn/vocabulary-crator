@@ -3,17 +3,13 @@ package com.przemyslawlusnia.vocabularycreator.core;
 import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import butterknife.BindView;
 import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.core.utils.ObjectUtils;
-import javax.annotation.Nullable;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
   private static final String TAG = BaseActivity.class.getSimpleName();
 
-  @Nullable
-  @BindView(R.id.toolbar)
   protected Toolbar toolbar;
 
   protected void setupToolbar() {

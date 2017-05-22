@@ -36,12 +36,12 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    final ModifiableWordViewModel word = (ModifiableWordViewModel) words.get(position);
+    final WordViewModel word = words.get(position);
     ((WordsViewHolder) holder).bind(word);
     holder.itemView.setSelected(word.isSelected());
     holder.itemView.setOnClickListener((view) -> {
       boolean newSelection = !word.isSelected();
-      word.setIsSelected(newSelection);
+      word.setSelected(newSelection);
       view.setSelected(newSelection);
       updateSelection(newSelection ? selectedItemsCount + 1 : selectedItemsCount - 1);
     });
@@ -88,7 +88,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   public WordViewModel getSelectedWord() {
     int selectedIndex = getFirstSelectedIndex();
-    return selectedIndex >= 0 ? words.get(selectedIndex) : ModifiableWordViewModel.create();
+    return selectedIndex >= 0 ? words.get(selectedIndex) : new WordViewModel();
   }
 
   public List<WordViewModel> getSelectedWords() {

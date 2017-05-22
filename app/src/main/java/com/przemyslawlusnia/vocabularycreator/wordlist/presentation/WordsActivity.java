@@ -1,10 +1,10 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
 import android.os.Bundle;
-import butterknife.ButterKnife;
+import android.support.v7.widget.Toolbar;
+import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.core.ActivitiesAndFragmentsHelper;
 import com.przemyslawlusnia.vocabularycreator.core.BaseActivity;
-import com.przemyslawlusnia.vocabularycreator.R;
 
 public class WordsActivity extends BaseActivity {
 
@@ -12,7 +12,7 @@ public class WordsActivity extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.words_activity);
-    ButterKnife.bind(this);
+    toolbar = (Toolbar) findViewById(R.id.toolbar);
     setupToolbar();
     if (savedInstanceState == null) {
       ActivitiesAndFragmentsHelper.showFragment(this, WordsFragment.newInstance(), R.id.fragmentContainer);

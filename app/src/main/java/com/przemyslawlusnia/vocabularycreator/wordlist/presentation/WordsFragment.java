@@ -11,8 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.core.ActivitiesAndFragmentsHelper;
@@ -25,7 +23,6 @@ import javax.inject.Inject;
 
 public class WordsFragment extends BaseFragment implements WordsView, OnWordsSelectionListener {
 
-  @BindView(R.id.wordsRecyclerView)
   RecyclerView wordsRecyclerView;
 
   @Inject
@@ -128,7 +125,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.words_fragment, container, false);
-    butterknifeUnbinder = ButterKnife.bind(this, view);
+    wordsRecyclerView = (RecyclerView) view.findViewById(R.id.wordsRecyclerView);
     return view;
   }
 
@@ -142,7 +139,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
 
   @OnClick(R.id.addWordFab)
   public void fabClick(View view) {
-    buildAndShowAddWordDialog(ModifiableWordViewModel.create(), false);
+    buildAndShowAddWordDialog(new WordViewModel(), false);
   }
 
   private void buildAndShowAddWordDialog(WordViewModel oldWord, boolean edit) {

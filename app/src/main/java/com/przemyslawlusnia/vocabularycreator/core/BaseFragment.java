@@ -25,7 +25,6 @@ public class BaseFragment extends Fragment {
   protected boolean networking = false;
   protected static final String NETWORKING_STATE = "NETWORKING_STATE";
 
-  protected Unbinder butterknifeUnbinder;
   protected EventListener eventListener;
 
   public BaseFragment() {
@@ -77,14 +76,6 @@ public class BaseFragment extends Fragment {
   protected void checkListenerClass(Context context, Class<?> expectedContextClass) {
     if (!expectedContextClass.isAssignableFrom(context.getClass())) {
       throw new RuntimeException(context.toString() + " must implement " + expectedContextClass.getSimpleName());
-    }
-  }
-
-  @Override
-  public void onDestroyView() {
-    super.onDestroyView();
-    if (butterknifeUnbinder != null) {
-      butterknifeUnbinder.unbind();
     }
   }
 
