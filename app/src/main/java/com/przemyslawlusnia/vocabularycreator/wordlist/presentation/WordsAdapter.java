@@ -88,7 +88,8 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   public WordViewModel getSelectedWord() {
     int selectedIndex = getFirstSelectedIndex();
-    return selectedIndex >= 0 ? words.get(selectedIndex) : new WordViewModel();
+    return selectedIndex >= 0 ? words.get(selectedIndex)
+        : new WordViewModel("", "", Constants.TYPE_TRAINING, false);
   }
 
   public List<WordViewModel> getSelectedWords() {

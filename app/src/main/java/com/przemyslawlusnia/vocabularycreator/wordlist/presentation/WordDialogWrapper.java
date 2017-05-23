@@ -34,7 +34,7 @@ public class WordDialogWrapper {
         .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
           String wordText = wordEditTxt.getText().toString();
           String translationText = translationEditTxt.getText().toString();
-          WordViewModel newWord = new WordViewModel();
+          WordViewModel newWord = new WordViewModel("", "", Constants.TYPE_TRAINING, false);
           newWord.setTranslation(translationText);
           newWord.setWord(wordText);
           newWord.setType(oldWord == null ? Constants.TYPE_TRAINING : oldWord.getType());

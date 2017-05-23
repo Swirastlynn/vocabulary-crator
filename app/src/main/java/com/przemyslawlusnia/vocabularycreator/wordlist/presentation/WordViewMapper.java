@@ -8,11 +8,11 @@ import java.util.List;
 public class WordViewMapper {
 
   public WordViewModel mapToWordViewModel(WordDomainModel wordDomainModel) {
-    WordViewModel result = new WordViewModel();
-    result.setTranslation(wordDomainModel.getTranslation());
-    result.setWord(wordDomainModel.getWord());
-    result.setType(wordDomainModel.getType());
-    return result;
+    return new WordViewModel(
+        wordDomainModel.getWord(),
+        wordDomainModel.getTranslation(),
+        wordDomainModel.getType(),
+        false);
   }
 
   public List<WordViewModel> mapToWordViewModels(List<WordDomainModel> wordDomainModels) {
@@ -21,10 +21,11 @@ public class WordViewMapper {
     }
     List<WordViewModel> result = new ArrayList<>(wordDomainModels.size());
     for (WordDomainModel word : wordDomainModels) {
-      WordViewModel viewWord = new WordViewModel();
-      viewWord.setTranslation(word.getTranslation());
-      viewWord.setWord(word.getWord());
-      viewWord.setType(word.getType());
+      WordViewModel viewWord = new WordViewModel(
+          word.getWord(),
+          word.getTranslation(),
+          word.getType(),
+          false);
       result.add(viewWord);
     }
     return result;

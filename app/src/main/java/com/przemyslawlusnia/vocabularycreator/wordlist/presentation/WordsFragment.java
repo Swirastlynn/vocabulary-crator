@@ -2,6 +2,7 @@ package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,10 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import butterknife.OnClick;
 import com.przemyslawlusnia.vocabularycreator.R;
 import com.przemyslawlusnia.vocabularycreator.core.ActivitiesAndFragmentsHelper;
 import com.przemyslawlusnia.vocabularycreator.core.BaseFragment;
+import com.przemyslawlusnia.vocabularycreator.core.Constants;
 import com.przemyslawlusnia.vocabularycreator.core.utils.ViewUtils;
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainComponentProvider;
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsViewModule;
@@ -23,7 +24,8 @@ import javax.inject.Inject;
 
 public class WordsFragment extends BaseFragment implements WordsView, OnWordsSelectionListener {
 
-  RecyclerView wordsRecyclerView;
+  private RecyclerView wordsRecyclerView;
+  private FloatingActionButton fab;
 
   @Inject
   WordsPresenter presenter;
@@ -126,20 +128,20 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.words_fragment, container, false);
     wordsRecyclerView = (RecyclerView) view.findViewById(R.id.wordsRecyclerView);
+    fab = (FloatingActionButton) view.findViewById(R.id.addWordFab);
     return view;
   }
 
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    fab.setOnClickListener((View v) -> {
+      buildAndShowAddWordDialog(
+          new WordViewModel("", "", Constants.TYPE_TRAINING, false), false);
+    });
     wordsRecyclerView.setLayoutManager(linearLayoutManager);
     presenter.getAllWords();
     wordsRecyclerView.setAdapter(wordsAdapter);
-  }
-
-  @OnClick(R.id.addWordFab)
-  public void fabClick(View view) {
-    buildAndShowAddWordDialog(new WordViewModel(), false);
   }
 
   private void buildAndShowAddWordDialog(WordViewModel oldWord, boolean edit) {
