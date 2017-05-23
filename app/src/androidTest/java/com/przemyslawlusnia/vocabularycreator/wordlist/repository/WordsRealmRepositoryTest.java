@@ -2,7 +2,6 @@ package com.przemyslawlusnia.vocabularycreator.wordlist.repository;
 
 import android.support.annotation.NonNull;
 import com.przemyslawlusnia.vocabularycreator.core.Constants;
-import com.przemyslawlusnia.vocabularycreator.wordlist.domain.ImmutableWordDomainModel;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainMapper;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainModel;
 import io.realm.Realm;
@@ -66,11 +65,7 @@ public class WordsRealmRepositoryTest {
 
   @NonNull
   private WordDomainModel getDummyWordDomainModel() {
-    final ImmutableWordDomainModel.Builder expectedBuilder = ImmutableWordDomainModel.builder()
-        .word("test_word")
-        .translation("test_translation")
-        .type(Constants.TYPE_LEARNED);
-    return expectedBuilder.build();
+    return new WordDomainModel("test_word", "test_translation", Constants.TYPE_TRAINING);
   }
 
   @Test

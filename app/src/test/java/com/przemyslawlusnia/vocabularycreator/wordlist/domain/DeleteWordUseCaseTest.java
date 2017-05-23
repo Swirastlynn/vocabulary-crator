@@ -1,5 +1,6 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.domain;
 
+import com.przemyslawlusnia.vocabularycreator.core.Constants;
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class DeleteWordUseCaseTest {
     MockitoAnnotations.initMocks(this);
     tested = new DeleteWordUseCase(Schedulers.immediate(), wordsRepositoryMock);
     WordDomainModel testedWordDomainModel =
-        ImmutableWordDomainModel.builder().word("test_word").translation("test_translation").build();
+        new WordDomainModel("test_word", "test_translation", Constants.TYPE_TRAINING);
     testedWordDomainModels.add(testedWordDomainModel);
     tested.init(testedWordDomainModels);
   }

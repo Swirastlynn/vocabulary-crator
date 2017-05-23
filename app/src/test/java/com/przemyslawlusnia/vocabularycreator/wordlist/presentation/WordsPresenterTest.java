@@ -1,10 +1,10 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
 import android.support.annotation.NonNull;
+import com.przemyslawlusnia.vocabularycreator.core.Constants;
 import com.przemyslawlusnia.vocabularycreator.core.RxUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.AddWordUseCase;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.DeleteWordUseCase;
-import com.przemyslawlusnia.vocabularycreator.wordlist.domain.ImmutableWordDomainModel;
 import com.przemyslawlusnia.vocabularycreator.wordlist.domain.WordDomainModel;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,17 +34,16 @@ public class WordsPresenterTest {
   WordsPresenter tested;
 
   // Can't mock it - PowerMockito or Mockito 2.x required, cause class is final
-  ModifiableWordViewModel testedWordViewModel;
-  ImmutableWordDomainModel testedWordDomainModel;
+  WordViewModel testedWordViewModel;
+  WordDomainModel testedWordDomainModel;
 
   @Before
   public void setUp() throws Exception {
     MockitoAnnotations.initMocks(this);
     tested = new WordsPresenter(viewMock, new WordViewMapper(), Schedulers.immediate(),
         addWordUseCaseMock, deleteWordUseCaseMock, getAllWordsUseCaseMock);
-    testedWordViewModel = ModifiableWordViewModel.create();
-    testedWordViewModel = testedWordViewModel.setWord("test_word").setTranslation("test_translation");
-    testedWordDomainModel = ImmutableWordDomainModel.builder().word("test_word").translation("test_translation").build();
+    testedWordViewModel = new WordViewModel("test_word", "test_translation", Constants.TYPE_TRAINING, false);
+    testedWordDomainModel = new WordDomainModel("test_word", "test_translation", Constants.TYPE_TRAINING);
     doNothing().when(viewMock).showProgress();
   }
 

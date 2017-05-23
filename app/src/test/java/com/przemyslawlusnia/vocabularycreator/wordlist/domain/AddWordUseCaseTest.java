@@ -1,5 +1,6 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.domain;
 
+import com.przemyslawlusnia.vocabularycreator.core.Constants;
 import com.przemyslawlusnia.vocabularycreator.wordlist.repository.WordsRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,13 +19,13 @@ public class AddWordUseCaseTest {
   @Mock
   WordsRepository wordsRepositoryMock;
 
-  ImmutableWordDomainModel testedWordDomainModel;
+  WordDomainModel testedWordDomainModel;
 
   @Before
   public void setUp() throws Exception {
     MockitoAnnotations.initMocks(this);
     tested = new AddWordUseCase(Schedulers.immediate(), wordsRepositoryMock);
-    testedWordDomainModel = ImmutableWordDomainModel.builder().word("test_word").translation("test_translation").build();
+    testedWordDomainModel = new WordDomainModel("test_word", "test_translation", Constants.TYPE_TRAINING);
     tested.init(testedWordDomainModel);
   }
 
@@ -46,8 +47,8 @@ public class AddWordUseCaseTest {
 
   @Test
   public void buildUseCaseObservable_emptyWord() throws Exception {
-    ImmutableWordDomainModel testedWordDomainModelWithEmptyWord =
-        ImmutableWordDomainModel.builder().word("").translation("test_translation").build();
+    WordDomainModel testedWordDomainModelWithEmptyWord =
+        new WordDomainModel("", "test_translation", Constants.TYPE_TRAINING);
     when(wordsRepositoryMock.add(testedWordDomainModelWithEmptyWord)).thenReturn(Observable.just(true));
     tested.init(testedWordDomainModelWithEmptyWord);
     TestSubscriber<Boolean> testSubscriber = new TestSubscriber<>();
