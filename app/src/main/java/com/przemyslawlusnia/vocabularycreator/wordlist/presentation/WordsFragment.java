@@ -155,17 +155,17 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
             } else {
               presenter.addWord(word);
             }
-            ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());
+            ActivitiesAndFragmentsHelper.INSTANCE.hideKeyboard(getActivity());
           }
 
           @Override
           public void negativeButtonClick() {
-            ActivitiesAndFragmentsHelper.hideKeyboard(getActivity());
+            ActivitiesAndFragmentsHelper.INSTANCE.hideKeyboard(getActivity());
           }
         }, oldWord
     );
     // todo RXJava reactive TextWatcher
-    ActivitiesAndFragmentsHelper.showKeyboard(getActivity());
+    ActivitiesAndFragmentsHelper.INSTANCE.showKeyboard(getActivity());
   }
 
   @Override
