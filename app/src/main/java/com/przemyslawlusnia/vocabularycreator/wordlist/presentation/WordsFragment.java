@@ -18,7 +18,7 @@ import com.przemyslawlusnia.vocabularycreator.core.ActivitiesAndFragmentsHelper;
 import com.przemyslawlusnia.vocabularycreator.core.BaseFragment;
 import com.przemyslawlusnia.vocabularycreator.core.Constants;
 import com.przemyslawlusnia.vocabularycreator.core.utils.ViewUtils;
-import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainComponentProvider;
+import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainComponentProviderSingleton;
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsViewModule;
 import java.util.List;
 import javax.inject.Inject;
@@ -54,7 +54,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
   }
 
   private void setupDependencies() {
-    WordsDomainComponentProvider.INSTANCE.getWordsDomainComponent()
+    WordsDomainComponentProviderSingleton.INSTANCE.component()
         .plus(new WordsViewModule(this, this, (WordsActivity) getActivity()))
         .inject(this);
   }
