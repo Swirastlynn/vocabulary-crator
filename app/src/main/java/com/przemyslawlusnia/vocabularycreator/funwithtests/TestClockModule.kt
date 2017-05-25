@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class TestClockModule {
+class TestClockModule { // todo or maybe use @Qualifier and put it into normal module?
 
     @Provides
     @AppScope
