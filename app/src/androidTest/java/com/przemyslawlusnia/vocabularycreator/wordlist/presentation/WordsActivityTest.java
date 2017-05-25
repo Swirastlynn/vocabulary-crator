@@ -218,8 +218,8 @@ public class WordsActivityTest {
     return new BoundedMatcher<RecyclerView.ViewHolder, WordsViewHolder>(WordsViewHolder.class) {
       @Override
       protected boolean matchesSafely(WordsViewHolder holder) {
-        return holder.wordTxt.getText().toString().equalsIgnoreCase(word)
-            && holder.translationTxt.getText().toString().equalsIgnoreCase(translation);
+        return holder.getWordTxt().getText().toString().equalsIgnoreCase(word)
+            && holder.getTranslationTxt().getText().toString().equalsIgnoreCase(translation);
       }
 
       @Override

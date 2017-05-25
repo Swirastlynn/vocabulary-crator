@@ -8,7 +8,7 @@ import io.realm.annotations.Required;
 import java.util.UUID;
 
 @RealmClass
-public class WordRealm implements RealmModel {
+public class WordRealm implements RealmModel { // todo change to Kotlin in the future - currently it doesn't work
 
   public static final String KEY_WORD = "word";
   public static final String KEY_TRANSLATION = "translation";
@@ -54,7 +54,7 @@ public class WordRealm implements RealmModel {
     this.type = type;
   }
 
-  public static WordRealm mapToWordRealm(WordDomainModel wordDomainModel) {
+  public static WordRealm mapToWordRealm(WordDomainModel wordDomainModel) { // todo to factory method?
     WordRealm wordRealm = new WordRealm();
     wordRealm.setId(UUID.randomUUID().toString());
     wordRealm.setWord(wordDomainModel.getWord());
