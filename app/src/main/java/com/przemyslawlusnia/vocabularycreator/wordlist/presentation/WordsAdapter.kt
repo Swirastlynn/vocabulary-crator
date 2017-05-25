@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.ViewGroup
 import com.przemyslawlusnia.vocabularycreator.core.Constants
-import com.przemyslawlusnia.vocabularycreator.core.utils.ObjectUtils
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.LearnedWordRecyclerViewHolder
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.TrainingWordRecyclerViewHolder
 import com.przemyslawlusnia.vocabularycreator.wordlist.presentation.viewholder.WordsViewHolder
@@ -42,14 +41,12 @@ class WordsAdapter(private val listener: OnWordsSelectionListener) : RecyclerVie
     private fun updateSelection(newSelectedItemsCount: Int) {
         selectedItemsCount = newSelectedItemsCount
 
-        if (ObjectUtils.isNotNull(TAG, "updateSelection", listener)) {
-            if (selectedItemsCount > 1) {
-                listener.updateMultipleSelection()
-            } else if (selectedItemsCount == 1) {
-                listener.updateSingleSelection()
-            } else {
-                listener.updateNoSelection()
-            }
+        if (selectedItemsCount > 1) {
+            listener.updateMultipleSelection()
+        } else if (selectedItemsCount == 1) {
+            listener.updateSingleSelection()
+        } else {
+            listener.updateNoSelection()
         }
     }
 

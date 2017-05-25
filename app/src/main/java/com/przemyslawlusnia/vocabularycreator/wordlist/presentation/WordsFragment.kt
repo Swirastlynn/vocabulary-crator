@@ -5,12 +5,13 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
-import android.widget.Toast
 import com.przemyslawlusnia.vocabularycreator.R
 import com.przemyslawlusnia.vocabularycreator.core.ActivitiesAndFragmentsHelper
 import com.przemyslawlusnia.vocabularycreator.core.BaseFragment
 import com.przemyslawlusnia.vocabularycreator.core.Constants
 import com.przemyslawlusnia.vocabularycreator.core.utils.ViewUtils
+import com.przemyslawlusnia.vocabularycreator.extension.bind
+import com.przemyslawlusnia.vocabularycreator.extension.showMessage
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainComponentProviderSingleton
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsViewModule
 import timber.log.Timber
@@ -18,8 +19,8 @@ import javax.inject.Inject
 
 class WordsFragment : BaseFragment(), WordsView, OnWordsSelectionListener {
 
-    lateinit var wordsRecyclerView: RecyclerView
-    lateinit var fab: FloatingActionButton
+    private lateinit var wordsRecyclerView: RecyclerView
+    private lateinit var fab: FloatingActionButton
 
     @Inject
     lateinit var presenter: WordsPresenter
@@ -60,19 +61,19 @@ class WordsFragment : BaseFragment(), WordsView, OnWordsSelectionListener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_search -> {
-                Toast.makeText(context, "Action Search", Toast.LENGTH_SHORT).show()
+                showMessage("Action Search")
                 return true
             }
             R.id.action_settings -> {
-                Toast.makeText(context, "Action Settings", Toast.LENGTH_SHORT).show()
+                showMessage("Action Settings")
                 return true
             }
             R.id.action_learn -> {
-                Toast.makeText(context, "Action Learn", Toast.LENGTH_SHORT).show()
+                showMessage("Action Learn")
                 return true
             }
             R.id.action_train -> {
-                Toast.makeText(context, "Action Train", Toast.LENGTH_SHORT).show()
+                showMessage("Action Train")
                 return true
             }
             R.id.action_edit -> {
@@ -112,8 +113,8 @@ class WordsFragment : BaseFragment(), WordsView, OnWordsSelectionListener {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.words_fragment, container, false)
-        wordsRecyclerView = view.findViewById(R.id.wordsRecyclerView) as RecyclerView
-        fab = view.findViewById(R.id.addWordFab) as FloatingActionButton
+        wordsRecyclerView = view.bind(R.id.wordsRecyclerView)
+        fab = view.bind(R.id.addWordFab)
         return view
     }
 

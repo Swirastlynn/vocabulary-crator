@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.annotation.ColorRes
 import android.support.v4.app.Fragment
 import android.util.Log
-import com.przemyslawlusnia.vocabularycreator.core.utils.ObjectUtils
 
 open class BaseFragment : Fragment() {
 
@@ -43,21 +42,15 @@ open class BaseFragment : Fragment() {
     }
 
     protected fun setToolbarTitle(txt: String) {
-        if (ObjectUtils.isNotNull<EventListener>("setToolbarTitle", TAG, eventListener)) {
-            eventListener?.setToolbarTitleTxt(txt)
-        }
+        eventListener?.setToolbarTitleTxt(txt)
     }
 
     protected fun setToolbarBackground(@ColorRes colorRes: Int) {
-        if (ObjectUtils.isNotNull<EventListener>("setToolbarBackground", TAG, eventListener)) {
-            eventListener?.setToolbarBackground(colorRes)
-        }
+        eventListener?.setToolbarBackground(colorRes)
     }
 
     protected fun setToolbarShadow(visible: Boolean) {
-        if (ObjectUtils.isNotNull<EventListener>("setToolbarShadow", TAG, eventListener)) {
-            eventListener?.setToolbarShadow(visible)
-        }
+        eventListener?.setToolbarShadow(visible)
     }
 
     protected fun checkListenerClass(context: Context, expectedContextClass: Class<*>) {

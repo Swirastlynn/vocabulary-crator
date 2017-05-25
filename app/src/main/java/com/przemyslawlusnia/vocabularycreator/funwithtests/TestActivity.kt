@@ -1,17 +1,17 @@
 package com.przemyslawlusnia.vocabularycreator.funwithtests
 
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
 import android.widget.TextView
 import com.przemyslawlusnia.vocabularycreator.R
 import com.przemyslawlusnia.vocabularycreator.core.BaseActivity
 import com.przemyslawlusnia.vocabularycreator.core.VocabularyCreatorApplication
 import com.przemyslawlusnia.vocabularycreator.core.clock.MyClock
+import com.przemyslawlusnia.vocabularycreator.extension.bind
 import javax.inject.Inject
 
 class TestActivity : BaseActivity() {
 
-    lateinit var testTxt: TextView
+    private val testTxt: TextView by bind(R.id.testTxt)
 
     @Inject
     lateinit var myClock: MyClock
@@ -20,8 +20,6 @@ class TestActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
         VocabularyCreatorApplication.clockComponent.inject(this)
-        toolbar = findViewById(R.id.toolbar) as Toolbar
-        testTxt = findViewById(R.id.testTxt) as TextView
         setupToolbar()
         testTxt.text = myClock.time
     }
