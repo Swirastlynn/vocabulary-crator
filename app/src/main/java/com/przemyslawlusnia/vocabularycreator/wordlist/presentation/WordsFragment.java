@@ -1,6 +1,7 @@
 package com.przemyslawlusnia.vocabularycreator.wordlist.presentation;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -147,9 +148,9 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
   private void buildAndShowAddWordDialog(WordViewModel oldWord, boolean edit) {
     WordDialogWrapper wordDialogWrapper = new WordDialogWrapper(getContext());
     wordDialogWrapper.buildAndShow(edit ? R.string.edit_word : R.string.new_word,
-        new WordDialogWrapper.WordDialogListener() {
+        new WordDialogListener() {
           @Override
-          public void positiveButtonClick(WordViewModel word) {
+          public void positiveButtonClick(@NonNull WordViewModel word) {
             if (edit) {
               wordsAdapter.editSelectedWord(word);
             } else {
@@ -169,7 +170,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
   }
 
   @Override
-  public void showAddWord(WordViewModel wordViewModel) {
+  public void showAddWord(@NonNull WordViewModel wordViewModel) {
     wordsAdapter.addWord(wordViewModel);
   }
 
@@ -180,7 +181,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
   }
 
   @Override
-  public void showAllWords(List<WordViewModel> wordViewModels) {
+  public void showAllWords(@NonNull List<WordViewModel> wordViewModels) {
     wordsAdapter.setWords(wordViewModels);
   }
 
