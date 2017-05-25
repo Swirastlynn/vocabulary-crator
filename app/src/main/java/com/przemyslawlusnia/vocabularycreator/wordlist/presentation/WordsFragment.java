@@ -207,7 +207,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
 
   @Override
   public void onDestroy() {
-    presenter.onDestroy();
+    presenter.onDetach();
     super.onDestroy();
   }
 }

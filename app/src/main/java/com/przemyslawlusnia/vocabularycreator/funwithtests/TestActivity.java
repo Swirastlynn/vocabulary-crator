@@ -21,7 +21,7 @@ public class TestActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_test);
     VocabularyCreatorApplication.getClockComponent().inject(this);
-    toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setToolbar((Toolbar) findViewById(R.id.toolbar));
     testTxt = (TextView) findViewById(R.id.testTxt);
     setupToolbar();
     testTxt.setText(myClock.getTime());

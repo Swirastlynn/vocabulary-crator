@@ -46,7 +46,7 @@ class WordsViewModule(private val wordsView: WordsView,
                                        deleteWordUseCase: DeleteWordUseCase,
                                        getAllWordsUseCase: RxUseCase<List<WordDomainModel>>): WordsPresenter {
         return WordsPresenter(
-                wordsView, mapper, AndroidSchedulers.mainThread(),
+                mapper, AndroidSchedulers.mainThread(),
                 addWordUseCase, deleteWordUseCase, getAllWordsUseCase
         )
     }

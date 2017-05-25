@@ -13,6 +13,7 @@ public final class ObjectUtils {
     return other == null ? Collections.<T>emptyList() : other;
   }
 
+  // todo null policy
   public static <T> boolean isNotNull(String tag, String function, T other) {
     boolean result = other != null;
     if (!result) {
