@@ -13,6 +13,7 @@ import com.przemyslawlusnia.vocabularycreator.core.Constants
 import com.przemyslawlusnia.vocabularycreator.core.utils.ViewUtils
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsDomainComponentProviderSingleton
 import com.przemyslawlusnia.vocabularycreator.wordlist.di.WordsViewModule
+import timber.log.Timber
 import javax.inject.Inject
 
 class WordsFragment : BaseFragment(), WordsView, OnWordsSelectionListener {
@@ -57,7 +58,7 @@ class WordsFragment : BaseFragment(), WordsView, OnWordsSelectionListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
+        when (item?.itemId) {
             R.id.action_search -> {
                 Toast.makeText(context, "Action Search", Toast.LENGTH_SHORT).show()
                 return true
@@ -83,6 +84,7 @@ class WordsFragment : BaseFragment(), WordsView, OnWordsSelectionListener {
                 return true
             }
             else -> {
+                Timber.e(TAG, "No such action")
             }
         }
 
@@ -183,6 +185,7 @@ class WordsFragment : BaseFragment(), WordsView, OnWordsSelectionListener {
     }
 
     companion object {
+        private val TAG = WordsFragment::class.java.simpleName
 
         fun newInstance(): WordsFragment {
             return WordsFragment()

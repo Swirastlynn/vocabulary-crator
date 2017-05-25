@@ -28,7 +28,7 @@ public class ExampleEspressoMockTest {
 
   @Test
   public void testTxt_hasAppropriateValue() {
-    onView(withText(TestMyClock.TEST_DATE)).check(matches(isDisplayed()));
+    onView(withText(TestMyClock.Companion.getTEST_DATE())).check(matches(isDisplayed()));
   }
   // todo use with espresso test and normal test IF IT IS GOOD PRACTICE?
   // todo Maybe test components should be inside main code to handle both cases?
