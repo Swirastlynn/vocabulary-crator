@@ -6,7 +6,7 @@ object WordsDomainComponentProviderSingleton {
 
     private var instance: WordsDomainComponent = DaggerWordsDomainComponent
             .builder()
-            .appComponent(VocabularyCreatorApplication.getAppComponent())
+            .appComponent(VocabularyCreatorApplication.appComponent)
             .wordsDomainModule(WordsDomainModule())
             .build()
 

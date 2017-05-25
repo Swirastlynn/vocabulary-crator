@@ -22,7 +22,7 @@ public class ExampleEspressoMockTest {
       new ActivityTestRule<TestActivity>(TestActivity.class) {
         @Override
         protected void beforeActivityLaunched() {
-          VocabularyCreatorApplication.setTestClockComponent();
+          VocabularyCreatorApplication.Companion.setTestClockComponent();
         }
       };
 

@@ -9,7 +9,7 @@ import com.przemyslawlusnia.vocabularycreator.core.VocabularyCreatorApplication;
 import com.przemyslawlusnia.vocabularycreator.core.clock.MyClock;
 import javax.inject.Inject;
 
-public class TestActivity extends BaseActivity {
+public class TestActivity extends BaseActivity { // todo change to kotlin after WordsFragment change
 
   protected TextView testTxt;
 
@@ -20,7 +20,7 @@ public class TestActivity extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_test);
-    VocabularyCreatorApplication.getClockComponent().inject(this);
+    VocabularyCreatorApplication.Companion.getClockComponent().inject(this);
     setToolbar((Toolbar) findViewById(R.id.toolbar));
     testTxt = (TextView) findViewById(R.id.testTxt);
     setupToolbar();
