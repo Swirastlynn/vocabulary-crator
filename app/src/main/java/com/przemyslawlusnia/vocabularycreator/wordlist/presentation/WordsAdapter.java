@@ -25,9 +25,9 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    if (viewType == Constants.TYPE_TRAINING) {
+    if (viewType == Constants.INSTANCE.getTYPE_TRAINING()) {
       return new TrainingWordRecyclerViewHolder(parent);
-    } else if (viewType == Constants.TYPE_LEARNED) {
+    } else if (viewType == Constants.INSTANCE.getTYPE_LEARNED()) {
       return new LearnedWordRecyclerViewHolder(parent);
     }
     Log.e(TAG, "Unknown Word type");
@@ -89,7 +89,7 @@ public class WordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
   public WordViewModel getSelectedWord() {
     int selectedIndex = getFirstSelectedIndex();
     return selectedIndex >= 0 ? words.get(selectedIndex)
-        : new WordViewModel("", "", Constants.TYPE_TRAINING, false);
+        : new WordViewModel("", "", Constants.INSTANCE.getTYPE_TRAINING(), false);
   }
 
   public List<WordViewModel> getSelectedWords() {

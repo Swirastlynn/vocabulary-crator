@@ -34,10 +34,10 @@ public class WordDialogWrapper {
         .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
           String wordText = wordEditTxt.getText().toString();
           String translationText = translationEditTxt.getText().toString();
-          WordViewModel newWord = new WordViewModel("", "", Constants.TYPE_TRAINING, false);
+          WordViewModel newWord = new WordViewModel("", "", Constants.INSTANCE.getTYPE_TRAINING(), false);
           newWord.setTranslation(translationText);
           newWord.setWord(wordText);
-          newWord.setType(oldWord == null ? Constants.TYPE_TRAINING : oldWord.getType());
+          newWord.setType(oldWord == null ? Constants.INSTANCE.getTYPE_TRAINING() : oldWord.getType());
           newWord.setSelected(oldWord != null && oldWord.isSelected());
           wordDialogListener.positiveButtonClick(newWord);
           dialogInterface.dismiss();

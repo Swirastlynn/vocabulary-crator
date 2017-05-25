@@ -38,12 +38,13 @@ public class WordsPresenterTest {
   WordDomainModel testedWordDomainModel;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() throws Exception { // todo https://youtrack.jetbrains.com/issue/KT-17951
     MockitoAnnotations.initMocks(this);
-    tested = new WordsPresenter(viewMock, new WordViewMapper(), Schedulers.immediate(),
+    tested = new WordsPresenter(new WordViewMapper(), Schedulers.immediate(),
         addWordUseCaseMock, deleteWordUseCaseMock, getAllWordsUseCaseMock);
-    testedWordViewModel = new WordViewModel("test_word", "test_translation", Constants.TYPE_TRAINING, false);
-    testedWordDomainModel = new WordDomainModel("test_word", "test_translation", Constants.TYPE_TRAINING);
+    tested.onAttachView(viewMock);
+    testedWordViewModel = new WordViewModel("test_word", "test_translation", Constants.INSTANCE.getTYPE_TRAINING(), false);
+    testedWordDomainModel = new WordDomainModel("test_word", "test_translation", Constants.INSTANCE.getTYPE_TRAINING());
     doNothing().when(viewMock).showProgress();
   }
 

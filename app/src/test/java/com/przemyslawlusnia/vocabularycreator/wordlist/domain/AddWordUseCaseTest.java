@@ -22,11 +22,11 @@ public class AddWordUseCaseTest {
   WordDomainModel testedWordDomainModel;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() throws Exception { // todo https://youtrack.jetbrains.com/issue/KT-17951
     MockitoAnnotations.initMocks(this);
     tested = new AddWordUseCase(Schedulers.immediate(), wordsRepositoryMock);
-    testedWordDomainModel = new WordDomainModel("test_word", "test_translation", Constants.TYPE_TRAINING);
-    tested.init(testedWordDomainModel);
+    testedWordDomainModel = new WordDomainModel("test_word", "test_translation", Constants.INSTANCE.getTYPE_TRAINING());
+    tested.initialize(testedWordDomainModel);
   }
 
   @Test
@@ -48,9 +48,9 @@ public class AddWordUseCaseTest {
   @Test
   public void buildUseCaseObservable_emptyWord() throws Exception {
     WordDomainModel testedWordDomainModelWithEmptyWord =
-        new WordDomainModel("", "test_translation", Constants.TYPE_TRAINING);
+        new WordDomainModel("", "test_translation", Constants.INSTANCE.getTYPE_TRAINING());
     when(wordsRepositoryMock.add(testedWordDomainModelWithEmptyWord)).thenReturn(Observable.just(true));
-    tested.init(testedWordDomainModelWithEmptyWord);
+    tested.initialize(testedWordDomainModelWithEmptyWord);
     TestSubscriber<Boolean> testSubscriber = new TestSubscriber<>();
     tested.buildUseCaseObservable().subscribe(testSubscriber);
     testSubscriber.assertError(Throwable.class);

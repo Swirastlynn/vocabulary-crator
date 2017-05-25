@@ -24,13 +24,13 @@ public class DeleteWordUseCaseTest {
   List<WordDomainModel> testedWordDomainModels = new ArrayList<>();
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() throws Exception { // todo https://youtrack.jetbrains.com/issue/KT-17951
     MockitoAnnotations.initMocks(this);
     tested = new DeleteWordUseCase(Schedulers.immediate(), wordsRepositoryMock);
     WordDomainModel testedWordDomainModel =
-        new WordDomainModel("test_word", "test_translation", Constants.TYPE_TRAINING);
+        new WordDomainModel("test_word", "test_translation", Constants.INSTANCE.getTYPE_TRAINING());
     testedWordDomainModels.add(testedWordDomainModel);
-    tested.init(testedWordDomainModels);
+    tested.initialize(testedWordDomainModels);
   }
 
   @Test
@@ -44,7 +44,7 @@ public class DeleteWordUseCaseTest {
   @Test
   public void buildUseCaseObservable_nullList() throws Exception {
     testedWordDomainModels = null;
-    tested.init(testedWordDomainModels);
+    tested.initialize(testedWordDomainModels);
     when(wordsRepositoryMock.delete(testedWordDomainModels)).thenReturn(Observable.empty());
     TestSubscriber<Void> testSubscriber = new TestSubscriber<>();
     tested.buildUseCaseObservable().subscribe(testSubscriber);

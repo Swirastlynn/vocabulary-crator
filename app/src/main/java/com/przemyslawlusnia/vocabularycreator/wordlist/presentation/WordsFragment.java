@@ -137,7 +137,7 @@ public class WordsFragment extends BaseFragment implements WordsView, OnWordsSel
     super.onViewCreated(view, savedInstanceState);
     fab.setOnClickListener((View v) -> {
       buildAndShowAddWordDialog(
-          new WordViewModel("", "", Constants.TYPE_TRAINING, false), false);
+          new WordViewModel("", "", Constants.INSTANCE.getTYPE_TRAINING(), false), false);
     });
     wordsRecyclerView.setLayoutManager(linearLayoutManager);
     presenter.getAllWords();

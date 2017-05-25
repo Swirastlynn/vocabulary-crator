@@ -19,7 +19,7 @@ class WordsPresenter(private val mapper: WordViewMapper,
 
     fun addWord(wordViewModel: WordViewModel) {
         view?.showProgress()
-        addWordUseCase.init(mapper.mapToWordDomainModel(wordViewModel))
+        addWordUseCase.initialize(mapper.mapToWordDomainModel(wordViewModel))
         addWordSubscription = addWordUseCase.execute()
                 .observeOn(uiScheduler)
                 .subscribe(AddWordObserver(wordViewModel))
@@ -27,7 +27,7 @@ class WordsPresenter(private val mapper: WordViewMapper,
 
     fun deleteWords(wordViewModels: List<WordViewModel>) {
         view?.showProgress()
-        deleteWordUseCase.init(mapper.mapToWordDomainModels(wordViewModels))
+        deleteWordUseCase.initialize(mapper.mapToWordDomainModels(wordViewModels))
         deleteWordSubscription = deleteWordUseCase.execute()
                 .observeOn(uiScheduler)
                 .subscribe(DeleteWordObserver())

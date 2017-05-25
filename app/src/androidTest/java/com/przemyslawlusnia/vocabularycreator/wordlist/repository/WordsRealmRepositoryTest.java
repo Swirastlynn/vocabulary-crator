@@ -65,7 +65,7 @@ public class WordsRealmRepositoryTest {
 
   @NonNull
   private WordDomainModel getDummyWordDomainModel() {
-    return new WordDomainModel("test_word", "test_translation", Constants.TYPE_TRAINING);
+    return new WordDomainModel("test_word", "test_translation", Constants.INSTANCE.getTYPE_TRAINING());
   }
 
   @Test
