@@ -41,6 +41,7 @@ class WordsFragment : BaseFragment(), WordsView, OnWordsSelectionListener {
     private fun setupDependencies() {
         WordsDomainComponentProviderSingleton.component()
                 .plus(WordsViewModule(this, this, activity as WordsActivity))
+                // fixme but `activity as WordsActivity` which is context has changed after device rotation...
                 .inject(this)
     }
 
